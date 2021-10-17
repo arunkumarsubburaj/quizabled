@@ -1,0 +1,24 @@
+<div class="main">
+  <header class="mainHeader">
+    <div class="logo">
+      <small>Organised By</small>
+    </div>
+    <nav>
+      <a routerLink="home" routerLinkActive="active">Home</a>
+      <a href="#">Resources</a>
+      <a routerLink="gallery" routerLinkActive="active">Gallery</a>
+      <a href="#" class="btnView">Login</a>
+      <a href="#" class="btnView">Register</a>
+      <a href="#" class="btnView sec">Demo</a>
+    </nav>
+    <div class="sponsor">
+      <small>Powered By</small>
+      <div class="logoLti"></div>
+      <div class="logoStep"></div>
+    </div>
+  </header>
+  <section>
+    <router-outlet></router-outlet>
+  </section>
+  <footer class="mainFooter">&copy; Quizabled</footer>
+</div>
