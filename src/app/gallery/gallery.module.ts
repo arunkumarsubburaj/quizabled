@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { GalleryComponent } from './gallery.component';
+import { SharedModule } from 'src/shared/modules/shared/shared.module';
 
 
 const routes: Routes = [{
@@ -14,6 +15,7 @@ const routes: Routes = [{
   declarations: [GalleryComponent],
   imports: [
     CommonModule,
+    SharedModule,
     RouterModule.forChild(routes)
   ]
 })
