@@ -5,7 +5,7 @@ interface Album {
   src: string,
   caption: string,
   thumb: string
-} 
+}
 
 @Component({
   selector: 'app-gallery',
@@ -14,25 +14,40 @@ interface Album {
 })
 export class GalleryComponent implements OnInit {
   albums: Album[] = [];
-  imageData: string[] = ["gallery-thumb2","gallery-thumb4","gallery-thumb1","gallery-thumb3"];
+  imgPrefix: string = "";
   constructor(private _lightbox: Lightbox) {
-    for (let i = 0; i < this.imageData.length; i++) {
-      const src = './../../assets/images/' + this.imageData[i] + '.jpg';
-      const caption = this.imageData[i];
-      const thumb = './../../assets/images/' + this.imageData[i] + '.jpg';
-      const album = {
-         src: src,
-         caption: caption,
-         thumb: thumb
-      };
-      this.albums.push(album);
-   }
   }
   ngOnInit() {
   }
-  open(index: number): void {
+  open(year: string): void {
     // open lightbox
-    this._lightbox.open(this.albums,index, {centerVertically: true, showImageNumberLabel: true});
+    switch (year) {
+      case "18_19":
+        this.getAlbums("18-19", 23, "2018-19_");
+        break;
+      case "19_20":
+        this.getAlbums("19-20", 6, "2019-20_");
+        break;
+      case "20_21":
+        this.getAlbums("20-21", 15, "2020-21_");
+        break;
+      default:
+        break;
+    }
+    this._lightbox.open(this.albums, 0, { centerVertically: true, showImageNumberLabel: true });
+  }
+  getAlbums(url: string, length: number, prefix: string) {
+    for (let i = 1; i <= length; i++) {
+      const src = './../../assets/images/gallery/' + url + '/' + prefix + i + '.jpg';
+      const caption = prefix + i + '.jpg';
+      const thumb = './../../assets/images/gallery/' + url+'/' + prefix + i + '.jpg';
+      const album = {
+        src: src,
+        caption: caption,
+        thumb: thumb
+      };
+      this.albums.push(album);
+    }
   }
   close(): void {
     // close lightbox programmatically
