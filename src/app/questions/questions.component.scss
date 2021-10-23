@@ -1,0 +1,45 @@
+h1 {
+    text-align: center;
+    margin: 5vh 0;
+}
+.questionBox {
+    padding: 30px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 15px rgba(24, 24, 24, 0.22);
+    border-radius: 5px;
+    margin-bottom: 5vh;
+}
+
+.ansOptions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.textbox {
+    height: 80px;
+    font-size: 18px;
+}
+
+.ansOption-item {
+    position: relative;
+    flex: 0 0 calc(50% - 15px);
+    max-width: calc(50% - 15px);
+    margin-bottom: 30px;
+    .textbox {
+        margin-bottom: 0;
+        padding-right: 100px;
+    }
+}
+
+.imgUpload {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    width: 44px;
+    height: 41px;
+    text-indent: -99em;
+    cursor: pointer;
+    overflow: hidden;
+    background: url('../../assets/images/upload.png') no-repeat;
+}

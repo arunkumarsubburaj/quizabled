@@ -19,6 +19,14 @@ const routes: Routes = [{
     {
       path: "gallery",
       loadChildren: ()=> import ("./gallery/gallery.module").then((m)=>m.GalleryModule)
+    },
+    {
+      path: "login",
+      loadChildren: ()=> import ("./login/login.module").then((m)=>m.LoginModule)
+    },
+    {
+      path: "questions",
+      loadChildren: ()=> import ("./questions/questions.module").then((m)=>m.QuestionsModule)
     }
   ]
 }];
