@@ -20,7 +20,7 @@ body {
     left: 0;
     top: 0;
     right: 0;
-  height: 88px;
+  height: 100px;
   padding: 0 10%;
   display: flex;
   align-items: center;
@@ -75,7 +75,7 @@ body {
         margin: 0 auto;
         width: 50px;
         height: 50px;
-        background: url('./assets/images/sia.svg') no-repeat center top;
+        background: url('./assets/images/sia.png') no-repeat center top;
         background-size: 100%;
     }
 }
@@ -95,13 +95,13 @@ body {
 .logoLti {
     flex: 0 0 64px;
     height: 50px;
-    background: url('./assets/images/lti.svg') no-repeat;
+    background: url('./assets/images/lti.png') no-repeat;
     background-size: 100%;
 }
 .logoStep {
     flex: 0 0 92px;
     height: 50px;
-    background: url('./assets/images/onestep.svg') no-repeat;
+    background: url('./assets/images/onestep.png') no-repeat;
     background-size: 100%;
 }
 
@@ -203,6 +203,8 @@ body {
 }
 .about {
     font-size: 24px;
+    padding: 0 40px;
+    margin-bottom: 10vh;
     p {        
         font-weight: 500;
         margin-bottom: 20px;
@@ -251,6 +253,8 @@ body {
 }
 
 .btnQuizPri {
+    display: inline-flex;
+    align-items: center;
     height: 40px;
     padding: 0 30px;
     font-size: 16px;
