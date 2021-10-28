@@ -1,11 +1,45 @@
 <div class="contentWrap flexCenter">
   <div class="boxWrap">
-    <img src="../../assets/images/quizabled.png" alt="">
+    <img src="../../assets/images/quizabled.png" alt="" />
     <h1>LOGIN</h1>
-    <form action="">
-      <input class="textbox" type="text" placeholder="Username" name="" id="">
-      <input class="textbox" type="text" placeholder="Password" name="" id="">
-      <input type="submit" value="Login">
+    <form [formGroup]="loginForm">
+      <input
+        class="textbox"
+        type="text"
+        placeholder="Email"
+        name=""
+        id="email"
+        formControlName="email"
+        required
+      />
+      <div
+        *ngIf="
+          loginForm.controls['email'].invalid &&
+          loginForm.controls['email'].touched
+        "
+        class="error invalid"
+      >
+        Email is required.
+      </div>
+      <input
+        class="textbox"
+        type="password"
+        placeholder="Password"
+        name=""
+        id="password"
+        formControlName="password"
+        required
+      />
+      <div
+        *ngIf="
+          loginForm.controls['password'].invalid &&
+          loginForm.controls['password'].touched
+        "
+        class="error invalid"
+      >
+        Password is required.
+      </div>
+      <input type="submit" value="Login" (click)="signIn()" />
     </form>
   </div>
 </div>
