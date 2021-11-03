@@ -6,14 +6,27 @@
 $blue: #4383ff;
 $grey: #e5e5e5;
 
+html {
+  font-size: 8px;
+  @media (min-width: 768px) {
+    font-size: 9px;
+  }
+  @media (min-width: 1200px) {
+    font-size: 10px;
+  }
+}
+
 body {
+  font-size: 16px;
   font-family: "Roboto", sans-serif;
   line-height: 1.4;
   color: #000;
   background-color: $grey;
 }
 .main {
-  padding-top: 88px;
+  @media (min-width: 767px) {
+    padding-top: 88px;
+  }
 }
 .mainHeader {
   position: fixed;
@@ -27,10 +40,17 @@ body {
   align-items: center;
   justify-content: space-between;
   background-color: #fff;
+  @media (max-width: 767px) {
+    position: static;
+    width: 100%;
+    padding: 20px;
+    height: auto;
+    flex-wrap: wrap;
+  }
 
   small {
     display: block;
-    font-size: 11px;
+    font-size: 1.1rem;
     font-weight: 500;
     margin-bottom: 5px;
   }
@@ -38,11 +58,20 @@ body {
   nav {
     display: inline-flex;
     align-items: center;
+    @media (max-width: 767px) {
+      order: 1;
+      flex: 0 0 100%;
+      justify-content: center;
+      margin-top: 40px;
+    }
     > * {
       margin: 0 1vw;
+      @media (max-width: 767px) {
+        margin: 0 10px;
+      }
     }
     a {
-      font-size: 18px;
+      font-size: 1.8rem;
       font-weight: 500;
       color: #000;
       &:hover,
@@ -51,7 +80,7 @@ body {
       }
 
       &.btnView {
-        font-size: 16px;
+        font-size: 1.6rem;
         padding: 5px 2vw;
         border-radius: 5px;
         color: #fff;
@@ -119,11 +148,18 @@ body {
     center no-repeat fixed;
   box-shadow: inset 0 0 0 50vw rgb(229 229 229 / 80%);
   background-size: cover;
+  @media (max-width: 767px) {
+    height: auto;
+    padding: 15vh 5vw;
+  }
   img {
     max-width: 40%;
+    @media (max-width: 767px) {
+      max-width: 80%;
+    }
   }
   p {
-    font-size: 20px;
+    font-size: 2rem;
     font-weight: 500;
     line-height: 1.8;
     margin: 1em 0;
@@ -137,33 +173,49 @@ body {
   background-color: $grey;
 }
 .rulesEligibility {
-  padding: 0 40px;
   margin-bottom: 7vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  aside {
-    flex-shrink: 0;
-    padding-left: 30px;
+  @media (max-width: 767px) {
+    aside {
+      margin-top: 20px;
+    }
+  }  
+  @media (min-width: 768px) {
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    aside {
+      flex-shrink: 0;
+      padding-left: 30px;
+    }
   }
+   
 }
 
 .homeQuizRow {
-  display: flex;
-  justify-content: space-between;
-  > section {
-    flex: 0 0 calc(50% - 15px);
-    display: inline-flex;
-    flex-direction: column;
-    img {
-      position: relative;
-      z-index: 1;
-      width: 100%;
+  @media (max-width: 767px) {
+    > section {
+      margin-bottom: 20px;
     }
   }
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    > section {
+      flex: 0 0 calc(50% - 15px);
+      display: inline-flex;
+      flex-direction: column;
+    }
+  }  
+  img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+  }
+
   h3 {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 2.4rem;
     margin-bottom: 20px;
   }
 }
@@ -177,22 +229,22 @@ body {
 .quizColContent {
   padding-top: 25px;
   h3 {
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 700;
     margin-bottom: 25px;
   }
   h4 {
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 500;
     margin-bottom: 10px;
   }
   p {
-    font-size: 20px;
+    font-size: 2rem;
     margin-bottom: 20px;
   }
   ol {
     margin-left: 25px;
-    font-size: 20px;
+    font-size: 2rem;
   }
   li {
     margin-bottom: 5px;
@@ -202,14 +254,19 @@ body {
   padding: 20px 10%;
   margin: 15px 0 25px;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 2.4rem;
   color: #fff;
   background: #77a5ff;
+  @media (max-width: 767px) {
+    padding: 20px;
+  }
 }
 .about {
-  font-size: 24px;
-  padding: 0 40px;
+  font-size: 2.4rem;
   margin-bottom: 10vh;
+  @media (min-width: 768px) {
+    padding: 0 40px;    
+  }
   p {
     font-weight: 500;
     margin-bottom: 20px;
@@ -224,19 +281,32 @@ body {
   padding: 30px 0;
 }
 .ngoLogos {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  > * {
-    margin: 0 5%;
+  @media (max-width: 767px) {
+    text-align: center;
+    img {
+      display: inline-block;
+      font-size: 0;
+    }
+  }
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    > * {
+      margin: 0 5%;
+    }
   }
 }
 .quizPartner {
   margin: 30px 0;
-  display: flex;
-  justify-content: space-between;
-  > div {
-    flex: 0 0 calc(50% - 15px);
+  @media (min-width: 768px) {
+    display: flex;
+    justify-content: space-between;
+    > div {
+      flex: 0 0 calc(50% - 15px);
+    }
+  }
+  > div {    
     background: #fff;
     padding: 20px;
     text-align: center;
@@ -246,7 +316,7 @@ body {
     }
     p {
       font-weight: 500;
-      font-size: 20px;
+      font-size: 2rem;
       margin-bottom: 15px;
     }
   }
@@ -261,7 +331,7 @@ body {
   align-items: center;
   height: 40px;
   padding: 0 30px;
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: 500;
   color: #fff;
   background: $blue;
@@ -272,13 +342,13 @@ body {
   }
 }
 h2 {
-  font-size: 30px;
+  font-size: 3rem;
   font-weight: 700;
   color: $blue;
   margin-bottom: 15px;
 }
 .paraLead {
-  font-size: 24px;
+  font-size: 2.4rem;
 }
 table {
   width: 100%;
@@ -287,7 +357,7 @@ table {
 }
 td {
   padding: 10px;
-  font-size: 14px;
+  font-size: 1.4rem;
   border: 1px solid #000;
   &:first-child {
     width: 100px;
@@ -309,7 +379,7 @@ td {
     max-width: 110px;
   }
   p {
-    font-size: 24px;
+    font-size: 2.4rem;
     font-weight: 500;
     margin: 0 10%;
   }
@@ -322,13 +392,17 @@ td {
   margin-bottom: 20px;
   li {
     position: relative;
-    flex: 0 0 calc(50% - 10px);
-    max-width: calc(50% - 10px);
+    flex: 0 0 100%;
+    max-width: 100%;
     margin-bottom: 20px;
     border-radius: 20px;
     overflow: hidden;
     transition: 0.2s;
     cursor: pointer;
+    @media (min-width: 600px) {
+      flex: 0 0 calc(50% - 10px);
+      max-width: calc(50% - 10px);
+    }
     &:hover:not(.youtube-content) {
       box-shadow: 0 0 0 3px $blue;
     }
@@ -346,7 +420,7 @@ td {
       justify-content: center;
       background: $blue;
       color: #fff;
-      font-size: 24px;
+      font-size: 2.4rem;
     }
   }
 }
@@ -355,7 +429,7 @@ td {
 .mainFooter {
   height: 160px;
   color: #fff;
-  font-size: 20px;
+  font-size: 2rem;
   font-weight: 500;
   background: #000;
   display: flex;
@@ -385,7 +459,7 @@ td {
   border-radius: 5px;
 }
 h1 {
-  font-size: 36px;
+  font-size: 3.6rem;
   line-height: 1;
   margin: 15px 0 20px;
 }
@@ -393,7 +467,7 @@ h1 {
   width: 100%;
   height: 55px;
   margin-bottom: 3vh;
-  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: 500;
   padding: 0 20px;
   background: #fff;
