@@ -10,12 +10,8 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     LightboxModule,
     ReactiveFormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
   ],
-  exports: [
-    LightboxModule,
-    ReactiveFormsModule,
-    ToastrModule
-  ]
+  exports: [LightboxModule, ReactiveFormsModule, ToastrModule],
 })
-export class SharedModule { }
+export class SharedModule {}

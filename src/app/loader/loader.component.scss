@@ -1,0 +1,34 @@
+/* my-loader.component.css */
+.loading-spinner {
+  background-color: rgba(255, 255, 255, 0.5);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  z-index: 200;
+  img {
+    align-self: end;
+  }
+  .loadingWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    .loading-message {
+      text-align: center;
+      font-size: 24px;
+      color: #4383ff;
+    }
+    .loadingImg {
+      background-image: url(./../../assets/images/loader.svg);
+      background-size: contain;
+      width: 60px;
+      height: 60px;
+      background-repeat: no-repeat;
+    }
+  }
+}
