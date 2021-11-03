@@ -27,6 +27,14 @@ const routes: Routes = [{
     {
       path: "questions",
       loadChildren: ()=> import ("./questions/questions.module").then((m)=>m.QuestionsModule)
+    },
+    {
+      path: "quiz-master",
+      loadChildren: ()=> import ("./qm-landing/qm-landing.module").then((m)=>m.QmLandingModule)
+    },
+    {
+      path: "add-questions",
+      loadChildren: ()=> import ("./qm-questions/qm-questions.module").then((m)=>m.QmQuestionsModule)
     }
   ]
 }];

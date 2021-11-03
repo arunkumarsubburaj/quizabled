@@ -171,6 +171,7 @@ body {
   max-width: 1200px;
   margin: 0 auto;
   background-color: $grey;
+  min-height: calc(100vh - 248px);
 }
 .rulesEligibility {
   margin-bottom: 7vh;
@@ -492,4 +493,53 @@ a {
     color: #333;
     text-decoration: underline;
   }
+}
+
+.questionBox {
+  padding: 30px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 15px rgba(24, 24, 24, 0.22);
+  border-radius: 5px;
+  margin-bottom: 5vh;
+}
+
+.ansOptions {
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.textbox {
+  height: 80px;
+  font-size: 18px;
+}
+
+.ansOption-item {
+  position: relative;
+  margin-bottom: 30px;
+  @media (min-width: 768px) {
+    flex: 0 0 calc(50% - 15px);
+    max-width: calc(50% - 15px);
+  }
+  .textbox {
+      margin-bottom: 0;
+      padding-right: 100px;
+  }
+}
+
+.imgUpload {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  width: 44px;
+  height: 41px;
+  text-indent: -99em;
+  cursor: pointer;
+  overflow: hidden;
+  background: url('assets/images/upload.png') no-repeat;
+}
+.posRelative {
+  position: relative;
 }

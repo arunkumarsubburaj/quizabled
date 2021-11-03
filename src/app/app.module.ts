@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { ShellComponent } from './shell/shell.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { SelectDropDownModule } from 'ngx-select-dropdown'
 
 @NgModule({
   declarations: [				
@@ -16,7 +17,8 @@ import { LoginComponent } from './login/login.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    SelectDropDownModule
   ],
   providers: [],
   bootstrap: [AppComponent]
