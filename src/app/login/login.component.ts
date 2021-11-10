@@ -5,6 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { delay } from 'rxjs/operators';
 import { LoginService } from './login.service';
@@ -16,7 +17,8 @@ import { LoginService } from './login.service';
 export class LoginComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) {}
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -37,10 +39,10 @@ export class LoginComponent implements OnInit {
         .login(data)
         .pipe(delay(2000))
         .subscribe(
-          (res) => {
-            const user = res;
-            console.log(user);
+          (res: any) => {
             this.toastrService.success('Logged In Successfully.', 'Success');
+            window.sessionStorage.setItem('ROLE', res.user.role);
+            this.launchLandingPage(res.user.role);
           },
           (err) => {
             const errorCode = err.error.code;
@@ -48,6 +50,20 @@ export class LoginComponent implements OnInit {
             this.toastrService.error(errorMessage, 'Error');
           }
         );
+    }
+  }
+  launchLandingPage(role: string) {
+    switch (role) {
+      case 'ADMIN':
+        break;
+      case 'STUDENT':
+        break;
+      case 'QUIZ_MASTER':
+        this.router.navigateByUrl('/quiz-master');
+        break;
+
+      default:
+        break;
     }
   }
 }

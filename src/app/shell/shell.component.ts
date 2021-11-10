@@ -10,13 +10,13 @@ export class ShellComponent implements OnInit {
   constructor(private loginService: LoginService) {}
 
   ngOnInit() {
-    this.loginService.getUsers().subscribe(
-      (res) => {
-        console.log(res);
-      },
-      (err) => {
-        console.log(err);
-      }
-    );
+    // this.loginService.getUsers().subscribe(
+    //   (res) => {
+    //     console.log(res);
+    //   },
+    //   (err) => {
+    //     console.log(err);
+    //   }
+    // );
   }
 }
