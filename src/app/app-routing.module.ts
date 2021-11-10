@@ -18,6 +18,11 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
+        path: 'quiz',
+        loadChildren: () =>
+          import('./quiz/quiz.module').then((m) => m.QuizModule),
+      },
+      {
         path: 'gallery',
         loadChildren: () =>
           import('./gallery/gallery.module').then((m) => m.GalleryModule),
@@ -47,9 +52,9 @@ const routes: Routes = [
           import('./qm-questions/qm-questions.module').then(
             (m) => m.QmQuestionsModule
           ),
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
       },
-      { path: '**', redirectTo: '' },
+      { path: '**', redirectTo: '' },      
     ],
   },
 ];

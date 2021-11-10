@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { QuizComponent } from './quiz.component';
 import { RouterModule, Routes } from '@angular/router';
-import { QmQuestionsComponent } from './qm-questions.component';
-import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { SharedModule } from 'src/shared/modules/shared/shared.module';
 
 const routes: Routes = [{
   path: "",
-  component: QmQuestionsComponent,
+  component: QuizComponent,
 }];
 
 @NgModule({
-  declarations: [QmQuestionsComponent],
   imports: [
     CommonModule,
     SharedModule,
-    SelectDropDownModule,
     RouterModule.forChild(routes)
-  ]
+  ],  
+  declarations: [QuizComponent]
 })
-export class QmQuestionsModule { }
+export class QuizModule { }
