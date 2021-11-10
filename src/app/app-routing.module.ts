@@ -52,7 +52,7 @@ const routes: Routes = [
           import('./qm-questions/qm-questions.module').then(
             (m) => m.QmQuestionsModule
           ),
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       { path: '**', redirectTo: '' },      
     ],
