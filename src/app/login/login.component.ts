@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { delay } from 'rxjs/operators';
+import { UserService } from '../user.service';
 import { LoginService } from './login.service';
 @Component({
   selector: 'app-login',
@@ -18,7 +18,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required]),
@@ -35,21 +36,19 @@ export class LoginComponent implements OnInit {
         email: this.fc.email.value,
         password: this.fc.password.value,
       };
-      this.loginService
-        .login(data)
-        .pipe(delay(2000))
-        .subscribe(
-          (res: any) => {
-            this.toastrService.success('Logged In Successfully.', 'Success');
-            window.sessionStorage.setItem('ROLE', res.user.role);
-            this.launchLandingPage(res.user.role);
-          },
-          (err) => {
-            const errorCode = err.error.code;
-            const errorMessage = err.error.message;
-            this.toastrService.error(errorMessage, 'Error');
-          }
-        );
+      this.loginService.login(data).subscribe(
+        (res: any) => {
+          this.toastrService.success('Logged In Successfully.', 'Success');
+          this.userService.setUser(res.user);
+          window.sessionStorage.setItem('ROLE', res.user.role);
+          this.launchLandingPage(res.user.role);
+        },
+        (err) => {
+          const errorCode = err.error.code;
+          const errorMessage = err.error.message;
+          this.toastrService.error(errorMessage, 'Error');
+        }
+      );
     }
   }
   launchLandingPage(role: string) {

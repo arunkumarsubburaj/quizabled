@@ -1,6 +1,4 @@
 import { AuthGuardService } from './../shared/services/auth-guard.service';
-import { AuthService } from './../shared/services/auth.service';
-import { LoaderService } from './loader.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -13,6 +11,8 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { LoaderComponent } from './loader/loader.component';
 import { LoaderInterceptor } from './loader.interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ToastrModule } from 'ngx-toastr';
+import { AuthService } from 'src/shared/services/auth.service';
 
 @NgModule({
   declarations: [AppComponent, ShellComponent, HomeComponent, LoaderComponent],
@@ -22,15 +22,15 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     BrowserAnimationsModule,
     SelectDropDownModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   exports: [HttpClientModule],
   providers: [
-    LoaderService,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
-    AuthService,
-    AuthGuardService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
+    AuthGuardService,
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })
