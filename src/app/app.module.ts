@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShellComponent } from './shell/shell.component';
 import { HomeComponent } from './home/home.component';
-import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { LoaderComponent } from './loader/loader.component';
 import { LoaderInterceptor } from './loader.interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
@@ -20,7 +19,6 @@ import { AuthService } from 'src/shared/services/auth.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SelectDropDownModule,
     HttpClientModule,
     ToastrModule.forRoot(),
   ],

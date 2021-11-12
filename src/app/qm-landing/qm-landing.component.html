@@ -6,7 +6,11 @@
     </h1>
   </div>
   <div class="qmLandingButtonWrap">
-    <button class="qmLandingButton">Update Demo Quiz</button>
-    <button class="qmLandingButton">Update Main Quiz</button>
+    <button class="qmLandingButton" (click)="gotoQuestions('demo')">
+      Update Demo Quiz
+    </button>
+    <button class="qmLandingButton" (click)="gotoQuestions('main')">
+      Update Main Quiz
+    </button>
   </div>
 </div>

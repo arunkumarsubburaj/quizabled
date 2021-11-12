@@ -1,80 +1,195 @@
 <div class="homeContent">
-  <div class="centerAlign">
-    <h1>Add Demo Quiz</h1>
+  <div class="centerAlign" [formGroup]="questionsForm">
+    <h1>{{ headerTitle }}</h1>
     <div class="filterHeader">
       <div class="selectCategory">
-        <div class="selectLabel">Select Category:</div>
-        <ngx-select-dropdown></ngx-select-dropdown>      
+        <div class="selectLabel">
+          Select Category:
+          <angular2-multiselect
+            [data]="categotyList"
+            [(ngModel)]="selectedCategories"
+            [settings]="settingsCategories"
+            formControlName="category"
+          >
+          </angular2-multiselect>
+        </div>
       </div>
       <div class="selectCategory">
-        <div class="selectLabel">Choose Your Language:</div>
-        <ngx-select-dropdown></ngx-select-dropdown>      
-      </div>
-    </div>
-    <div class="questionBox">
-      <span class="questionSerial">1</span>
-      <div class="posRelative">
-        <input class="textbox" type="text" placeholder="Question" name="" id="">
-        <input class="imgUpload" type="file" name="" id="">
-      </div>
-      <div class="ansOptions">
-        <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
-        </div>
-        <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
-        </div>
-        <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
-        </div>
-        <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
-        </div>
-      </div>
-      <div class="correctAns">
-        <label>Answer:</label>
-        <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Enter Answer" name="" id="">
+        <div class="selectLabel">
+          Choose Your Language:
+          <angular2-multiselect
+            [data]="languageList"
+            [(ngModel)]="selectedLangauges"
+            [settings]="settingsLangauges"
+            formControlName="language"
+          >
+          </angular2-multiselect>
         </div>
       </div>
     </div>
+    <ng-container formArrayName="questions">
+      <ng-container
+        *ngFor="let questionGroup of questions().controls; let qIndex = index"
+      >
+        <div class="questionBox" [formGroupName]="qIndex">
+          <span class="questionSerial">{{ qIndex + 1 }}</span>
+          <input type="hidden" name="questionId" formControlName="questionId" />
+          <input
+            type="hidden"
+            name="languageCode"
+            formControlName="languageCode"
+          />
+          <input type="hidden" name="category" formControlName="category" />
+          <input type="hidden" name="optionId" formControlName="optionId" />
+          <input type="hidden" name="isActive" formControlName="isActive" />
+          <div class="posRelative">
+            <input
+              class="textbox"
+              type="text"
+              placeholder="Question"
+              name=""
+              id=""
+              formControlName="question"
+            />
+            <input
+              class="imgUpload"
+              type="file"
+              name=""
+              id=""
+              formControlName="questionImage"
+            />
+          </div>
+          <ng-container formArrayName="options">
+            <div class="ansOptions">
+              <ng-container
+                *ngFor="
+                  let optionGroup of optionsArray(qIndex).controls;
+                  let oIndex = index
+                "
+              >
+                <ng-container [formGroupName]="oIndex">
+                  <input
+                    type="hidden"
+                    name="optionId"
+                    formControlName="optionId"
+                  />
+                  <input
+                    type="hidden"
+                    name="questionId"
+                    formControlName="questionId"
+                  />
+                  <input
+                    type="hidden"
+                    name="isActive"
+                    formControlName="isActive"
+                  />
+                  <div class="ansOption-item">
+                    <input
+                      class="textbox"
+                      type="text"
+                      placeholder="Option {{ oIndex + 1 }}"
+                      name=""
+                      id=""
+                      formControlName="options"
+                    />
+                    <input
+                      class="imgUpload"
+                      type="file"
+                      name=""
+                      id=""
+                      formControlName="optionImage"
+                    />
+                  </div>
+                </ng-container>
+              </ng-container>
+            </div>
+          </ng-container>
+          <div class="correctAns">
+            <label>Answer:</label>
+            <div class="ansOption-item">
+              <input
+                class="textbox"
+                type="text"
+                placeholder="Enter Answer"
+                name=""
+                id=""
+              />
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
 
-    <div class="questionBox">
+    <!-- <div class="questionBox">
       <span class="questionSerial">2</span>
       <div class="posRelative">
-        <input class="textbox" type="text" placeholder="Question" name="" id="">
-        <input class="imgUpload" type="file" name="" id="">
+        <input
+          class="textbox"
+          type="text"
+          placeholder="Question"
+          name=""
+          id=""
+        />
+        <input class="imgUpload" type="file" name="" id="" />
       </div>
       <div class="ansOptions">
         <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
+          <input
+            class="textbox"
+            type="text"
+            placeholder="Option 1"
+            name=""
+            id=""
+          />
+          <input class="imgUpload" type="file" name="" id="" />
         </div>
         <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
+          <input
+            class="textbox"
+            type="text"
+            placeholder="Option 1"
+            name=""
+            id=""
+          />
+          <input class="imgUpload" type="file" name="" id="" />
         </div>
         <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
+          <input
+            class="textbox"
+            type="text"
+            placeholder="Option 1"
+            name=""
+            id=""
+          />
+          <input class="imgUpload" type="file" name="" id="" />
         </div>
         <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Option 1" name="" id="">
-          <input class="imgUpload" type="file" name="" id="">
+          <input
+            class="textbox"
+            type="text"
+            placeholder="Option 1"
+            name=""
+            id=""
+          />
+          <input class="imgUpload" type="file" name="" id="" />
         </div>
       </div>
       <div class="correctAns">
         <label>Answer:</label>
         <div class="ansOption-item">
-          <input class="textbox" type="text" placeholder="Enter Answer" name="" id="">
+          <input
+            class="textbox"
+            type="text"
+            placeholder="Enter Answer"
+            name=""
+            id=""
+          />
         </div>
       </div>
-    </div>
-
-
+    </div> -->
+  </div>
+  <div id="actionFooter">
+    <button class="btnQuizPri" (click)="submitForm()">Save</button>
+    <button class="btnQuizSec" (click)="resetForm()">Cancel</button>
   </div>
 </div>
