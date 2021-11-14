@@ -17,9 +17,11 @@ export class QmLandingComponent implements OnInit, AfterContentInit {
   user: any;
   ngOnInit() {}
   ngAfterContentInit(): void {
-    this.userService.getUser().subscribe((res) => {
-      this.user = res;
-    });
+    if (window.sessionStorage.getItem('userData')) {
+      this.user = JSON.parse(
+        window.sessionStorage.getItem('userData') as string
+      );
+    }
   }
   gotoQuestions(type: string) {
     switch (type) {

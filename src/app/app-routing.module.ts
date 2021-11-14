@@ -1,9 +1,15 @@
+import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ShellComponent } from './shell/shell.component';
 import { AuthGuardService as AuthGuard } from './../shared/services/auth-guard.service';
+import { AdminComponent } from './admin/admin.component';
 const routes: Routes = [
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
   {
     path: '',
     component: ShellComponent,
@@ -28,11 +34,6 @@ const routes: Routes = [
           import('./gallery/gallery.module').then((m) => m.GalleryModule),
       },
       {
-        path: 'login',
-        loadChildren: () =>
-          import('./login/login.module').then((m) => m.LoginModule),
-      },
-      {
         path: 'questions',
         loadChildren: () =>
           import('./questions/questions.module').then((m) => m.QuestionsModule),
@@ -44,6 +45,11 @@ const routes: Routes = [
           import('./qm-landing/qm-landing.module').then(
             (m) => m.QmLandingModule
           ),
+        // canActivate: [AuthGuard],
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
         canActivate: [AuthGuard],
       },
       {
@@ -54,7 +60,7 @@ const routes: Routes = [
           ),
         canActivate: [AuthGuard],
       },
-      { path: '**', redirectTo: '' },      
+      { path: '**', redirectTo: '' },
     ],
   },
 ];

@@ -1,5 +1,5 @@
 <div class="main">
-  <header class="mainHeader">
+  <header class="mainHeader" *ngIf="!isLoggedIn">
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
     </a>
@@ -7,7 +7,7 @@
       <a routerLink="home" routerLinkActive="active">Home</a>
       <!-- <a href="#">Resources</a> -->
       <a routerLink="gallery" routerLinkActive="active">Gallery</a>
-      <!-- <a routerLink="login" routerLinkActive="active" class="btnView">Login</a> -->
+      <a routerLink="login" routerLinkActive="active" class="btnView">Login</a>
       <a
         href="https://forms.gle/Pf7LZeXXQkjncP288"
         target="_blank"
@@ -15,6 +15,28 @@
         >Register</a
       >
       <!-- <a href="#" class="btnView sec">Demo</a> -->
+    </nav>
+    <div class="sponsor">
+      <small>Powered By</small>
+      <a
+        href="https://www.lntinfotech.com/social-responsibility/"
+        target="_blank"
+        class="logoLti"
+      ></a>
+      <div class="logoStep"></div>
+    </div>
+  </header>
+  <header class="mainHeader" *ngIf="isLoggedIn">
+    <a href="https://sevainaction.org/" target="_blank" class="logo">
+      <small>Organised By</small>
+    </a>
+    <nav>
+      <h5>
+        Welcome, <span>{{ user.user_name }}</span>
+      </h5>
+
+      <div class="spacer"></div>
+      <a class="btnView logoutBtn" target="_blank" (click)="logout()">Logout</a>
     </nav>
     <div class="sponsor">
       <small>Powered By</small>

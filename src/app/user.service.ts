@@ -13,6 +13,7 @@ export class UserService {
     return this.user$.asObservable();
   }
   setUser(userData: any) {
+    // window.sessionStorage.setItem('userData', userData);
     this.user$.next(userData);
   }
 }

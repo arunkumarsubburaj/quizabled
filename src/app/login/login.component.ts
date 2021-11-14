@@ -1,10 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../user.service';
@@ -14,7 +9,7 @@ import { LoginService } from './login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, AfterViewInit {
   constructor(
     private toastrService: ToastrService,
     private loginService: LoginService,
@@ -26,6 +21,16 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
   ngOnInit() {}
+  ngAfterViewInit() {
+    if (window.sessionStorage.getItem('userData')) {
+      const res = JSON.parse(
+        window.sessionStorage.getItem('userData') as string
+      );
+      this.userService.setUser(res);
+      window.sessionStorage.setItem('ROLE', res.role);
+      this.launchLandingPage(res.role);
+    }
+  }
   get fc() {
     return this.loginForm.controls;
   }
@@ -54,6 +59,7 @@ export class LoginComponent implements OnInit {
   launchLandingPage(role: string) {
     switch (role) {
       case 'ADMIN':
+        this.router.navigateByUrl('/admin');
         break;
       case 'STUDENT':
         break;

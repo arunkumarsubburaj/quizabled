@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { QuestionService } from './../question.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
@@ -7,7 +8,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-
+import { Option, Question, Questions } from '../models/questions';
 @Component({
   selector: 'app-qm-questions',
   templateUrl: './qm-questions.component.html',
@@ -16,7 +17,8 @@ import {
 export class QmQuestionsComponent implements OnInit, AfterViewInit {
   constructor(
     private questionService: QuestionService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private toastrService: ToastrService
   ) {}
   headerTitle: string = '';
   categotyList = [
@@ -79,14 +81,13 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       questionImage: new FormControl(null),
       languageCode: new FormControl('', [Validators.required]),
       category: new FormControl('', [Validators.required]),
-      optionId: new FormControl(''),
-      isActive: new FormControl(''),
+      optionId: new FormControl(null),
+      isActive: new FormControl(true),
+      answer: new FormControl(''),
       options: this.fb.array([]),
     });
   }
-  // questionGroups(): FormGroup[] {
-  //   return this.questions().controls as FormGroup[];
-  // }
+
   optionsArray(qIndex: number): FormArray {
     return this.questions().at(qIndex).get('options') as FormArray;
   }
@@ -97,7 +98,8 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       options: new FormControl('', [Validators.required]),
       optionImage: new FormControl(''),
       questionId: new FormControl(''),
-      isActive: new FormControl(''),
+      isActive: new FormControl(true),
+      isAnswer: new FormControl(false),
     });
   }
 
@@ -119,6 +121,119 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   }
   submitForm() {
     console.log(this.questionsForm.value);
+    const responseJson: Questions = this.questionsForm.value;
+    responseJson.questions.forEach((question: Question) => {
+      question.category = responseJson.category[0]?.name;
+      question.languageCode = responseJson.language[0]?.name;
+      question.options.forEach((option: Option) => {
+        option.isAnswer = (question.answer === option.options).toString();
+        option.isActive = 'true';
+        option.questionId = question.questionId ? question?.questionId : null;
+      });
+    });
+    let finalObject = responseJson.questions.filter(
+      (questionGrp) => questionGrp.question !== ''
+    );
+    console.log(finalObject);
+    // let finalObject: Question[] = [
+    //   {
+    //     questionId: null,
+    //     question: 'q1',
+    //     questionImage: null,
+    //     languageCode: 'en',
+    //     category: 'A',
+    //     optionId: null,
+    //     isActive: 'true',
+    //     answer: 'o1',
+    //     options: [
+    //       {
+    //         optionId: null,
+    //         options: 'o1',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'true',
+    //       },
+    //       {
+    //         optionId: null,
+    //         options: 'o2',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'false',
+    //       },
+    //       {
+    //         optionId: null,
+    //         options: 'o3',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'false',
+    //       },
+    //       {
+    //         optionId: null,
+    //         options: 'o4',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'false',
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     questionId: null,
+    //     question: 'q2',
+    //     questionImage: null,
+    //     languageCode: 'en',
+    //     category: 'A',
+    //     optionId: null,
+    //     isActive: 'true',
+    //     answer: 'o24',
+    //     options: [
+    //       {
+    //         optionId: null,
+    //         options: 'o21',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'false',
+    //       },
+    //       {
+    //         optionId: null,
+    //         options: 'o22',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'false',
+    //       },
+    //       {
+    //         optionId: null,
+    //         options: 'o23',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'false',
+    //       },
+    //       {
+    //         optionId: null,
+    //         options: 'o24',
+    //         optionImage: '',
+    //         questionId: null,
+    //         isActive: 'true',
+    //         isAnswer: 'true',
+    //       },
+    //     ],
+    //   },
+    // ];
+    this.questionService.uploadQuestions(finalObject).subscribe(
+      (res) => {
+        this.toastrService.success('Questions Added Successfully', 'Success');
+      },
+      (err) => {
+        console.log(err);
+        this.toastrService.error(err, 'Error!!!');
+      }
+    );
   }
   resetForm() {
     this.questionsForm.reset();

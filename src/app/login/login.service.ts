@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { shareReplay, tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,9 +13,10 @@ export class LoginService {
   constructor(private http: HttpClient) {}
   login(data: { email: string; password: string }) {
     return this.http.post(environment.apiUrl + CoreConstants.login, data).pipe(
-      tap((res: any) =>
-        this.setSession({ idToken: res.token, expiresIn: res.expiresIn })
-      ),
+      tap((res: any) => {
+        window.sessionStorage.setItem('userData', JSON.stringify(res.user));
+        this.setSession({ idToken: res.token, expiresIn: res.expiresIn });
+      }),
       shareReplay()
     );
   }

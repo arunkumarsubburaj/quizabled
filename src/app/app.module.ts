@@ -1,3 +1,5 @@
+import { LoginComponent } from './login/login.component';
+import { SharedModule } from './../shared/modules/shared/shared.module';
 import { AuthGuardService } from './../shared/services/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -12,13 +14,22 @@ import { LoaderInterceptor } from './loader.interceptor';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from 'src/shared/services/auth.service';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
-  declarations: [AppComponent, ShellComponent, HomeComponent, LoaderComponent],
+  declarations: [
+    AppComponent,
+    ShellComponent,
+    HomeComponent,
+    LoaderComponent,
+    AdminComponent,
+    LoginComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    SharedModule,
     HttpClientModule,
     ToastrModule.forRoot(),
   ],
