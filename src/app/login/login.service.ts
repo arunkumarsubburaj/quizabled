@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoginService {
   constructor(private http: HttpClient) {}
-  login(data: { email: string; password: string }) {
+  login(data: { user_name: string; password: string }) {
     return this.http.post(environment.apiUrl + CoreConstants.login, data).pipe(
       tap((res: any) => {
         window.sessionStorage.setItem('userData', JSON.stringify(res.user));

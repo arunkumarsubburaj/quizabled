@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private userService: UserService
   ) {}
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required]),
+    user_name: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
   });
   ngOnInit() {}
@@ -37,8 +37,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
   signIn() {
     if (this.loginForm.invalid) {
     } else {
-      const data: { email: string; password: string } = {
-        email: this.fc.email.value,
+      const data: { user_name: string; password: string } = {
+        user_name: this.fc.user_name.value,
         password: this.fc.password.value,
       };
       this.loginService.login(data).subscribe(

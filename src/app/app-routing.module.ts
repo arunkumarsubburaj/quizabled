@@ -34,12 +34,6 @@ const routes: Routes = [
           import('./gallery/gallery.module').then((m) => m.GalleryModule),
       },
       {
-        path: 'questions',
-        loadChildren: () =>
-          import('./questions/questions.module').then((m) => m.QuestionsModule),
-        canActivate: [AuthGuard],
-      },
-      {
         path: 'quiz-master',
         loadChildren: () =>
           import('./qm-landing/qm-landing.module').then(

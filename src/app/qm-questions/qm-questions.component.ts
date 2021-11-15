@@ -9,6 +9,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { Option, Question, Questions } from '../models/questions';
+export enum QuizType {
+  'demo' = 1,
+  'main' = 2,
+}
 @Component({
   selector: 'app-qm-questions',
   templateUrl: './qm-questions.component.html',
@@ -21,6 +25,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     private toastrService: ToastrService
   ) {}
   headerTitle: string = '';
+  quizType: number = QuizType.demo;
   categotyList = [
     { id: 1, itemName: 'Catogory A', name: 'A' },
     { id: 2, itemName: 'Catogory B', name: 'B' },
@@ -37,18 +42,11 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   languageList = [
     { id: 1, itemName: 'English', name: 'en' },
     { id: 2, itemName: 'Tamil', name: 'tn' },
-    { id: 3, itemName: 'Telugu', name: 'tl' },
-    { id: 4, itemName: 'Kannada', name: 'ka' },
-    { id: 5, itemName: 'Malayalam', name: 'ma' },
-    { id: 6, itemName: 'Hindi', name: 'hi' },
+    // { id: 3, itemName: 'Telugu', name: 'tl' },
+    { id: 3, itemName: 'Kannada', name: 'ka' },
+    // { id: 5, itemName: 'Malayalam', name: 'ma' },
+    { id: 4, itemName: 'Hindi', name: 'hi' },
   ];
-  selectedLangauges = [];
-  settingsLangauges = {
-    enableSearchFilter: false,
-    addNewItemOnFilter: false,
-    singleSelection: true,
-    text: 'Select Language',
-  };
   questionsForm = this.fb.group({
     category: new FormControl('', [Validators.required]),
     language: new FormControl('', [Validators.required]),
@@ -56,12 +54,14 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   });
   ngOnInit() {}
   ngAfterViewInit() {
-    this.questionService.getQuestionType().subscribe((res) => {
+    this.questionService.getQuestionType().subscribe((res: any) => {
       switch (res) {
         case 'demo':
+          this.quizType = QuizType.demo;
           this.headerTitle = 'Add / Update Demo Quiz Questions';
           break;
         case 'main':
+          this.quizType = QuizType.main;
           this.headerTitle = 'Add / Update Main Quiz Questions';
           break;
         default:
@@ -74,16 +74,19 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     return this.questionsForm.get('questions') as FormArray;
   }
 
-  questionGroup(): FormGroup {
+  questionGroup(langIndex: number): FormGroup {
+    const langCode = this.languageList[langIndex].name;
     return this.fb.group({
       questionId: new FormControl(null),
       question: new FormControl('', [Validators.required]),
       questionImage: new FormControl(null),
-      languageCode: new FormControl('', [Validators.required]),
+      languageCode: new FormControl(langCode, [Validators.required]),
       category: new FormControl('', [Validators.required]),
       optionId: new FormControl(null),
-      isActive: new FormControl(true),
+      isActive: new FormControl('true'),
       answer: new FormControl(''),
+      primaryLangCode: new FormControl(null),
+      quizType: new FormControl(this.quizType),
       options: this.fb.array([]),
     });
   }
@@ -107,13 +110,13 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     this.optionsArray(qIndex).push(this.optionGroup());
   }
 
-  addQuestions() {
-    this.questions().push(this.questionGroup());
+  addQuestions(languageIndex: number) {
+    this.questions().push(this.questionGroup(languageIndex));
   }
 
   private generateQuestions() {
-    for (let question = 0; question < 20; question++) {
-      this.addQuestions();
+    for (let question = 0; question < this.languageList.length; question++) {
+      this.addQuestions(question);
       for (let option = 0; option < 4; option++) {
         this.addOptions(question);
       }
@@ -124,7 +127,6 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     const responseJson: Questions = this.questionsForm.value;
     responseJson.questions.forEach((question: Question) => {
       question.category = responseJson.category[0]?.name;
-      question.languageCode = responseJson.language[0]?.name;
       question.options.forEach((option: Option) => {
         option.isAnswer = (question.answer === option.options).toString();
         option.isActive = 'true';
@@ -135,96 +137,6 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       (questionGrp) => questionGrp.question !== ''
     );
     console.log(finalObject);
-    // let finalObject: Question[] = [
-    //   {
-    //     questionId: null,
-    //     question: 'q1',
-    //     questionImage: null,
-    //     languageCode: 'en',
-    //     category: 'A',
-    //     optionId: null,
-    //     isActive: 'true',
-    //     answer: 'o1',
-    //     options: [
-    //       {
-    //         optionId: null,
-    //         options: 'o1',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'true',
-    //       },
-    //       {
-    //         optionId: null,
-    //         options: 'o2',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'false',
-    //       },
-    //       {
-    //         optionId: null,
-    //         options: 'o3',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'false',
-    //       },
-    //       {
-    //         optionId: null,
-    //         options: 'o4',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'false',
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     questionId: null,
-    //     question: 'q2',
-    //     questionImage: null,
-    //     languageCode: 'en',
-    //     category: 'A',
-    //     optionId: null,
-    //     isActive: 'true',
-    //     answer: 'o24',
-    //     options: [
-    //       {
-    //         optionId: null,
-    //         options: 'o21',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'false',
-    //       },
-    //       {
-    //         optionId: null,
-    //         options: 'o22',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'false',
-    //       },
-    //       {
-    //         optionId: null,
-    //         options: 'o23',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'false',
-    //       },
-    //       {
-    //         optionId: null,
-    //         options: 'o24',
-    //         optionImage: '',
-    //         questionId: null,
-    //         isActive: 'true',
-    //         isAnswer: 'true',
-    //       },
-    //     ],
-    //   },
-    // ];
     this.questionService.uploadQuestions(finalObject).subscribe(
       (res) => {
         this.toastrService.success('Questions Added Successfully', 'Success');

@@ -20,20 +20,20 @@
       <input
         class="textbox"
         type="text"
-        placeholder="Email"
+        placeholder="User name"
         name=""
-        id="email"
-        formControlName="email"
+        id="user_name"
+        formControlName="user_name"
         required
       />
       <div
         *ngIf="
-          loginForm.controls['email'].invalid &&
-          loginForm.controls['email'].touched
+          loginForm.controls['user_name'].invalid &&
+          loginForm.controls['user_name'].touched
         "
         class="error invalid"
       >
-        Email is required.
+        User Name is required.
       </div>
       <input
         class="textbox"
