@@ -2,6 +2,15 @@ $blue: #4383ff;
 $blueHover: #3076ff;
 $grey: #e5e5e5;
 
+.loginWrap {
+  max-width: 600px;
+  margin: 0 auto;
+  .textbox {
+    height: 50px;
+    margin-bottom: 30px;
+  }
+}
+
 form {
   width: 100%;
   display: flex;
@@ -28,7 +37,4 @@ form {
 }
 img {
   height: inherit;
-}
-h1 {
-  text-align: left;
 }

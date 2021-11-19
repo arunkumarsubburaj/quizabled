@@ -2,7 +2,6 @@
   <a href="https://sevainaction.org/" target="_blank" class="logo">
     <small>Organised By</small>
   </a>
-  <img src="../../assets/images/quizabled.png" alt="" />
   <div class="sponsor">
     <small>Powered By</small>
     <a
@@ -13,48 +12,53 @@
     <div class="logoStep"></div>
   </div>
 </header>
-<div class="contentWrap flexCenter">
-  <div class="boxWrap">
-    <h1>LOGIN</h1>
-    <form [formGroup]="loginForm">
-      <input
-        class="textbox"
-        type="text"
-        placeholder="User name"
-        name=""
-        id="user_name"
-        formControlName="user_name"
-        required
-      />
-      <div
-        *ngIf="
-          loginForm.controls['user_name'].invalid &&
-          loginForm.controls['user_name'].touched
-        "
-        class="error invalid"
-      >
-        User Name is required.
+<div class="homeContent">
+  <div class="questionBox mediumBox">
+    <div class="loginWrap">
+      <div class="centerAlign">
+        <img src="../../assets/images/quizabled.png" alt="">
+        <h1>LOGIN</h1>
       </div>
-      <input
-        class="textbox"
-        type="password"
-        placeholder="Password"
-        name=""
-        id="password"
-        formControlName="password"
-        required
-      />
-      <div
-        *ngIf="
-          loginForm.controls['password'].invalid &&
-          loginForm.controls['password'].touched
-        "
-        class="error invalid"
-      >
-        Password is required.
-      </div>
-      <input type="submit" value="Login" (click)="signIn()" />
-    </form>
+      <form [formGroup]="loginForm">
+        <input
+          class="textbox"
+          type="text"
+          placeholder="User name"
+          name=""
+          id="user_name"
+          formControlName="user_name"
+          required
+        />
+        <div
+          *ngIf="
+            loginForm.controls['user_name'].invalid &&
+            loginForm.controls['user_name'].touched
+          "
+          class="error invalid"
+        >
+          User Name is required.
+        </div>
+        <input
+          class="textbox"
+          type="password"
+          placeholder="Password"
+          name=""
+          id="password"
+          formControlName="password"
+          required
+        />
+        <div
+          *ngIf="
+            loginForm.controls['password'].invalid &&
+            loginForm.controls['password'].touched
+          "
+          class="error invalid"
+        >
+          Password is required.
+        </div>
+        <input type="submit" value="Login" (click)="signIn()" />
+      </form>
+    </div>
   </div>
 </div>
 <footer class="mainFooter">&copy; Quizabled</footer>

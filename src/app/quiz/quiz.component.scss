@@ -230,11 +230,7 @@ $blue: #4383ff;
 }
 
 /* instruction */
-.instructionBox {
-    @media (min-width: 960px) {
-        margin-left: 10%;
-        margin-right: 10%;
-    }
+.instructionPage {
     .btnQuizPri {
         display: flex;
         margin-left: auto;

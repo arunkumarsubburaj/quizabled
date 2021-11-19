@@ -612,3 +612,10 @@ div#actionFooter {
 .redText {
   color: #e20000;
 }
+
+.mediumBox {
+  @media (min-width: 960px) {
+      margin-left: 10%;
+      margin-right: 10%;
+  }
+}
