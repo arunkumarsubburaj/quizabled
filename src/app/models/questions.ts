@@ -27,7 +27,7 @@ export interface Question {
   category: string;
   optionId: number | null;
   isActive: string;
-  answer: string;
+  answer: any;
   options: Option[];
   primaryQuestionId: number | null;
   quizType: string;

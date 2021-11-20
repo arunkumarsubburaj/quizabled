@@ -34,6 +34,14 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     { id: 4, itemName: 'Catogory D', name: 'D' },
   ];
   selectedCategories: { id: number; itemName: string; name: string }[] = [];
+  answerList: { id: number; itemName: string; name: string }[] = [];
+  selectedAnswers: { id: number; itemName: string; name: string }[] = [];
+  answerCategories = {
+    enableSearchFilter: false,
+    addNewItemOnFilter: false,
+    singleSelection: true,
+    text: 'Select Answer',
+  };
   settingsCategories = {
     enableSearchFilter: false,
     addNewItemOnFilter: false,
@@ -90,6 +98,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       questionImage: new FormControl(null),
       languageCode: new FormControl(langCode, [Validators.required]),
       category: new FormControl('', [Validators.required]),
+      selectedAnswers: new FormControl(''),
       optionId: new FormControl(null),
       isActive: new FormControl('true'),
       answer: new FormControl(''),
@@ -170,6 +179,19 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     }
     this.parentQuestionArrayIndex++;
   }
+  updateAnswer(event: any, pIndex: number, qIndex: number) {
+    const options: FormArray = this.optionsArray(pIndex, qIndex) as FormArray;
+    const question: FormGroup = this.getQuestions(pIndex, qIndex);
+    for (let oIndex = 0; oIndex < options.length; oIndex++) {
+      const option: FormGroup = options.at(oIndex) as FormGroup;
+      option.get('isAnswer')?.setValue('false');
+      if (oIndex == event.currentTarget.value) {
+        option.get('isAnswer')?.setValue('true');
+        const optionValue = option.get('options')?.value;
+        question.get('answer')?.setValue(optionValue);
+      }
+    }
+  }
   isCategoryValid(): boolean {
     if (this.questionsForm.controls.category.invalid) {
       this.questionsForm.markAllAsTouched();
@@ -209,23 +231,9 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       var childArrayLength = childArray.length;
       for (let childIndex = 0; childIndex < childArrayLength; childIndex++) {
         const questionGroup = childArray.at(childIndex);
-        const optionsArray = questionGroup.get('options') as FormArray;
         console.log('categoryName: ', this.selectedCategories[0]?.name);
         const patchCategory = { category: this.selectedCategories[0]?.name };
         questionGroup.patchValue(patchCategory);
-        var answer = questionGroup.get('answer')?.value;
-        for (
-          let optionIndex = 0;
-          optionIndex < optionsArray.length;
-          optionIndex++
-        ) {
-          const optionGroup = optionsArray.at(optionIndex) as FormGroup;
-          var patchAnswer = { isAnswer: 'false' };
-          if ((optionGroup.get('options') as FormGroup).value === answer) {
-            patchAnswer.isAnswer = 'true';
-          }
-          optionGroup.patchValue(patchAnswer);
-        }
       }
     }
     console.log(responseJson.questionsArray);
@@ -247,14 +255,12 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   resetForm() {
     this.questionsForm.reset();
   }
-  onItemSelect(item: any) {
-    this.selectedCategories.length = 0;
-    this.selectedCategories.push(item);
-    console.log(this.selectedCategories);
-  }
-  OnItemDeSelect(item: any) {
+  onItemSelect(item: any, pqIndex: number, qIndex: number) {
     console.log(item);
-    this.selectedCategories.length = 0;
-    console.log(this.selectedCategories);
+    this.getQuestions(pqIndex, qIndex).get('answer')?.setValue(item.name);
+  }
+  OnItemDeSelect(item: any, pqIndex: number, qIndex: number) {
+    console.log(item);
+    this.getQuestions(pqIndex, qIndex).get('answer')?.setValue('');
   }
 }

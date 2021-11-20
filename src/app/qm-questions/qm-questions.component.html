@@ -136,6 +136,12 @@
                           name=""
                           formControlName="isAnswer"
                         />
+                        <input
+                          type="radio"
+                          name="option_{{ pqIndex }}_{{ qIndex }}"
+                          [value]="oIndex"
+                          (change)="updateAnswer($event, pqIndex, qIndex)"
+                        />
                         <div class="ansOption-item">
                           <input
                             class="textbox"
@@ -173,14 +179,40 @@
                 <div class="correctAns">
                   <label>Answer:</label>
                   <div class="ansOption-item">
-                    <input
+                    <!-- <input
                       class="textbox"
                       type="text"
                       placeholder="Enter Answer"
                       name=""
                       id=""
                       formControlName="answer"
+                    /> -->
+                    <!-- <angular2-multiselect
+                      [data]="categoryList"
+                      [(ngModel)]="selectedCategories"
+                      [settings]="settingsCategories"
+                      formControlName="category"
+                    >
+                    </angular2-multiselect>-->
+                    <input
+                      type="text"
+                      readonly
+                      name="answer"
+                      formControlName="answer"
                     />
+                    <!-- <input
+                      type="hidden"
+                      name="selectedAnswers"
+                      formControlName="selectedAnswers"
+                    /> -->
+                    <!-- <angular2-multiselect
+                      [data]="answerList"
+                      [settings]="answerCategories"
+                      (onOpen)="updateAnswerList($event, pqIndex, qIndex)"
+                      (onSelect)="onItemSelect($event, pqIndex, qIndex)"
+                      (onDeSelect)="OnItemDeSelect($event, pqIndex, qIndex)"
+                    >
+                    </angular2-multiselect> -->
                   </div>
                 </div>
               </ng-container>
