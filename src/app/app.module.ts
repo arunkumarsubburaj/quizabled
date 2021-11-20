@@ -15,24 +15,16 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from 'src/shared/services/auth.service';
 import { AdminComponent } from './admin/admin.component';
-import { InstructionsComponent } from './instructions/instructions.component';
-import { ReviewQuizComponent } from './review-quiz/review-quiz.component';
-import { QuizCategoryComponent } from './quiz-category/quiz-category.component';
-import { QuizResultComponent } from './quiz-result/quiz-result.component';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     ShellComponent,
     HomeComponent,
     LoaderComponent,
     AdminComponent,
     LoginComponent,
-    InstructionsComponent,
-    ReviewQuizComponent,
-    QuizCategoryComponent,
-      QuizResultComponent
-   ],
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

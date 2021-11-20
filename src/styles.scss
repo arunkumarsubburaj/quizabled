@@ -92,6 +92,7 @@ body {
         &:hover {
           background: #666;
           box-shadow: none;
+          cursor: pointer;
         }
       }
     }
@@ -615,7 +616,12 @@ div#actionFooter {
 
 .mediumBox {
   @media (min-width: 960px) {
-      margin-left: 10%;
-      margin-right: 10%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+}
+.cuppa-dropdown {
+  .clear-all {
+    display: none;
   }
 }

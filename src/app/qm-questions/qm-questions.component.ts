@@ -34,8 +34,8 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     { id: 4, itemName: 'Catogory D', name: 'D' },
   ];
   selectedCategories: { id: number; itemName: string; name: string }[] = [];
-  answerList: { id: number; itemName: string; name: string }[] = [];
-  selectedAnswers: { id: number; itemName: string; name: string }[] = [];
+  // answerList: { id: number; itemName: string; name: string }[] = [];
+  // selectedAnswers: { id: number; itemName: string; name: string }[] = [];
   answerCategories = {
     enableSearchFilter: false,
     addNewItemOnFilter: false,
@@ -98,7 +98,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       questionImage: new FormControl(null),
       languageCode: new FormControl(langCode, [Validators.required]),
       category: new FormControl('', [Validators.required]),
-      selectedAnswers: new FormControl(''),
+      // selectedAnswers: new FormControl(''),
       optionId: new FormControl(null),
       isActive: new FormControl('true'),
       answer: new FormControl(''),

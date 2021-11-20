@@ -2,10 +2,21 @@
   <div class="questionBox mediumBox">
     <div class="centerAlign">
       <img src="../../assets/images/quizabled.png" alt="" />
+      <p class="desc"><strong>Please Select Your Language</strong></p>
+      <div>
+        <angular2-multiselect
+          [data]="languageList"
+          [settings]="languageConfig"
+          [(ngModel)]="selectedLanguages"
+        >
+        </angular2-multiselect>
+      </div>
+    </div>
+    <div class="centerAlign">
       <p class="desc"><strong>Please Select Your Category</strong></p>
     </div>
     <div class="quizAnsWrap boxList">
-      <div class="quizAns">
+      <div class="quizAns" (click)="updateCategory('A')">
         <input type="radio" name="chooseCategory" id="categoryA" />
         <label for="categoryA">
           <div class="textbox">
@@ -17,7 +28,7 @@
           </div>
         </label>
       </div>
-      <div class="quizAns">
+      <div class="quizAns" (click)="updateCategory('B')">
         <input type="radio" name="chooseCategory" id="categoryB" />
         <label for="categoryB">
           <div class="textbox">
@@ -29,7 +40,7 @@
           </div>
         </label>
       </div>
-      <div class="quizAns">
+      <div class="quizAns" (click)="updateCategory('C')">
         <input type="radio" name="chooseCategory" id="categoryC" />
         <label for="categoryC">
           <div class="textbox">
@@ -41,7 +52,7 @@
           </div>
         </label>
       </div>
-      <div class="quizAns">
+      <div class="quizAns" (click)="updateCategory('D')">
         <input type="radio" name="chooseCategory" id="categoryD" />
         <label for="categoryD">
           <div class="textbox">
@@ -53,10 +64,6 @@
           </div>
         </label>
       </div>
-    </div>
-    <div class="centerAlign">
-      <p class="desc"><strong>Please Select Your Language</strong></p>
-      <div>Add Language drodown here, will style it</div>
     </div>
   </div>
 </div>

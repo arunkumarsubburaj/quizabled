@@ -5,10 +5,6 @@ import { HomeComponent } from './home/home.component';
 import { ShellComponent } from './shell/shell.component';
 import { AuthGuardService as AuthGuard } from './../shared/services/auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
-import { InstructionsComponent } from './instructions/instructions.component';
-import { QuizCategoryComponent } from './quiz-category/quiz-category.component';
-import { QuizResultComponent } from './quiz-result/quiz-result.component';
-import { ReviewQuizComponent } from './review-quiz/review-quiz.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -55,11 +51,17 @@ const routes: Routes = [
       },
       {
         path: 'instructions',
-        component: InstructionsComponent,
+        loadChildren: () =>
+          import('./instructions/instruction.module').then(
+            (m) => m.InstructionModule
+          ),
       },
       {
         path: 'category',
-        component: QuizCategoryComponent,
+        loadChildren: () =>
+          import('./quiz-category/quiz-category.module').then(
+            (m) => m.QuizCategoryModule
+          ),
       },
       {
         path: 'quiz',
@@ -68,11 +70,17 @@ const routes: Routes = [
       },
       {
         path: 'result',
-        component: QuizResultComponent,
+        loadChildren: () =>
+          import('./quiz-result/quiz-result.module').then(
+            (m) => m.QuizResultModule
+          ),
       },
       {
         path: 'review',
-        component: ReviewQuizComponent,
+        loadChildren: () =>
+          import('./review-quiz/review-quiz.module').then(
+            (m) => m.ReviewQuizModule
+          ),
       },
       { path: '**', redirectTo: '' },
     ],

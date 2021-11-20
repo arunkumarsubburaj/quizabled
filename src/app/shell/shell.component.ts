@@ -16,6 +16,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
     private router: Router
   ) {}
   user: any;
+  isDemoUser: boolean = false;
   ngOnInit() {}
   ngAfterViewInit() {
     if (window.sessionStorage.getItem('userData')) {
@@ -26,13 +27,23 @@ export class ShellComponent implements OnInit, AfterViewInit {
     } else {
       this.isLoggedIn = false;
     }
+    if (window.sessionStorage.getItem('isDemoUser') == 'true') {
+      this.isDemoUser = true;
+    }
   }
   logout() {
     this.router.navigateByUrl('/');
     window.sessionStorage.removeItem('ROLE');
     window.sessionStorage.removeItem('userData');
+    window.sessionStorage.removeItem('isDemoUser');
     this.isLoggedIn = false;
+    this.isDemoUser = false;
     this.loginService.logout();
     this.userService.setUser({});
+  }
+  goToDemo() {
+    window.sessionStorage.setItem('isDemoUser', 'true');
+    this.isDemoUser = true;
+    this.router.navigateByUrl('/instructions');
   }
 }

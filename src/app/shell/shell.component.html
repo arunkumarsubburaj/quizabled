@@ -1,5 +1,5 @@
 <div class="main">
-  <header class="mainHeader" *ngIf="!isLoggedIn">
+  <header class="mainHeader" *ngIf="!isLoggedIn && !isDemoUser">
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
     </a>
@@ -14,9 +14,7 @@
         class="btnView"
         >Register</a
       >
-      <a routerLink="quiz" routerLinkActive="active" class="btnView sec"
-        >Demo</a
-      >
+      <a (click)="goToDemo()" class="btnView sec">Demo</a>
     </nav>
     <div class="sponsor">
       <small>Powered By</small>
@@ -28,13 +26,13 @@
       <div class="logoStep"></div>
     </div>
   </header>
-  <header class="mainHeader" *ngIf="isLoggedIn">
+  <header class="mainHeader" *ngIf="isLoggedIn || isDemoUser">
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
     </a>
     <nav>
       <h5>
-        Welcome, <span>{{ user.user_name }}</span>
+        Welcome, <span>{{ isDemoUser ? "demo user" : user.user_name }}</span>
       </h5>
 
       <div class="spacer"></div>
