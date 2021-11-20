@@ -1,0 +1,67 @@
+/* Category List */
+.boxList {
+  .textbox {
+    padding: 15px;
+    margin-bottom: 20px;
+    background: #ffffff;
+    box-shadow: 0px 4px 15px rgba(24, 24, 24, 0.22);
+    border-radius: 5px;
+    height: auto;
+    border: 0;
+  }
+}
+$blue: #4383ff;
+.quizAns {
+  position: relative;
+  margin-bottom: 20px;
+  @media (min-width: 768px) {
+    flex: 0 0 calc(50% - 40px);
+    max-width: calc(50% - 40px);
+    margin: 0 20px 40px;
+  }
+
+  .zoom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+    cursor: zoom-in;
+  }
+
+  &:hover .zoom {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  label {
+    cursor: pointer;
+    height: 100%;
+    &:hover .textbox {
+      background: rgb(224, 249, 255);
+    }
+  }
+
+  input {
+    display: none;
+
+    &:checked + label .textbox {
+      background: $blue;
+      color: #fff;
+      transition: 0.12s;
+    }
+  }
+}
+.quizAnsWrap {
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+  }
+}

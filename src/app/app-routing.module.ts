@@ -5,6 +5,10 @@ import { HomeComponent } from './home/home.component';
 import { ShellComponent } from './shell/shell.component';
 import { AuthGuardService as AuthGuard } from './../shared/services/auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
+import { InstructionsComponent } from './instructions/instructions.component';
+import { QuizCategoryComponent } from './quiz-category/quiz-category.component';
+import { QuizResultComponent } from './quiz-result/quiz-result.component';
+import { ReviewQuizComponent } from './review-quiz/review-quiz.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -22,11 +26,6 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeComponent,
-      },
-      {
-        path: 'quiz',
-        loadChildren: () =>
-          import('./quiz/quiz.module').then((m) => m.QuizModule),
       },
       {
         path: 'gallery',
@@ -54,6 +53,27 @@ const routes: Routes = [
           ),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'instructions',
+        component: InstructionsComponent,
+      },
+      {
+        path: 'category',
+        component: QuizCategoryComponent,
+      },
+      {
+        path: 'quiz',
+        loadChildren: () =>
+          import('./quiz/quiz.module').then((m) => m.QuizModule),
+      },
+      {
+        path: 'result',
+        component: QuizResultComponent,
+      },
+      {
+        path: 'review',
+        component: ReviewQuizComponent,
+      },
       { path: '**', redirectTo: '' },
     ],
   },
@@ -62,5 +82,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  declarations: [],
 })
 export class AppRoutingModule {}
