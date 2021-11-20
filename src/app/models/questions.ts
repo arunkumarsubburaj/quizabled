@@ -29,10 +29,12 @@ export interface Question {
   isActive: string;
   answer: string;
   options: Option[];
+  primaryQuestionId: number | null;
+  quizType: string;
 }
 
 export interface Questions {
   category: Category[];
   language: Language[];
-  questions: Question[];
+  questionsArray: Question[][];
 }

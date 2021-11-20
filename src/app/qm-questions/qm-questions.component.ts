@@ -26,13 +26,14 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   ) {}
   headerTitle: string = '';
   quizType: number = QuizType.demo;
-  categotyList = [
+  parentQuestionArrayIndex = 0;
+  categoryList: { id: number; itemName: string; name: string }[] = [
     { id: 1, itemName: 'Catogory A', name: 'A' },
     { id: 2, itemName: 'Catogory B', name: 'B' },
     { id: 3, itemName: 'Catogory C', name: 'C' },
     { id: 4, itemName: 'Catogory D', name: 'D' },
   ];
-  selectedCategories = [];
+  selectedCategories: { id: number; itemName: string; name: string }[] = [];
   settingsCategories = {
     enableSearchFilter: false,
     addNewItemOnFilter: false,
@@ -42,15 +43,14 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   languageList = [
     { id: 1, itemName: 'English', name: 'en' },
     { id: 2, itemName: 'Tamil', name: 'tn' },
+    // { id: 3, itemName: 'Kannada', name: 'ka' },
+    // { id: 4, itemName: 'Hindi', name: 'hi' },
     // { id: 3, itemName: 'Telugu', name: 'tl' },
-    { id: 3, itemName: 'Kannada', name: 'ka' },
     // { id: 5, itemName: 'Malayalam', name: 'ma' },
-    { id: 4, itemName: 'Hindi', name: 'hi' },
   ];
   questionsForm = this.fb.group({
     category: new FormControl('', [Validators.required]),
-    language: new FormControl('', [Validators.required]),
-    questions: this.fb.array([]),
+    questionsArray: this.fb.array([]),
   });
   ngOnInit() {}
   ngAfterViewInit() {
@@ -70,8 +70,16 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     });
     this.generateQuestions();
   }
+  parentQuestionsArray(): FormArray {
+    return this.questionsForm.get('questionsArray') as FormArray;
+  }
   questions(): FormArray {
-    return this.questionsForm.get('questions') as FormArray;
+    return this.fb.array([]);
+  }
+  childQuestionsArray(parentQuestionsArrayIndex: number): FormArray {
+    return this.parentQuestionsArray().at(
+      parentQuestionsArrayIndex
+    ) as FormArray;
   }
 
   questionGroup(langIndex: number): FormGroup {
@@ -85,14 +93,41 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       optionId: new FormControl(null),
       isActive: new FormControl('true'),
       answer: new FormControl(''),
-      primaryLangCode: new FormControl(null),
+      primaryQuestionId: new FormControl(null),
       quizType: new FormControl(this.quizType),
       options: this.fb.array([]),
     });
   }
 
-  optionsArray(qIndex: number): FormArray {
-    return this.questions().at(qIndex).get('options') as FormArray;
+  getQuestions(
+    parentQuestionsArrayIndex: number,
+    childQuestionsArrayIndex: number
+  ): FormGroup {
+    return this.childQuestionsArray(parentQuestionsArrayIndex).at(
+      childQuestionsArrayIndex
+    ) as FormGroup;
+  }
+
+  optionsArray(
+    parentQuestionsArrayIndex: number,
+    childQuestionsArrayIndex: number
+  ): FormArray {
+    return this.getQuestions(
+      parentQuestionsArrayIndex,
+      childQuestionsArrayIndex
+    ).get('options') as FormArray;
+  }
+
+  getOption(
+    parentQuestionsArrayIndex: number,
+    childQuestionsArrayIndex: number,
+    optionIndex: number
+  ): FormGroup {
+    const optionsArray: FormArray = this.optionsArray(
+      parentQuestionsArrayIndex,
+      childQuestionsArrayIndex
+    );
+    return optionsArray.at(optionIndex) as FormGroup;
   }
 
   optionGroup(): FormGroup {
@@ -101,53 +136,125 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       options: new FormControl('', [Validators.required]),
       optionImage: new FormControl(''),
       questionId: new FormControl(''),
-      isActive: new FormControl(true),
-      isAnswer: new FormControl(false),
+      isActive: new FormControl('true'),
+      isAnswer: new FormControl('false'),
     });
   }
-
-  addOptions(qIndex: number) {
-    this.optionsArray(qIndex).push(this.optionGroup());
+  addChildQuestionsArray() {
+    this.parentQuestionsArray().push(this.questions());
   }
 
-  addQuestions(languageIndex: number) {
-    this.questions().push(this.questionGroup(languageIndex));
+  addOptions(
+    parentQuestionsArrayIndex: number,
+    childQuestionsArrayIndex: number
+  ) {
+    this.optionsArray(parentQuestionsArrayIndex, childQuestionsArrayIndex).push(
+      this.optionGroup()
+    );
   }
-
-  private generateQuestions() {
+  getQuestionsGroup(
+    parentQuestionArrayIndex: number,
+    questionGroupIndex: number
+  ) {
+    this.childQuestionsArray(parentQuestionArrayIndex).at(questionGroupIndex);
+  }
+  generateQuestions() {
+    this.addChildQuestionsArray();
     for (let question = 0; question < this.languageList.length; question++) {
-      this.addQuestions(question);
+      this.childQuestionsArray(this.parentQuestionArrayIndex).push(
+        this.questionGroup(question)
+      );
       for (let option = 0; option < 4; option++) {
-        this.addOptions(question);
+        this.addOptions(this.parentQuestionArrayIndex, question);
       }
     }
+    this.parentQuestionArrayIndex++;
   }
-  submitForm() {
-    console.log(this.questionsForm.value);
+  isCategoryValid(): boolean {
+    if (this.questionsForm.controls.category.invalid) {
+      this.questionsForm.markAllAsTouched();
+      this.toastrService.error(
+        'Please fill all mandatory fields',
+        'Form Validation Error!!!'
+      );
+      console.log(this.questionsForm.errors);
+      return false;
+    } else {
+      return true;
+    }
+  }
+  isValidForm(): boolean {
+    if (this.questionsForm.invalid) {
+      this.questionsForm.markAllAsTouched();
+      this.toastrService.error(
+        'Please fill all mandatory fields',
+        'Form Validation Error!!!'
+      );
+      console.log(this.questionsForm.errors);
+      return false;
+    } else {
+      return true;
+    }
+  }
+  submitForm(): boolean | void {
+    if (!this.isCategoryValid()) {
+      return false;
+    }
     const responseJson: Questions = this.questionsForm.value;
-    responseJson.questions.forEach((question: Question) => {
-      question.category = responseJson.category[0]?.name;
-      question.options.forEach((option: Option) => {
-        option.isAnswer = (question.answer === option.options).toString();
-        option.isActive = 'true';
-        option.questionId = question.questionId ? question?.questionId : null;
-      });
-    });
-    let finalObject = responseJson.questions.filter(
-      (questionGrp) => questionGrp.question !== ''
-    );
-    console.log(finalObject);
-    this.questionService.uploadQuestions(finalObject).subscribe(
-      (res) => {
-        this.toastrService.success('Questions Added Successfully', 'Success');
-      },
-      (err) => {
-        console.log(err);
-        this.toastrService.error(err, 'Error!!!');
+    var parentArray: FormArray = this.questionsForm.controls
+      .questionsArray as FormArray;
+    var parentArrayLength = parentArray.length;
+    for (let parentIndex = 0; parentIndex < parentArrayLength; parentIndex++) {
+      var childArray = parentArray.at(parentIndex) as FormArray;
+      var childArrayLength = childArray.length;
+      for (let childIndex = 0; childIndex < childArrayLength; childIndex++) {
+        const questionGroup = childArray.at(childIndex);
+        const optionsArray = questionGroup.get('options') as FormArray;
+        console.log('categoryName: ', this.selectedCategories[0]?.name);
+        const patchCategory = { category: this.selectedCategories[0]?.name };
+        questionGroup.patchValue(patchCategory);
+        var answer = questionGroup.get('answer')?.value;
+        for (
+          let optionIndex = 0;
+          optionIndex < optionsArray.length;
+          optionIndex++
+        ) {
+          const optionGroup = optionsArray.at(optionIndex) as FormGroup;
+          var patchAnswer = { isAnswer: 'false' };
+          if ((optionGroup.get('options') as FormGroup).value === answer) {
+            patchAnswer.isAnswer = 'true';
+          }
+          optionGroup.patchValue(patchAnswer);
+        }
       }
-    );
+    }
+    console.log(responseJson.questionsArray);
+    if (!this.isValidForm()) {
+      return false;
+    }
+    responseJson.questionsArray.forEach((questionArray: Question[]) => {
+      this.questionService.uploadQuestions(questionArray).subscribe(
+        (res) => {
+          this.toastrService.success('Questions Added Successfully', 'Success');
+        },
+        (err) => {
+          console.log(err);
+          this.toastrService.error(err.error, 'Error!!!');
+        }
+      );
+    });
   }
   resetForm() {
     this.questionsForm.reset();
+  }
+  onItemSelect(item: any) {
+    this.selectedCategories.length = 0;
+    this.selectedCategories.push(item);
+    console.log(this.selectedCategories);
+  }
+  OnItemDeSelect(item: any) {
+    console.log(item);
+    this.selectedCategories.length = 0;
+    console.log(this.selectedCategories);
   }
 }

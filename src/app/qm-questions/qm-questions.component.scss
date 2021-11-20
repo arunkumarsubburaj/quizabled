@@ -1,75 +1,82 @@
 .filterHeader {
-    padding: 20px 0;
-    margin-bottom: 5vh;
+  padding: 20px 0;
+  margin-bottom: 5vh;
+  .selectLabel {
+    font-size: 2.4rem;
+  }
+  ngx-select-dropdown {
+    min-width: 200px;
+  }
+  @media (max-width: 959px) {
+    text-align: left;
+    > * {
+      margin-bottom: 20px;
+    }
     .selectLabel {
-        font-size: 2.4rem;
+      margin-bottom: 5px;
     }
-    ngx-select-dropdown {
-        min-width: 200px;
+  }
+  @media (min-width: 960px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > * {
+      display: inline-flex;
+      align-items: center;
+      margin: 0 5%;
     }
-    @media (max-width: 959px) {
-        text-align: left;
-        > * {
-            margin-bottom: 20px;
-        }
-        .selectLabel {
-            margin-bottom: 5px;
-        }
+    .selectLabel {
+      margin-right: 20px;
     }
-    @media (min-width: 960px) {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    
-        > * {
-            display: inline-flex;
-            align-items: center;
-            margin: 0 5%;            
-        }
-        .selectLabel {
-            margin-right: 20px;
-        }
-    }
+  }
 }
 
 .questionBox {
-    @media (min-width: 768px) {
-        position: relative;
-        padding: 30px 30px 30px 60px;
-    }
+  @media (min-width: 768px) {
+    position: relative;
+    padding: 30px 30px 30px 60px;
+  }
 }
 .questionSerial {
-    position: absolute;
-    top: 45px;
-    left: 25px;
-    font-size: 3rem;
-    font-weight: 600;
-    display: none;
-    @media (min-width: 768px) {
-        display: block;
-    }
+  position: absolute;
+  top: 45px;
+  left: 25px;
+  font-size: 3rem;
+  font-weight: 600;
+  display: none;
+  @media (min-width: 768px) {
+    display: block;
+  }
 }
 .correctAns {
-    background: #eee;
-    border: 1px solid #aaa;
-    padding: 20px;
-    text-align: left;
+  background: #eee;
+  border: 1px solid #aaa;
+  padding: 20px;
+  text-align: left;
+  > label {
+    font-size: 2.4rem;
+  }
+  .ansOption-item {
+    margin-bottom: 0;
+  }
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
     > label {
-        font-size: 2.4rem;
+      margin-right: 20px;
+      flex-shrink: 0;
     }
     .ansOption-item {
-        margin-bottom: 0;
+      flex: 1 0 auto;
+      max-width: 100%;
     }
-    @media (min-width: 768px) {
-        display: flex;
-        align-items: center;
-        > label {
-            margin-right: 20px;
-            flex-shrink: 0;
-        }
-        .ansOption-item {
-            flex: 1 0 auto;
-            max-width: 100%;
-        }
+  }
+}
+::ng-deep {
+  .cuppa-dropdown {
+    .clear-all {
+      display: none;
     }
+  }
 }
