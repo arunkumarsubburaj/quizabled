@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-quiz-category',
@@ -7,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./quiz-category.component.scss'],
 })
 export class QuizCategoryComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toastrService: ToastrService) {}
   languageList: any = [];
   languageConfig = {};
   selectedLanguages: any = [];
@@ -30,6 +31,29 @@ export class QuizCategoryComponent implements OnInit {
   }
   updateCategory(category: string) {
     window.sessionStorage.setItem('selectedCategory', category);
+  }
+  onItemSelect(eve: any) {
+    console.log(eve);
+    window.sessionStorage.setItem(
+      'selectedLanguage',
+      this.selectedLanguages[0].name
+    );
+  }
+  goToQuiz(): boolean | void {
+    if (
+      window.sessionStorage.getItem('selectedLanguage') == undefined ||
+      (window.sessionStorage.getItem('selectedLanguage') as string)?.length == 0
+    ) {
+      this.toastrService.error('Please select a Language', 'Error');
+      return false;
+    }
+    if (
+      window.sessionStorage.getItem('selectedCategory') == undefined ||
+      (window.sessionStorage.getItem('selectedCategory') as string)?.length == 0
+    ) {
+      this.toastrService.error('Please select a category', 'Error');
+      return false;
+    }
     this.router.navigateByUrl('/quiz');
   }
 }

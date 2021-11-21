@@ -8,6 +8,7 @@
           [data]="languageList"
           [settings]="languageConfig"
           [(ngModel)]="selectedLanguages"
+          (onSelect)="onItemSelect($event)"
         >
         </angular2-multiselect>
       </div>
@@ -65,5 +66,6 @@
         </label>
       </div>
     </div>
+    <button class="btnQuizPri" (click)="goToQuiz()">Start</button>
   </div>
 </div>

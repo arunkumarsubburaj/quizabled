@@ -66,11 +66,11 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       switch (res) {
         case 'demo':
           this.quizType = QuizType.demo;
-          this.headerTitle = 'Add / Update Demo Quiz Questions';
+          this.headerTitle = 'Add Demo Quiz Questions';
           break;
         case 'main':
           this.quizType = QuizType.main;
-          this.headerTitle = 'Add / Update Main Quiz Questions';
+          this.headerTitle = 'Add Main Quiz Questions';
           break;
         default:
           break;

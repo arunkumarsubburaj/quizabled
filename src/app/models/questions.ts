@@ -30,7 +30,7 @@ export interface Question {
   answer: any;
   options: Option[];
   primaryQuestionId: number | null;
-  quizType: string;
+  quizType: number;
 }
 
 export interface Questions {
