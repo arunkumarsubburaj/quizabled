@@ -1,4 +1,4 @@
-import { QuestionService } from './../question.service';
+import { QuizService } from '../quiz.service';
 import { UserService } from './../user.service';
 import { AfterContentInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class QmLandingComponent implements OnInit, AfterContentInit {
   constructor(
     private userService: UserService,
-    private questionService: QuestionService,
+    private quizService: QuizService,
     private router: Router
   ) {}
   user: any;
@@ -26,7 +26,7 @@ export class QmLandingComponent implements OnInit, AfterContentInit {
   gotoQuestions(type: string) {
     switch (type) {
       case 'demo':
-        this.questionService.setQuestionType(type);
+        this.quizService.setQuestionType(type);
         break;
 
       default:

@@ -1,12 +1,12 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import { QuestionService } from './question.service';
+import { QuestionService } from './quiz.service';
 
 describe('Service: Question', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [QuestionService]
+      providers: [QuestionService],
     });
   });
 

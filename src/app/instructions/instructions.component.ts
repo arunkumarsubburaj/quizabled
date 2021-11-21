@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-instructions',
@@ -7,9 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./instructions.component.scss'],
 })
 export class InstructionsComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UserService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.userService.getLoginStatus().subscribe((status) => {
+      if (!status) {
+        this.router.navigateByUrl('/home');
+      }
+    });
+  }
   gotoCategory() {
     this.router.navigateByUrl('/category');
   }

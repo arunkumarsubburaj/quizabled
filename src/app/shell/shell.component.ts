@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login/login.service';
+import { QuizService } from '../quiz.service';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,7 +14,8 @@ export class ShellComponent implements OnInit, AfterViewInit {
   constructor(
     private userService: UserService,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private quizService: QuizService
   ) {}
   user: any;
   isDemoUser: boolean = false;
@@ -36,6 +38,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
     window.sessionStorage.removeItem('ROLE');
     window.sessionStorage.removeItem('userData');
     window.sessionStorage.removeItem('isDemoUser');
+    this.quizService.setDemoSession(false);
     this.isLoggedIn = false;
     this.isDemoUser = false;
     this.loginService.logout();
@@ -43,6 +46,8 @@ export class ShellComponent implements OnInit, AfterViewInit {
   }
   goToDemo() {
     window.sessionStorage.setItem('isDemoUser', 'true');
+    this.quizService.setDemoSession(true);
+    this.userService.setLoginStatus(true);
     this.isDemoUser = true;
     this.router.navigateByUrl('/instructions');
   }

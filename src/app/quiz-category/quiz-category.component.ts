@@ -1,6 +1,8 @@
+import { UserService } from './../user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { QuizService } from '../quiz.service';
 
 @Component({
   selector: 'app-quiz-category',
@@ -8,11 +10,21 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./quiz-category.component.scss'],
 })
 export class QuizCategoryComponent implements OnInit {
-  constructor(private router: Router, private toastrService: ToastrService) {}
+  constructor(
+    private router: Router,
+    private toastrService: ToastrService,
+    private quizService: QuizService,
+    private userService: UserService
+  ) {}
   languageList: any = [];
   languageConfig = {};
   selectedLanguages: any = [];
   ngOnInit() {
+    this.userService.getLoginStatus().subscribe((status) => {
+      if (!status) {
+        this.router.navigateByUrl('/home');
+      }
+    });
     this.languageList = [
       { id: 1, itemName: 'English', name: 'en' },
       { id: 2, itemName: 'Tamil', name: 'tn' },
@@ -31,6 +43,7 @@ export class QuizCategoryComponent implements OnInit {
   }
   updateCategory(category: string) {
     window.sessionStorage.setItem('selectedCategory', category);
+    this.quizService.setCategory(category);
   }
   onItemSelect(eve: any) {
     console.log(eve);
@@ -38,6 +51,7 @@ export class QuizCategoryComponent implements OnInit {
       'selectedLanguage',
       this.selectedLanguages[0].name
     );
+    this.quizService.setLanguage(this.selectedLanguages[0].name);
   }
   goToQuiz(): boolean | void {
     if (

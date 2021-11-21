@@ -30,3 +30,57 @@
     margin-left: 10px;
   }
 }
+
+.certificateBlock {
+  width: 961px;
+  height: 672px;
+  background: #f7f7f7 url("./../../assets/images/certificate.jpeg") no-repeat
+    center center;
+  background-size: 100%;
+  position: relative;
+  margin: 0 auto;
+}
+.certificateContent {
+  position: absolute;
+  top: 350px;
+  left: 130px;
+  right: 130px;
+  font-size: 18px;
+  line-height: 1.8;
+
+  strong {
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-left: 2px;
+    padding-left: 3px;
+    &:after {
+      content: "";
+      position: absolute;
+      top: 25px;
+      left: 0;
+      right: 0;
+      border-bottom: 3px dotted #d0a054;
+    }
+  }
+}
+
+.certificateSignature {
+  position: absolute;
+  top: 535px;
+  right: 105px;
+  padding: 5px;
+  text-align: center;
+  background: #f7f7f7;
+  strong {
+    font-weight: 600;
+    font-size: 20px;
+  }
+  span {
+    font-size: 14px;
+  }
+  > * {
+    display: block;
+  }
+}

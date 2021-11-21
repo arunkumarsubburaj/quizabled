@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         (res: any) => {
           this.toastrService.success('Logged In Successfully.', 'Success');
           this.userService.setUser(res.user);
+          this.userService.setLoginStatus(true);
           window.sessionStorage.setItem('ROLE', res.user.role);
           this.launchLandingPage(res.user.role);
         },
@@ -62,6 +63,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigateByUrl('/admin');
         break;
       case 'STUDENT':
+        this.router.navigateByUrl('/instructions');
         break;
       case 'QUIZ_MASTER':
         this.router.navigateByUrl('/quiz-master');

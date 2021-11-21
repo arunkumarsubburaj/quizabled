@@ -10,6 +10,11 @@ $blue: #4383ff;
 }
 
 .quizWrap {
+  &.questionBox {
+    &.hide {
+      display: none;
+    }
+  }
   .textbox {
     display: flex;
     flex-direction: column;

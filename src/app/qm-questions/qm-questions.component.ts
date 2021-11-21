@@ -1,5 +1,5 @@
 import { ToastrService } from 'ngx-toastr';
-import { QuestionService } from './../question.service';
+import { QuizService } from '../quiz.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -20,7 +20,7 @@ export enum QuizType {
 })
 export class QmQuestionsComponent implements OnInit, AfterViewInit {
   constructor(
-    private questionService: QuestionService,
+    private quizService: QuizService,
     public fb: FormBuilder,
     private toastrService: ToastrService
   ) {}
@@ -62,7 +62,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   });
   ngOnInit() {}
   ngAfterViewInit() {
-    this.questionService.getQuestionType().subscribe((res: any) => {
+    this.quizService.getQuestionType().subscribe((res: any) => {
       switch (res) {
         case 'demo':
           this.quizType = QuizType.demo;
@@ -241,7 +241,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       return false;
     }
     responseJson.questionsArray.forEach((questionArray: Question[]) => {
-      this.questionService.uploadQuestions(questionArray).subscribe(
+      this.quizService.uploadQuestions(questionArray).subscribe(
         (res) => {
           this.toastrService.success('Questions Added Successfully', 'Success');
         },

@@ -2,86 +2,63 @@
 <div class="homeContent pageQuizQuestion">
   <h1 class="centerAlign">Quizzabled: Mock Test</h1>
 
-  <!-- Quiz Question -->
-  <!-- <div class="quizWrap questionBox">
+  <div
+    class="quizWrap questionBox"
+    [ngClass]="{ hide: i == currentIndex }"
+    *ngFor="let questions of primaryQuestionsArray; let i = index"
+  >
     <div class="quizQus">
       <div class="textbox">
         <div>
-          <span>Question <span>1</span>: &nbsp;</span>Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Debitis, harum.
+          <input
+            type="hidden"
+            name="questionId"
+            [value]="questions.questionObj.questionId"
+          />
+          <span
+            >Question <span>{{ i + 1 }}</span
+            >: &nbsp;</span
+          >{{ questions.questionObj.question }}
         </div>
-        <div class="secLang">
-          <span>Question <span>1</span>: &nbsp;</span>Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Debitis, harum.
+        <div class="secLang" *ngIf="secondaryQuestionsArray.length > 0">
+          <span
+            >Question <span>{{ i + 1 }}</span
+            >: &nbsp;</span
+          >{{ secondaryQuestionsArray[i].questionObj.question }}
         </div>
       </div>
     </div>
     <div class="quizAnsWrap">
-      <div class="quizAns">
-        <input type="radio" name="quizAnswer" id="answer1" />
-        <label for="answer1">
+      <div
+        class="quizAns"
+        *ngFor="let option of questions.optionsArray; let j = index"
+      >
+        <input
+          type="radio"
+          [name]="questions.questionObj.questionId"
+          [id]="option.optionId"
+        />
+        <label [for]="option.optionId">
           <div class="textbox">
-            <div>Answer 1</div>
-            <div class="secLang">Answer 1</div>
+            <div>{{ option.options }}</div>
+            <div class="secLang" *ngIf="secondaryQuestionsArray.length > 0">
+              {{ secondaryQuestionsArray[i].optionsArray[j].options }}
+            </div>
+            <img
+              src="../../assets/images/catalyst.jpg"
+              alt=""
+              *ngIf="option.optionImage && option.optionImage.length > 0"
+            />
           </div>
         </label>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizAnswer" id="answer2" />
-        <label for="answer2">
-          <div class="textbox">
-            <div>Answer 2</div>
-            <div class="secLang">Answer 2</div>
-          </div>
-        </label>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizAnswer" id="answer3" />
-        <label for="answer3">
-          <div class="textbox">
-            <div>Answer 3</div>
-            <div class="secLang">Answer 3</div>
-          </div>
-        </label>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizAnswer" id="answer4" />
-        <label for="answer4">
-          <div class="textbox">
-            <div>Answer 4</div>
-            <div class="secLang">Answer 4</div>
-          </div>
-        </label>
-      </div>
-    </div>
-  </div> -->
-
-  <div class="quizWrap questionBox">
-    <div class="quizQus">
-      <div class="textbox">
-        <div>
-          <span>Question <span>1</span>: &nbsp;</span>Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Debitis, harum.
-        </div>
-        <div class="secLang">
-          <span>Question <span>1</span>: &nbsp;</span>Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Debitis, harum.
+        <div
+          class="zoom"
+          *ngIf="option.optionImage && option.optionImage.length > 0"
+        >
+          Click here to Zoom the Image
         </div>
       </div>
-    </div>
-    <div class="quizAnsWrap">
-      <div class="quizAns">
-        <input type="radio" name="quizAnswerImg" id="answer11" />
-        <label for="answer11">
-          <div class="textbox">
-            <div>Answer 1</div>
-            <div class="secLang">Answer 1</div>
-            <img src="../../assets/images/catalyst.jpg" alt="" />
-          </div>
-        </label>
-        <div class="zoom">Click here to Zoom the Image</div>
-      </div>
-      <div class="quizAns">
+      <!-- <div class="quizAns">
         <input type="radio" name="quizAnswerImg" id="answer12" />
         <label for="answer12">
           <div class="textbox">
@@ -108,62 +85,9 @@
             <div class="secLang">Answer 4</div>
           </div>
         </label>
-      </div>
+      </div> -->
     </div>
   </div>
-
-  <!-- <div class="quizWrap questionBox">
-    <div class="quizQus">
-      <div class="textbox">
-        <div>
-          <span>Question <span>1</span>: &nbsp;</span>Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Debitis, harum.
-        </div>
-        <div class="secLang">
-          <span>Question <span>1</span>: &nbsp;</span>Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Debitis, harum.
-        </div>
-      </div>
-    </div>
-    <div class="quizAnsWrap">
-      <div class="quizAns">
-        <input type="radio" name="quizImg" id="answer21" />
-        <label for="answer21">
-          <div class="textbox">
-            <img src="../../assets/images/catalyst.jpg" alt="" />
-          </div>
-        </label>
-        <div class="zoom">Click here to Zoom the Image</div>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizImg" id="answer22" />
-        <label for="answer22">
-          <div class="textbox">
-            <img src="../../assets/images/fouredge.jpg" alt="" />
-          </div>
-        </label>
-        <div class="zoom">Click here to Zoom the Image</div>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizImg" id="answer23" />
-        <label for="answer23">
-          <div class="textbox">
-            <img src="../../assets/images/fouredge.jpg" alt="" />
-          </div>
-        </label>
-        <div class="zoom">Click here to Zoom the Image</div>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizImg" id="answer24" />
-        <label for="answer24">
-          <div class="textbox">
-            <img src="../../assets/images/catalyst.jpg" alt="" />
-          </div>
-        </label>
-        <div class="zoom">Click here to Zoom the Image</div>
-      </div>
-    </div>
-  </div> -->
 
   <!-- make this show(display: flex) hide(display: none)  -->
   <div class="zoomedImg" style="display: none">
@@ -173,31 +97,36 @@
 
   <!-- Next Previous -->
   <div class="navBtnWrap">
-    <button class="btnQuizPri prevBtn">Previous</button>
-    <button class="btnQuizPri nextBtn">Next</button>
+    <button
+      class="btnQuizPri prevBtn"
+      (click)="changeQuestion('prev')"
+      [disabled]="currentIndex == 0"
+    >
+      Previous
+    </button>
+    <button
+      class="btnQuizPri nextBtn"
+      (click)="changeQuestion('next')"
+      *ngIf="currentIndex != primaryQuestionsArray.length - 1"
+    >
+      Next
+    </button>
+    <button
+      class="btnQuizPri nextBtn"
+      (click)="gotoReview()"
+      *ngIf="currentIndex == primaryQuestionsArray.length - 1"
+    >
+      Review
+    </button>
   </div>
 
   <!-- Pagination -->
-  <div class="questionPagination">
-    <div class="active">1</div>
-    <div>2</div>
-    <div>3</div>
-    <div>4</div>
-    <div>5</div>
-    <div>6</div>
-    <div>7</div>
-    <div>8</div>
-    <div>9</div>
-    <div>10</div>
-    <div>11</div>
-    <div>12</div>
-    <div>13</div>
-    <div>14</div>
-    <div>15</div>
-    <div>16</div>
-    <div>17</div>
-    <div>18</div>
-    <div>19</div>
-    <div>20</div>
+  <div class="questionPagination" style="display: none">
+    <div
+      *ngFor="let item of primaryQuestionsArray; let i = index"
+      [ngClass]="{ active: currentIndex == i }"
+    >
+      {{ i + 1 }}
+    </div>
   </div>
 </div>
