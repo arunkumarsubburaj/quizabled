@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main" [class]="fontClass">
   <header class="mainHeader" *ngIf="!isLoggedIn && !isDemoUser">
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
@@ -17,9 +17,18 @@
       <a (click)="goToDemo()" class="btnView sec">Demo</a>
       <div class="fontSizeChange">
         <h4>Adjust Fontsize</h4>
-        <button class="sizeSmall">A-</button>
-        <button class="sizeMedium active">A</button>
-        <button class="sizeLarge">A+</button>
+        <button class="sizeSmall" (click)="changeFont($event, 'small')">
+          A-
+        </button>
+        <button
+          class="sizeMedium active"
+          (click)="changeFont($event, 'default')"
+        >
+          A
+        </button>
+        <button class="sizeLarge" (click)="changeFont($event, 'large')">
+          A+
+        </button>
       </div>
     </nav>
     <div class="sponsor">
@@ -43,6 +52,21 @@
 
       <div class="spacer"></div>
       <a class="btnView logoutBtn" target="_blank" (click)="logout()">Logout</a>
+      <div class="fontSizeChange">
+        <h4>Adjust Fontsize</h4>
+        <button class="sizeSmall" (click)="changeFont($event, 'small')">
+          A-
+        </button>
+        <button
+          class="sizeMedium active"
+          (click)="changeFont($event, 'default')"
+        >
+          A
+        </button>
+        <button class="sizeLarge" (click)="changeFont($event, 'large')">
+          A+
+        </button>
+      </div>
     </nav>
     <div class="sponsor">
       <small>Powered By</small>

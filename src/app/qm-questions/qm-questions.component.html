@@ -41,145 +41,156 @@
               "
             >
               <ng-container [formGroupName]="qIndex">
-                <p class="languageName">
-                  Language: {{ languageList[qIndex].itemName }}
-                </p>
-                <input
-                  type="hidden"
-                  name="questionId"
-                  formControlName="questionId"
-                />
-                <input
-                  type="hidden"
-                  name="languageCode"
-                  formControlName="languageCode"
-                />
-                <input
-                  type="hidden"
-                  name="category"
-                  formControlName="category"
-                />
-                <input
-                  type="hidden"
-                  name="optionId"
-                  formControlName="optionId"
-                />
-                <input
-                  type="hidden"
-                  name="isActive"
-                  formControlName="isActive"
-                />
-                <input
-                  type="hidden"
-                  name="primaryQuestionId"
-                  formControlName="primaryQuestionId"
-                />
-                <input
-                  type="hidden"
-                  name="quizType"
-                  formControlName="quizType"
-                />
-                <div class="posRelative">
+                <div class="qusSet">
+                  <h3 class="languageTitle">
+                    Language: {{ languageList[qIndex].itemName }}
+                  </h3>
                   <input
-                    class="textbox"
-                    type="text"
-                    placeholder="Question"
-                    name=""
-                    id=""
-                    formControlName="question"
+                    type="hidden"
+                    name="questionId"
+                    formControlName="questionId"
                   />
-                  <div
-                    *ngIf="
-                      getQuestions(pqIndex, qIndex).controls['question']
-                        .invalid &&
-                      getQuestions(pqIndex, qIndex).controls['question'].touched
-                    "
-                    class="error invalid"
-                  >
-                    Question is required.
-                  </div>
                   <input
-                    class="imgUpload"
-                    type="file"
-                    name=""
-                    id=""
-                    formControlName="questionImage"
+                    type="hidden"
+                    name="languageCode"
+                    formControlName="languageCode"
                   />
-                </div>
-                <ng-container formArrayName="options">
-                  <div class="ansOptions">
-                    <ng-container
-                      *ngFor="
-                        let optionGroup of optionsArray(pqIndex, qIndex)
-                          .controls;
-                        let oIndex = index
+                  <input
+                    type="hidden"
+                    name="category"
+                    formControlName="category"
+                  />
+                  <input
+                    type="hidden"
+                    name="optionId"
+                    formControlName="optionId"
+                  />
+                  <input
+                    type="hidden"
+                    name="isActive"
+                    formControlName="isActive"
+                  />
+                  <input
+                    type="hidden"
+                    name="primaryQuestionId"
+                    formControlName="primaryQuestionId"
+                  />
+                  <input
+                    type="hidden"
+                    name="quizType"
+                    formControlName="quizType"
+                  />
+                  <div class="posRelative">
+                    <input
+                      class="textbox"
+                      type="text"
+                      placeholder="Question"
+                      name=""
+                      id=""
+                      formControlName="question"
+                    />
+                    <div
+                      *ngIf="
+                        getQuestions(pqIndex, qIndex).controls['question']
+                          .invalid &&
+                        getQuestions(pqIndex, qIndex).controls['question']
+                          .touched
                       "
+                      class="error invalid"
                     >
-                      <ng-container [formGroupName]="oIndex">
-                        <input
-                          type="hidden"
-                          name="optionId"
-                          formControlName="optionId"
-                        />
-                        <input
-                          type="hidden"
-                          name="questionId"
-                          formControlName="questionId"
-                        />
-                        <input
-                          type="hidden"
-                          name="isActive"
-                          formControlName="isActive"
-                        />
-                        <input
-                          type="hidden"
-                          name=""
-                          formControlName="isAnswer"
-                        />
-                        <input
-                          type="radio"
-                          name="option_{{ pqIndex }}_{{ qIndex }}"
-                          [value]="oIndex"
-                          (change)="updateAnswer($event, pqIndex, qIndex)"
-                        />
-                        <div class="ansOption-item">
-                          <input
-                            class="textbox"
-                            type="text"
-                            placeholder="Option {{ oIndex + 1 }}"
-                            name=""
-                            id=""
-                            formControlName="options"
-                          />
-                          <div
-                            *ngIf="
-                              getOption(pqIndex, qIndex, oIndex).controls[
-                                'options'
-                              ].invalid &&
-                              getOption(pqIndex, qIndex, oIndex).controls[
-                                'options'
-                              ].touched
-                            "
-                            class="error invalid"
-                          >
-                            Option is required.
-                          </div>
-                          <input
-                            class="imgUpload"
-                            type="file"
-                            name=""
-                            id=""
-                            formControlName="optionImage"
-                          />
-                        </div>
-                      </ng-container>
-                    </ng-container>
+                      Question is required.
+                    </div>
+                    <input
+                      class="imgUpload"
+                      type="file"
+                      name=""
+                      id=""
+                      formControlName="questionImage"
+                    />
                   </div>
-                </ng-container>
-                <div class="correctAns">
-                  <label>Answer:</label>
-                  <div class="ansOption-item">
-                    <!-- <input
+                  <ng-container formArrayName="options">
+                    <div class="ansOptions">
+                      <ng-container
+                        *ngFor="
+                          let optionGroup of optionsArray(pqIndex, qIndex)
+                            .controls;
+                          let oIndex = index
+                        "
+                      >
+                        <ng-container [formGroupName]="oIndex">
+                          <div class="ansOption-item">
+                            <input
+                              type="hidden"
+                              name="optionId"
+                              formControlName="optionId"
+                            />
+                            <input
+                              type="hidden"
+                              name="questionId"
+                              formControlName="questionId"
+                            />
+                            <input
+                              type="hidden"
+                              name="isActive"
+                              formControlName="isActive"
+                            />
+                            <input
+                              type="hidden"
+                              name=""
+                              formControlName="isAnswer"
+                            />
+                            <input
+                              type="radio"
+                              id="option_{{ pqIndex }}_{{ qIndex }}_{{
+                                oIndex
+                              }}"
+                              name="option_{{ pqIndex }}_{{ qIndex }}"
+                              [value]="oIndex"
+                              (change)="updateAnswer($event, pqIndex, qIndex)"
+                            />
+                            <!-- <div class="ansOption-item"> -->
+                            <label
+                              for="option_{{ pqIndex }}_{{ qIndex }}_{{
+                                oIndex
+                              }}"
+                            ></label>
+                            <input
+                              class="textbox"
+                              type="text"
+                              placeholder="Option {{ oIndex + 1 }}"
+                              name=""
+                              id=""
+                              formControlName="options"
+                            />
+                            <div
+                              *ngIf="
+                                getOption(pqIndex, qIndex, oIndex).controls[
+                                  'options'
+                                ].invalid &&
+                                getOption(pqIndex, qIndex, oIndex).controls[
+                                  'options'
+                                ].touched
+                              "
+                              class="error invalid"
+                            >
+                              Option is required.
+                            </div>
+                            <input
+                              class="imgUpload"
+                              type="file"
+                              name=""
+                              id=""
+                              formControlName="optionImage"
+                            />
+                          </div>
+                        </ng-container>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <div class="correctAns">
+                    <label>Answer:</label>
+                    <div class="ansOption-item">
+                      <!-- <input
                       class="textbox"
                       type="text"
                       placeholder="Enter Answer"
@@ -187,25 +198,26 @@
                       id=""
                       formControlName="answer"
                     /> -->
-                    <!-- <angular2-multiselect
+                      <!-- <angular2-multiselect
                       [data]="categoryList"
                       [(ngModel)]="selectedCategories"
                       [settings]="settingsCategories"
                       formControlName="category"
                     >
                     </angular2-multiselect>-->
-                    <input
-                      type="text"
-                      readonly
-                      name="answer"
-                      formControlName="answer"
-                    />
-                    <!-- <input
+                      <input
+                        class="displayAnswer"
+                        type="text"
+                        readonly
+                        name="answer"
+                        formControlName="answer"
+                      />
+                      <!-- <input
                       type="hidden"
                       name="selectedAnswers"
                       formControlName="selectedAnswers"
                     /> -->
-                    <!-- <angular2-multiselect
+                      <!-- <angular2-multiselect
                       [data]="answerList"
                       [settings]="answerCategories"
                       (onOpen)="updateAnswerList($event, pqIndex, qIndex)"
@@ -213,6 +225,7 @@
                       (onDeSelect)="OnItemDeSelect($event, pqIndex, qIndex)"
                     >
                     </angular2-multiselect> -->
+                    </div>
                   </div>
                 </div>
               </ng-container>

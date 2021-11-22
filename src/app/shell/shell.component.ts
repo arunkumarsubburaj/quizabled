@@ -19,6 +19,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
   ) {}
   user: any;
   isDemoUser: boolean = false;
+  fontClass: string = '';
   ngOnInit() {}
   ngAfterViewInit() {
     if (window.sessionStorage.getItem('userData')) {
@@ -50,5 +51,25 @@ export class ShellComponent implements OnInit, AfterViewInit {
     this.userService.setLoginStatus(true);
     this.isDemoUser = true;
     this.router.navigateByUrl('/instructions');
+  }
+  changeFont(event: MouseEvent, fontSize: string) {
+    switch (fontSize) {
+      case 'small':
+        this.fontClass = 'fsSmall';
+        break;
+      case 'default':
+        this.fontClass = '';
+        break;
+      case 'large':
+        this.fontClass = 'fsLarge';
+        break;
+      default:
+        break;
+    }
+    const fontBtns = document.querySelectorAll('.fontSizeChange button');
+    fontBtns.forEach((fontBtn) => {
+      fontBtn.classList.remove('active');
+    });
+    (event.currentTarget as HTMLButtonElement).classList.add('active');
   }
 }
