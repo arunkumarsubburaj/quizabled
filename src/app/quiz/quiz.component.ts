@@ -19,6 +19,9 @@ export class QuizComponent implements OnInit {
   secondaryQuestionsArray: any = [];
   quizConfig: QuizConfig | {} = {};
   currentIndex: number = 0;
+  isReviewHide: boolean = true;
+  resultArrayObj: any = [];
+  questionAnswered = 0;
   constructor(
     private quizService: QuizService,
     private router: Router,
@@ -91,6 +94,48 @@ export class QuizComponent implements OnInit {
     }
   }
   gotoReview() {
-    this.router.navigateByUrl('/review');
+    this.resultArrayObj.length = 0;
+    this.questionAnswered = 0;
+    var questions = document.querySelectorAll('.quizWrap.questionBox');
+    for (let index = 0; index < questions.length; index++) {
+      const question = questions[index];
+      var selectedOption = question.querySelector(
+        'input.questionNOption:checked'
+      );
+      this.questionAnswered =
+        selectedOption != null
+          ? this.questionAnswered + 1
+          : this.questionAnswered;
+      var questionId = question.querySelector(
+        "input[name='questionId']"
+      ) as HTMLInputElement;
+      var questionEle = question.querySelector(
+        "input[name='question']"
+      ) as HTMLInputElement;
+      var questionNoEle = question.querySelector(
+        "input[name='questionNo']"
+      ) as HTMLInputElement;
+      this.resultArrayObj.push({
+        questionId: questionId.value,
+        question: questionEle.value,
+        selectedOptionId: +(selectedOption?.id as string),
+        selectedValue: selectedOption
+          ? selectedOption.getAttribute('data-selectedValue')
+          : null,
+        questionNo: questionNoEle.value,
+      });
+    }
+    window.sessionStorage.setItem(
+      'resultArrayObj',
+      JSON.stringify(this.resultArrayObj)
+    );
+    this.isReviewHide = false;
+  }
+  gotoQuestion(questionObj: any) {
+    this.currentIndex = questionObj.questionNo - 1;
+    this.isReviewHide = true;
+  }
+  gotoCertify() {
+    this.router.navigateByUrl('/result');
   }
 }

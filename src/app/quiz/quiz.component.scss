@@ -1,6 +1,9 @@
 $blue: #4383ff;
 
 .pageQuizQuestion {
+  &.hide {
+    display: none;
+  }
   .questionPagination {
     @media (min-width: 768px) {
       padding: 0 130px;
@@ -174,6 +177,7 @@ $blue: #4383ff;
     background: #ff8484;
     box-shadow: 0px 4px 15px rgba(24, 24, 24, 0.22);
     border-radius: 5px;
+    cursor: pointer;
     &.active {
       color: $blue;
       background: #fff;
@@ -186,4 +190,54 @@ $blue: #4383ff;
       margin: 0 10px 20px;
     }
   }
+}
+
+/* Review & Submit */
+.pageReview {
+  &.hide {
+    display: none;
+  }
+  .questionPagination {
+    .done {
+      color: #000;
+      background: #92ff4f;
+    }
+    @media (min-width: 768px) {
+      padding: 5vh 10%;
+    }
+  }
+  .btnQuizPri {
+    margin-bottom: 20px;
+  }
+  // .questionPagination {
+  //   display: flex;
+  //   align-items: flex-start;
+  //   justify-content: center;
+  //   flex-wrap: wrap;
+  //   > * {
+  //     width: 40px;
+  //     height: 40px;
+  //     margin: 0 8px 16px;
+  //     display: inline-flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //     font-size: 18px;
+  //     font-weight: 600;
+  //     color: #fff;
+  //     background: #ff8484;
+  //     box-shadow: 0px 4px 15px rgba(24, 24, 24, 0.22);
+  //     border-radius: 5px;
+  //     &.active {
+  //       color: $blue;
+  //       background: #fff;
+  //     }
+  //   }
+  //   @media (min-width: 768px) {
+  //     > * {
+  //       width: 50px;
+  //       height: 50px;
+  //       margin: 0 10px 20px;
+  //     }
+  //   }
+  // }
 }

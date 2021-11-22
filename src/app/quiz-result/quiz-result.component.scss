@@ -39,6 +39,8 @@
   background-size: 100%;
   position: relative;
   margin: 0 auto;
+  margin-bottom: 20px;
+  box-shadow: 3px 0px 31px -1px rgba(0, 0, 0, 0.75);
 }
 .certificateContent {
   position: absolute;
@@ -82,5 +84,16 @@
   }
   > * {
     display: block;
+  }
+}
+@media print {
+  #printHeader {
+    display: none;
+  }
+  #printCertificate {
+    -webkit-print-color-adjust: exact;
+  }
+  @page {
+    size: landscape;
   }
 }

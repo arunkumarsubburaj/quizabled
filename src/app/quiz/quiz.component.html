@@ -1,11 +1,11 @@
 <!-- Questions Page -->
-<div class="homeContent pageQuizQuestion">
+<div class="homeContent pageQuizQuestion" [ngClass]="{ hide: !isReviewHide }">
   <h1 class="centerAlign">Quizzabled: Mock Test</h1>
 
   <div
     class="quizWrap questionBox"
-    [ngClass]="{ hide: i == currentIndex }"
     *ngFor="let questions of primaryQuestionsArray; let i = index"
+    [ngClass]="{ hide: i != currentIndex }"
   >
     <div class="quizQus">
       <div class="textbox">
@@ -15,6 +15,12 @@
             name="questionId"
             [value]="questions.questionObj.questionId"
           />
+          <input
+            type="hidden"
+            name="question"
+            [value]="questions.questionObj.question"
+          />
+          <input type="hidden" name="questionNo" [value]="i + 1" />
           <span
             >Question <span>{{ i + 1 }}</span
             >: &nbsp;</span
@@ -37,6 +43,10 @@
           type="radio"
           [name]="questions.questionObj.questionId"
           [id]="option.optionId"
+          class="questionNOption"
+          [attr.data-selectedValue]="option.options"
+          [attr.data-index]="i + 1"
+          [attr.data-question]="questions.questionObj.question"
         />
         <label [for]="option.optionId">
           <div class="textbox">
@@ -58,34 +68,6 @@
           Click here to Zoom the Image
         </div>
       </div>
-      <!-- <div class="quizAns">
-        <input type="radio" name="quizAnswerImg" id="answer12" />
-        <label for="answer12">
-          <div class="textbox">
-            <div>Answer 2</div>
-            <div class="secLang">Answer 2</div>
-            <img src="../../assets/images/fouredge.jpg" alt="" />
-          </div>
-        </label>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizAnswerImg" id="answer13" />
-        <label for="answer13">
-          <div class="textbox">
-            <div>Answer 3</div>
-            <div class="secLang">Answer 3</div>
-          </div>
-        </label>
-      </div>
-      <div class="quizAns">
-        <input type="radio" name="quizAnswerImg" id="answer14" />
-        <label for="answer14">
-          <div class="textbox">
-            <div>Answer 4</div>
-            <div class="secLang">Answer 4</div>
-          </div>
-        </label>
-      </div> -->
     </div>
   </div>
 
@@ -128,5 +110,37 @@
     >
       {{ i + 1 }}
     </div>
+  </div>
+</div>
+
+<div class="homeContent pageReview" [ngClass]="{ hide: isReviewHide }">
+  <div class="centerAlign">
+    <h1>Review and Submit</h1>
+    <div class="desc">
+      <strong
+        >Once you click the submit buttoln you will not be able to change your
+        answers. So please review and then click submit.</strong
+      >
+    </div>
+    <div class="desc redText">
+      <strong
+        >You have answered&nbsp;<span>{{ questionAnswered }}</span
+        >&nbsp;out of &nbsp;<span>{{ primaryQuestionsArray.length }}</span
+        >&nbsp; questions in this quiz.</strong
+      >
+    </div>
+    <div class="questionPagination">
+      <div
+        *ngFor="let questionObj of resultArrayObj"
+        (click)="gotoQuestion(questionObj)"
+        [ngClass]="{ done: questionObj.selectedValue != null }"
+      >
+        {{ questionObj.questionNo }}
+      </div>
+    </div>
+    <div class="desc redText">
+      <strong>Warning: Submitting is final and cannot be undone.</strong>
+    </div>
+    <button class="btnQuizPri" (click)="gotoCertify()">Submit</button>
   </div>
 </div>

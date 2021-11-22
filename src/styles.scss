@@ -14,6 +14,25 @@ html {
   @media (min-width: 1200px) {
     font-size: 10px;
   }
+
+  .fsSmall {
+    font-size: 7px;
+    @media (min-width: 768px) {
+      font-size: 8px;
+    }
+    @media (min-width: 1200px) {
+      font-size: 9px;
+    }
+  }
+  .fsLarge {
+    font-size: 9px;
+    @media (min-width: 768px) {
+      font-size: 10px;
+    }
+    @media (min-width: 1200px) {
+      font-size: 11px;
+    }
+  }
 }
 
 body {
@@ -173,6 +192,7 @@ body {
   img {
     max-width: 40%;
     margin: 0 auto;
+    max-height: 30vh;
     @media (max-width: 767px) {
       max-width: 80%;
     }
@@ -569,6 +589,36 @@ a {
     flex: 0 0 calc(50% - 15px);
     max-width: calc(50% - 15px);
   }
+  input[type="radio"] {
+    display: none;
+    & + label {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      position: absolute;
+      top: 25px;
+      left: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border: 2px solid #ccc;
+
+      &:before {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: $blue;
+        opacity: 0;
+        transition: 0.2s;
+      }
+    }
+
+    &:checked + label:before {
+      opacity: 1;
+    }
+  }
   .textbox {
     margin-bottom: 0;
     padding-right: 100px;
@@ -597,9 +647,9 @@ div#actionFooter {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px 0;
+  margin: 20px 0 30px;
   > button {
-    margin: 0 20px;
+    margin: 0 12px;
   }
 }
 .desc {
@@ -624,8 +674,23 @@ div#actionFooter {
     margin-right: 10%;
   }
 }
+
+/* Select */
+.selectTitle {
+  font-weight: 600;
+  font-size: 2rem;
+}
+.selected-list .c-btn {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
 .cuppa-dropdown {
+  min-width: 200px;
   .clear-all {
     display: none;
+  }
+  .pure-checkbox input[type="checkbox"] + label {
+    font-size: 1.6rem;
+    font-weight: 600;
   }
 }

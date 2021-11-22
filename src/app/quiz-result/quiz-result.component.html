@@ -1,43 +1,5 @@
-<!-- <div class="homeContent pageReview">
-  <div class="centerAlign">
-    <h1>Quizzabled Result</h1>
-    <div class="desc">
-      <strong
-        >Congragulations you have completed the quiz. Here are your
-        results:</strong
-      >
-    </div>
-    <div class="desc"><strong class="bigSize">16</strong>/<span>20</span></div>
-    <div class="desc">
-      Completed on <strong>7/9/21</strong> at <strong>12:30pm</strong> in
-      <strong>2 mins 12 secs</strong>
-    </div>
-    <div class="resultBtnWrap">
-      <button class="btnQuizPri">Print Certificate</button>
-      <button class="btnQuizPri">Give Feedback</button>
-    </div>
-  </div>
-
-  <div class="certificateWrap">
-    <div class="certificateHeader">
-      <img src="../../assets/images/sia.png" alt="" />
-      <div>
-        <img src="../../assets/images/lti.png" alt="" />
-        <img src="../../assets/images/onestep.png" alt="" />
-      </div>
-    </div>
-    <div class="centerAlign">
-      <h1>Certificate of Participation</h1>
-      <div class="desc">
-        This is to certify that MOCK PARTICIPANT representing Example School has
-        participapted in and completed Quizzabled: Mock Test on 07/09/2021.
-      </div>
-      <div>Mr. B.V. Rajasehekara Reddy<br />Secretary, Seva in Action</div>
-    </div>
-  </div>
-</div> -->
 <div class="homeContent pageReview">
-  <div class="centerAlign">
+  <div class="centerAlign" id="printHeader">
     <h1>Quizzabled Result</h1>
     <div class="desc">
       <strong
@@ -45,23 +7,29 @@
         results:</strong
       >
     </div>
-    <div class="desc"><strong class="bigSize">16</strong>/<span>20</span></div>
     <div class="desc">
-      Completed on <strong>7/9/21</strong> at <strong>12:30pm</strong> in
+      <strong class="bigSize">{{ questionsAnswered }}</strong
+      >/<span>{{ totalQuestions }}</span>
+    </div>
+    <div class="desc">
+      Completed on <strong>{{ currentDate | date: "fullDate" }}</strong> at
+      <strong>{{ currentDate | date: "shortTime" }}</strong> in
       <strong>2 mins 12 secs</strong>
     </div>
     <div class="resultBtnWrap">
       <button class="btnQuizPri" (click)="printCertificate()">
         Print Certificate
       </button>
-      <button class="btnQuizPri">Give Feedback</button>
+      <button class="btnQuizPri" disabled>Give Feedback</button>
     </div>
   </div>
   <div class="certificateBlock" id="printCertificate">
     <div class="certificateContent">
       This is to certify that
-      <strong style="width: 520px">MOCK PARTICIPANT</strong> <br />representing
-      <strong style="width: 580px">Example School</strong><br />
+      <strong style="width: 520px">{{ participantName }}</strong>
+      <br />representing
+      <strong style="width: 580px">{{ participantInstitution }}</strong
+      ><br />
       has participapted in and completed Quizzabled: Mock Test on 07/09/2021.
     </div>
     <div class="certificateSignature">

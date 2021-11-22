@@ -35,7 +35,7 @@
               "./node_modules/ngx-lightbox/lightbox.css",
               "node_modules/angular2-multiselect-dropdown/themes/default.theme.css"
             ],
-            "scripts": ["node_modules/html2pdf.js/dist/html2pdf.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {
