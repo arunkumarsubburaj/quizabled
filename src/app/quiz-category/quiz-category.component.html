@@ -13,10 +13,10 @@
         </angular2-multiselect>
       </div>
     </div>
-    <div class="centerAlign">
+    <div class="centerAlign" *ngIf="!user.q_category">
       <p class="desc"><strong>Please Select Your Category</strong></p>
     </div>
-    <div class="quizAnsWrap boxList">
+    <div class="quizAnsWrap boxList" *ngIf="!user.q_category">
       <div class="quizAns" (click)="updateCategory('A')">
         <input type="radio" name="chooseCategory" id="categoryA" />
         <label for="categoryA">

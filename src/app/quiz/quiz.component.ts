@@ -174,13 +174,17 @@ export class QuizComponent implements OnInit {
     var seconds: number = +((millis % 60000) / 1000).toFixed(0);
     return `${minutes} mins ${seconds < 10 ? '0' : ''}${seconds} secs `;
   }
-  getImage(imageObj: any) {
+  getImage(imageObj: any, isOption?: boolean) {
     console.log(`${environment.imagePath}/${imageObj.questionImage}`);
-    return `${environment.imagePath}/${imageObj.questionImage}`;
+    return `${environment.imagePath}/${
+      isOption ? imageObj.optionImage : imageObj.questionImage
+    }`;
   }
-  expand(imageObj: any) {
+  expand(imageObj: any, isOption?: boolean) {
     const zoomedImg = document.querySelector('.zoomedImg');
-    const imaggePath = `${environment.imagePath}/${imageObj.questionImage}`;
+    const imaggePath = `${environment.imagePath}/${
+      isOption ? imageObj.optionImage : imageObj.questionImage
+    }`;
     zoomedImg?.querySelector('img')?.setAttribute('src', imaggePath);
     zoomedImg?.classList.add('show');
   }

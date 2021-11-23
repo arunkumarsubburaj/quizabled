@@ -98,11 +98,10 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     const langCode = this.languageList[langIndex].name;
     return this.fb.group({
       questionId: new FormControl(null),
-      question: new FormControl('', [Validators.required]),
-      questionImage: new FormControl(null),
+      question: new FormControl(''),
+      questionImage: new FormControl(''),
       languageCode: new FormControl(langCode, [Validators.required]),
       category: new FormControl('', [Validators.required]),
-      // selectedAnswers: new FormControl(''),
       optionId: new FormControl(null),
       isActive: new FormControl('true'),
       answer: new FormControl(''),
@@ -146,9 +145,9 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   optionGroup(): FormGroup {
     return this.fb.group({
       optionId: new FormControl(null),
-      options: new FormControl('', [Validators.required]),
+      options: new FormControl(''),
       optionImage: new FormControl(''),
-      questionId: new FormControl(''),
+      questionId: new FormControl(null),
       isActive: new FormControl('true'),
       isAnswer: new FormControl('false'),
     });
@@ -196,6 +195,36 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       }
     }
   }
+  validateQuestionNOptions(): boolean {
+    const questionFormObj = this.questionsForm.value;
+    const questionsArray = questionFormObj.questionsArray[0];
+    let isValid = true;
+    for (let qIndex = 0; qIndex < questionsArray.length; qIndex++) {
+      const questionObj: Question = questionsArray[qIndex];
+      if (!questionObj.questionImage && !questionObj.question) {
+        this.toastrService.error(
+          'Either question or question Image should not be empty',
+          'Form Validation Error!!!'
+        );
+        isValid = false;
+        return false;
+      }
+      const optionArray = questionObj.options;
+      for (let oIndex = 0; oIndex < optionArray.length; oIndex++) {
+        const optionObj: Option = optionArray[oIndex];
+        if (!optionObj.optionImage && !optionObj.options) {
+          this.toastrService.error(
+            'Either option or option Image should not be empty',
+            'Form Validation Error!!!'
+          );
+          isValid = false;
+          return false;
+        }
+      }
+    }
+    console.log(isValid);
+    return isValid;
+  }
   isCategoryValid(): boolean {
     if (this.questionsForm.controls.category.invalid) {
       this.questionsForm.markAllAsTouched();
@@ -228,6 +257,9 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     }
     const responseJson: Questions = this.questionsForm.value;
     this.updateFormValues();
+    if (!this.validateQuestionNOptions()) {
+      return false;
+    }
     console.log(responseJson.questionsArray);
     if (!this.isValidForm()) {
       return false;
@@ -236,8 +268,10 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       this.quizService.uploadQuestions(questionArray).subscribe(
         (res) => {
           this.toastrService.success('Questions Added Successfully', 'Success');
-          this.questionsForm.reset();
+          this.questionsForm.controls.questionsArray.reset();
+          this.resetImage();
           this.resetRadioButtons();
+          this.setDefaults();
         },
         (err) => {
           console.log(err);
@@ -268,7 +302,8 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     }
   }
   resetForm() {
-    this.questionsForm.reset();
+    this.questionsForm.controls.questionsArray.reset();
+    this.resetImage();
     this.resetRadioButtons();
     this.router.navigateByUrl('/quiz-master');
   }
@@ -294,14 +329,10 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       return;
     }
     this.quizService.uploadImage(file).subscribe((res) => {
-      console.log(res);
       if (imageType == 'qn') {
         const questionElements = Array.from(
           document.querySelectorAll('.questionImage')
         );
-        // const qnHiddenImages = Array.from(
-        //   document.querySelectorAll('.qnHiddenImage')
-        // );
         questionElements.forEach((questionElement: any, i: number) => {
           questionElement.style.backgroundImage = `url('${
             environment.imagePath + '/' + (res as ImageUploadResponse).filename
@@ -310,32 +341,62 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
             (res as ImageUploadResponse).filename
           );
         });
-        // qnHiddenImages.forEach((questionImageElement: any) => {
-        //   questionImageElement.value = (res as ImageUploadResponse).filename;
-        // });
       } else {
-        const optionElements = Array.from(
-          document.querySelectorAll('.optionImage')
-        );
-        const optionHiddenImages = Array.from(
-          document.querySelectorAll('.optionHiddenImage')
-        );
-        (
-          optionElements[optionIndex as number] as HTMLInputElement
-        ).style.backgroundImage = `url('${
-          environment.imagePath + '/' + (res as ImageUploadResponse).filename
-        }')`;
-        (
-          optionElements[(optionIndex as number) + 4] as HTMLInputElement
-        ).style.backgroundImage = `url('${
-          environment.imagePath + '/' + (res as ImageUploadResponse).filename
-        }')`;
-        (optionHiddenImages[optionIndex as number] as HTMLInputElement).value =
-          (res as ImageUploadResponse).filename;
-        (
-          optionHiddenImages[(optionIndex as number) + 4] as HTMLInputElement
-        ).value = (res as ImageUploadResponse).filename;
+        const queArray = Array.from(document.querySelectorAll('.ansOptions'));
+        queArray.forEach((queEle, qIndex) => {
+          const optionArrayEle = queEle.querySelectorAll('.imgUpload');
+          (
+            optionArrayEle[optionIndex as number] as HTMLElement
+          ).style.backgroundImage = `url('${
+            environment.imagePath + '/' + (res as ImageUploadResponse).filename
+          }')`;
+          this.getOption(0, qIndex, optionIndex as number).controls[
+            'optionImage'
+          ].setValue((res as ImageUploadResponse).filename);
+        });
       }
     });
+  }
+  setDefaults() {
+    const questionsArray = (
+      this.questionsForm.controls.questionsArray as FormArray
+    ).at(0) as FormArray;
+    for (let qIndex = 0; qIndex < questionsArray.length; qIndex++) {
+      const questionObj = questionsArray.at(qIndex) as FormGroup;
+      const langCode = this.languageList[qIndex].name;
+      const patchValue: Partial<Question> = {
+        answer: '',
+        category: this.selectedCategories[0]?.name,
+        isActive: 'true',
+        languageCode: langCode,
+        optionId: null,
+        primaryQuestionId: null,
+        question: '',
+        questionId: null,
+        questionImage: '',
+        quizType: this.quizType,
+      };
+      questionObj.patchValue(patchValue);
+      const optionsArray = questionObj.controls.options as FormArray;
+      for (let oIndex = 0; oIndex < optionsArray.length; oIndex++) {
+        const optionObj = optionsArray.at(oIndex) as FormGroup;
+        const optionPatchValue: Partial<Option> = {
+          isActive: 'true',
+          isAnswer: 'false',
+          optionId: null,
+          optionImage: '',
+          options: '',
+          questionId: null,
+        };
+        optionObj.patchValue(optionPatchValue);
+      }
+    }
+  }
+  resetImage() {
+    const imageArray = document.querySelectorAll('.imgUpload');
+    for (let index = 0; index < imageArray.length; index++) {
+      const image: any = imageArray[index];
+      image.style.backgroundImage = '';
+    }
   }
 }

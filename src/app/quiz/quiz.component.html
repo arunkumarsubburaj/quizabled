@@ -79,16 +79,16 @@
               {{ secondaryQuestionsArray[i].optionsArray[j].options }}
             </div>
             <img
-              *ngIf="option.questionImage && option.questionImage.length > 0"
-              [src]="getImage(option)"
+              *ngIf="option.optionImage && option.optionImage.length > 0"
+              [src]="getImage(option, true)"
               alt=""
             />
           </div>
         </label>
         <div
-          *ngIf="option.questionImage && option.questionImage.length > 0"
+          *ngIf="option.optionImage && option.optionImage.length > 0"
           class="zoom"
-          (click)="expand(option)"
+          (click)="expand(option, true)"
         >
           Click here to Zoom the Image
         </div>

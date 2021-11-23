@@ -17,20 +17,29 @@
       <strong>{{ timeTaken }}</strong>
     </div>
     <div class="resultBtnWrap">
-      <button class="btnQuizPri" (click)="printCertificate()">
+      <button
+        class="btnQuizPri"
+        (click)="printCertificate()"
+        *ngIf="user.role != 'DEMO'"
+      >
         Print Certificate
       </button>
       <button class="btnQuizPri" disabled>Give Feedback</button>
     </div>
   </div>
-  <div class="certificateBlock" id="printCertificate">
+  <div
+    class="certificateBlock"
+    id="printCertificate"
+    *ngIf="user.role != 'DEMO'"
+  >
     <div class="certificateContent">
       This is to certify that
       <strong style="width: 520px">{{ participantName }}</strong>
       <br />representing
       <strong style="width: 580px">{{ participantInstitution }}</strong
       ><br />
-      has participapted in and completed Quizzabled: Mock Test on 07/09/2021.
+      has participapted in and completed Quizzabled:2021-21 on
+      {{ currentDate | date: "longDate" }}.
     </div>
     <div class="certificateSignature">
       <strong>B.V. Rajasehekara Reddy</strong

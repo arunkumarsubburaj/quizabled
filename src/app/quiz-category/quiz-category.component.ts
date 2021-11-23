@@ -15,7 +15,12 @@ export class QuizCategoryComponent implements OnInit {
     private toastrService: ToastrService,
     private quizService: QuizService,
     private userService: UserService
-  ) {}
+  ) {
+    this.userService.getUser().subscribe((res) => {
+      this.user = res;
+    });
+  }
+  user: any;
   languageList: any = [];
   languageConfig = {};
   selectedLanguages: any = [];
@@ -60,6 +65,10 @@ export class QuizCategoryComponent implements OnInit {
     ) {
       this.toastrService.error('Please select a Language', 'Error');
       return false;
+    }
+    if (this.user && this.user.q_category) {
+      window.sessionStorage.setItem('selectedCategory', this.user.q_category);
+      this.quizService.setCategory(this.user.q_category);
     }
     if (
       window.sessionStorage.getItem('selectedCategory') == undefined ||
