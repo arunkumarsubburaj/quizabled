@@ -14,7 +14,7 @@
     <div class="desc">
       Completed on <strong>{{ currentDate | date: "fullDate" }}</strong> at
       <strong>{{ currentDate | date: "shortTime" }}</strong> in
-      <strong>2 mins 12 secs</strong>
+      <strong>{{ timeTaken }}</strong>
     </div>
     <div class="resultBtnWrap">
       <button class="btnQuizPri" (click)="printCertificate()">

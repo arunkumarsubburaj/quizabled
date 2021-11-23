@@ -1,7 +1,13 @@
 <!-- Questions Page -->
 <div class="homeContent pageQuizQuestion" [ngClass]="{ hide: !isReviewHide }">
   <h1 class="centerAlign">Quizzabled: Mock Test</h1>
-
+  <div id="timer">
+    <countdown
+      #cd
+      [config]="countDownConfig"
+      (event)="handleCounterEvent($event)"
+    ></countdown>
+  </div>
   <div
     class="quizWrap questionBox"
     *ngFor="let questions of primaryQuestionsArray; let i = index"
@@ -32,6 +38,24 @@
             >: &nbsp;</span
           >{{ secondaryQuestionsArray[i].questionObj.question }}
         </div>
+        <img
+          *ngIf="
+            questions.questionObj.questionImage &&
+            questions.questionObj.questionImage.length > 0
+          "
+          [src]="getImage(questions.questionObj)"
+          alt=""
+        />
+        <div
+          class="zoom"
+          *ngIf="
+            questions.questionObj.questionImage &&
+            questions.questionObj.questionImage.length > 0
+          "
+          (click)="expand(questions.questionObj)"
+        >
+          Click here to Zoom the Image
+        </div>
       </div>
     </div>
     <div class="quizAnsWrap">
@@ -55,15 +79,16 @@
               {{ secondaryQuestionsArray[i].optionsArray[j].options }}
             </div>
             <img
-              src="../../assets/images/catalyst.jpg"
+              *ngIf="option.questionImage && option.questionImage.length > 0"
+              [src]="getImage(option)"
               alt=""
-              *ngIf="option.optionImage && option.optionImage.length > 0"
             />
           </div>
         </label>
         <div
+          *ngIf="option.questionImage && option.questionImage.length > 0"
           class="zoom"
-          *ngIf="option.optionImage && option.optionImage.length > 0"
+          (click)="expand(option)"
         >
           Click here to Zoom the Image
         </div>
@@ -72,9 +97,11 @@
   </div>
 
   <!-- make this show(display: flex) hide(display: none)  -->
-  <div class="zoomedImg" style="display: none">
-    <button class="btnQuizPri"><span>&times;</span> Close</button>
-    <img src="../../assets/images/fouredge.jpg" alt="" />
+  <div class="zoomedImg">
+    <button class="btnQuizPri" (click)="collapseImage()">
+      <span>&times;</span> Close
+    </button>
+    <img alt="" />
   </div>
 
   <!-- Next Previous -->
@@ -103,7 +130,7 @@
   </div>
 
   <!-- Pagination -->
-  <div class="questionPagination" style="display: none">
+  <div class="questionPagination">
     <div
       *ngFor="let item of primaryQuestionsArray; let i = index"
       [ngClass]="{ active: currentIndex == i }"

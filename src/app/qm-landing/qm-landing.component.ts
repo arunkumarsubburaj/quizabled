@@ -24,14 +24,7 @@ export class QmLandingComponent implements OnInit, AfterContentInit {
     }
   }
   gotoQuestions(type: string) {
-    switch (type) {
-      case 'demo':
-        this.quizService.setQuestionType(type);
-        break;
-
-      default:
-        break;
-    }
+    this.quizService.setQuestionType(type);
     this.router.navigateByUrl('/add-questions');
   }
 }

@@ -36,9 +36,11 @@ export class ShellComponent implements OnInit, AfterViewInit {
   }
   logout() {
     this.router.navigateByUrl('/');
-    window.sessionStorage.removeItem('ROLE');
-    window.sessionStorage.removeItem('userData');
-    window.sessionStorage.removeItem('isDemoUser');
+    var n = sessionStorage.length;
+    while (n--) {
+      var key: string = sessionStorage.key(n) as string;
+      sessionStorage.removeItem(key);
+    }
     this.quizService.setDemoSession(false);
     this.isLoggedIn = false;
     this.isDemoUser = false;
@@ -53,23 +55,25 @@ export class ShellComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl('/instructions');
   }
   changeFont(event: MouseEvent, fontSize: string) {
-    switch (fontSize) {
-      case 'small':
-        this.fontClass = 'fsSmall';
-        break;
-      case 'default':
-        this.fontClass = '';
-        break;
-      case 'large':
-        this.fontClass = 'fsLarge';
-        break;
-      default:
-        break;
-    }
     const fontBtns = document.querySelectorAll('.fontSizeChange button');
+    const htmlEle: any = document.querySelector('html');
+    htmlEle.classList.remove('fsSmall');
+    htmlEle.classList.remove('fsLarge');
     fontBtns.forEach((fontBtn) => {
       fontBtn.classList.remove('active');
     });
     (event.currentTarget as HTMLButtonElement).classList.add('active');
+    switch (fontSize) {
+      case 'small':
+        htmlEle.classList.add('fsSmall');
+        break;
+      case 'default':
+        break;
+      case 'large':
+        htmlEle.classList.add('fsLarge');
+        break;
+      default:
+        break;
+    }
   }
 }

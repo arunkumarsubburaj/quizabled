@@ -9,6 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Option, Question, Questions } from '../models/questions';
+import { Router } from '@angular/router';
+import { ImageUploadResponse } from '../models/quiz';
+import { environment } from 'src/environments/environment';
 export enum QuizType {
   'demo' = 1,
   'main' = 2,
@@ -22,7 +25,8 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   constructor(
     private quizService: QuizService,
     public fb: FormBuilder,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private router: Router
   ) {}
   headerTitle: string = '';
   quizType: number = QuizType.demo;
@@ -223,19 +227,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       return false;
     }
     const responseJson: Questions = this.questionsForm.value;
-    var parentArray: FormArray = this.questionsForm.controls
-      .questionsArray as FormArray;
-    var parentArrayLength = parentArray.length;
-    for (let parentIndex = 0; parentIndex < parentArrayLength; parentIndex++) {
-      var childArray = parentArray.at(parentIndex) as FormArray;
-      var childArrayLength = childArray.length;
-      for (let childIndex = 0; childIndex < childArrayLength; childIndex++) {
-        const questionGroup = childArray.at(childIndex);
-        console.log('categoryName: ', this.selectedCategories[0]?.name);
-        const patchCategory = { category: this.selectedCategories[0]?.name };
-        questionGroup.patchValue(patchCategory);
-      }
-    }
+    this.updateFormValues();
     console.log(responseJson.questionsArray);
     if (!this.isValidForm()) {
       return false;
@@ -244,6 +236,8 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       this.quizService.uploadQuestions(questionArray).subscribe(
         (res) => {
           this.toastrService.success('Questions Added Successfully', 'Success');
+          this.questionsForm.reset();
+          this.resetRadioButtons();
         },
         (err) => {
           console.log(err);
@@ -252,8 +246,39 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       );
     });
   }
+  updateFormValues() {
+    var parentArray: FormArray = this.questionsForm.controls
+      .questionsArray as FormArray;
+    var parentArrayLength = parentArray.length;
+    for (let parentIndex = 0; parentIndex < parentArrayLength; parentIndex++) {
+      var childArray = parentArray.at(parentIndex) as FormArray;
+      var childArrayLength = childArray.length;
+      for (let childIndex = 0; childIndex < childArrayLength; childIndex++) {
+        const langCode = this.languageList[childIndex].name;
+        const questionGroup = childArray.at(childIndex);
+        console.log('categoryName: ', this.selectedCategories[0]?.name);
+        const patchValues = {
+          category: this.selectedCategories[0]?.name,
+          isActive: 'true',
+          languageCode: langCode,
+          quizType: this.quizType,
+        };
+        questionGroup.patchValue(patchValues);
+      }
+    }
+  }
   resetForm() {
     this.questionsForm.reset();
+    this.resetRadioButtons();
+    this.router.navigateByUrl('/quiz-master');
+  }
+  resetRadioButtons() {
+    const checkedItems = document.querySelectorAll(
+      '.ansOptions input[type="radio"]:checked'
+    );
+    checkedItems.forEach((radioElement: any) => {
+      radioElement.checked = false;
+    });
   }
   onItemSelect(item: any, pqIndex: number, qIndex: number) {
     console.log(item);
@@ -262,5 +287,55 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   OnItemDeSelect(item: any, pqIndex: number, qIndex: number) {
     console.log(item);
     this.getQuestions(pqIndex, qIndex).get('answer')?.setValue('');
+  }
+  uploadImage(event: any, imageType: string, optionIndex?: number) {
+    const file = event.currentTarget.files[0];
+    if (!file.type.startsWith('image/')) {
+      return;
+    }
+    this.quizService.uploadImage(file).subscribe((res) => {
+      console.log(res);
+      if (imageType == 'qn') {
+        const questionElements = Array.from(
+          document.querySelectorAll('.questionImage')
+        );
+        // const qnHiddenImages = Array.from(
+        //   document.querySelectorAll('.qnHiddenImage')
+        // );
+        questionElements.forEach((questionElement: any, i: number) => {
+          questionElement.style.backgroundImage = `url('${
+            environment.imagePath + '/' + (res as ImageUploadResponse).filename
+          }')`;
+          this.getQuestions(0, i).controls['questionImage'].setValue(
+            (res as ImageUploadResponse).filename
+          );
+        });
+        // qnHiddenImages.forEach((questionImageElement: any) => {
+        //   questionImageElement.value = (res as ImageUploadResponse).filename;
+        // });
+      } else {
+        const optionElements = Array.from(
+          document.querySelectorAll('.optionImage')
+        );
+        const optionHiddenImages = Array.from(
+          document.querySelectorAll('.optionHiddenImage')
+        );
+        (
+          optionElements[optionIndex as number] as HTMLInputElement
+        ).style.backgroundImage = `url('${
+          environment.imagePath + '/' + (res as ImageUploadResponse).filename
+        }')`;
+        (
+          optionElements[(optionIndex as number) + 4] as HTMLInputElement
+        ).style.backgroundImage = `url('${
+          environment.imagePath + '/' + (res as ImageUploadResponse).filename
+        }')`;
+        (optionHiddenImages[optionIndex as number] as HTMLInputElement).value =
+          (res as ImageUploadResponse).filename;
+        (
+          optionHiddenImages[(optionIndex as number) + 4] as HTMLInputElement
+        ).value = (res as ImageUploadResponse).filename;
+      }
+    });
   }
 }

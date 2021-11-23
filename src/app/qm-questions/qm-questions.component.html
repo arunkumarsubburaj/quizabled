@@ -101,12 +101,24 @@
                       Question is required.
                     </div>
                     <input
-                      class="imgUpload"
+                      type="hidden"
+                      class="qnHiddenImage"
+                      formControlName="questionImage"
+                    />
+                    <input
+                      class="imgUpload questionImage"
                       type="file"
                       name=""
                       id=""
-                      formControlName="questionImage"
+                      *ngIf="qIndex == 0"
+                      (change)="uploadImage($event, 'qn')"
                     />
+                    <div
+                      class="imgUpload questionImage"
+                      name=""
+                      id=""
+                      *ngIf="qIndex != 0"
+                    ></div>
                   </div>
                   <ng-container formArrayName="options">
                     <div class="ansOptions">
@@ -176,12 +188,24 @@
                               Option is required.
                             </div>
                             <input
-                              class="imgUpload"
+                              type="hidden"
+                              class="optionHiddenImage"
+                              formControlName="optionImage"
+                            />
+                            <input
+                              class="imgUpload optionImage"
                               type="file"
                               name=""
                               id=""
-                              formControlName="optionImage"
+                              *ngIf="qIndex == 0"
+                              (change)="uploadImage($event, 'op', oIndex)"
                             />
+                            <div
+                              class="imgUpload optionImage"
+                              name=""
+                              id=""
+                              *ngIf="qIndex != 0"
+                            ></div>
                           </div>
                         </ng-container>
                       </ng-container>
@@ -212,19 +236,6 @@
                         name="answer"
                         formControlName="answer"
                       />
-                      <!-- <input
-                      type="hidden"
-                      name="selectedAnswers"
-                      formControlName="selectedAnswers"
-                    /> -->
-                      <!-- <angular2-multiselect
-                      [data]="answerList"
-                      [settings]="answerCategories"
-                      (onOpen)="updateAnswerList($event, pqIndex, qIndex)"
-                      (onSelect)="onItemSelect($event, pqIndex, qIndex)"
-                      (onDeSelect)="OnItemDeSelect($event, pqIndex, qIndex)"
-                    >
-                    </angular2-multiselect> -->
                     </div>
                   </div>
                 </div>
@@ -236,10 +247,10 @@
     </ng-container>
   </div>
   <div id="actionFooter">
-    <button class="btnQuizPri" (click)="generateQuestions()">
+    <!-- <button class="btnQuizPri" (click)="generateQuestions()">
       Add Next Question
-    </button>
-    <button class="btnQuizPri" (click)="submitForm()">Save</button>
+    </button> -->
+    <button class="btnQuizPri" (click)="submitForm()">Save & Create New</button>
     <button class="btnQuizSec" (click)="resetForm()">Cancel</button>
   </div>
 </div>

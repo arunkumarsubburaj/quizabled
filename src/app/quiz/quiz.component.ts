@@ -1,11 +1,17 @@
 import { QuestionSet, Option } from './../models/quiz';
 import { QuizConfig, QuizService } from './../quiz.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, of } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../user.service';
+import {
+  CountdownComponent,
+  CountdownConfig,
+  CountdownEvent,
+} from 'ngx-countdown';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -22,17 +28,17 @@ export class QuizComponent implements OnInit {
   isReviewHide: boolean = true;
   resultArrayObj: any = [];
   questionAnswered = 0;
+  countDownConfig: CountdownConfig = { leftTime: 1800, demand: true };
+  counterStatus: any;
+  @ViewChild('cd') private cd!: CountdownComponent;
   constructor(
     private quizService: QuizService,
     private router: Router,
     private toastrService: ToastrService,
     private userService: UserService
   ) {
-    forkJoin({
-      category: this.quizService.getCategory().pipe(take(1)),
-      quizType: this.quizService.getDemoSession().pipe(take(1)),
-      language: this.quizService.getLanguage().pipe(take(1)),
-    })
+    this.quizService
+      .getQuizConfig()
       .pipe(catchError((error) => of(error)))
       .subscribe((res) => {
         console.log(res);
@@ -74,6 +80,10 @@ export class QuizComponent implements OnInit {
             });
           });
         }
+        setTimeout(() => {
+          this.cd.begin();
+          this.counterStatus = 'on';
+        }, 500);
       },
       (err) => {
         this.toastrService.error(err.error, 'Error');
@@ -129,13 +139,52 @@ export class QuizComponent implements OnInit {
       'resultArrayObj',
       JSON.stringify(this.resultArrayObj)
     );
-    this.isReviewHide = false;
+    if (this.counterStatus == 'on') {
+      this.isReviewHide = false;
+    } else {
+      this.gotoCertify();
+    }
   }
   gotoQuestion(questionObj: any) {
     this.currentIndex = questionObj.questionNo - 1;
     this.isReviewHide = true;
   }
   gotoCertify() {
-    this.router.navigateByUrl('/result');
+    if (this.counterStatus == 'on') {
+      this.counterStatus = 'off';
+      this.cd.stop();
+    }
+    setTimeout(() => {
+      this.router.navigateByUrl('/result');
+    }, 500);
+  }
+  handleCounterEvent(event: CountdownEvent) {
+    if (event.action == 'stop') {
+      this.counterStatus = 'off';
+      const timeConsumed = 1800000 - event.left;
+      const timeTaken = this.millisToMinutesAndSeconds(timeConsumed);
+      window.sessionStorage.setItem('timeTaken', timeTaken);
+      if (event.left == 0) {
+        this.gotoReview();
+      }
+    }
+  }
+  millisToMinutesAndSeconds(millis: number) {
+    var minutes = Math.floor(millis / 60000);
+    var seconds: number = +((millis % 60000) / 1000).toFixed(0);
+    return `${minutes} mins ${seconds < 10 ? '0' : ''}${seconds} secs `;
+  }
+  getImage(imageObj: any) {
+    console.log(`${environment.imagePath}/${imageObj.questionImage}`);
+    return `${environment.imagePath}/${imageObj.questionImage}`;
+  }
+  expand(imageObj: any) {
+    const zoomedImg = document.querySelector('.zoomedImg');
+    const imaggePath = `${environment.imagePath}/${imageObj.questionImage}`;
+    zoomedImg?.querySelector('img')?.setAttribute('src', imaggePath);
+    zoomedImg?.classList.add('show');
+  }
+  collapseImage() {
+    document.querySelector('.zoomedImg')?.classList.remove('show');
   }
 }

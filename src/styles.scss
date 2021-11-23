@@ -15,7 +15,7 @@ html {
     font-size: 10px;
   }
 
-  .fsSmall {
+  &.fsSmall {
     font-size: 7px;
     @media (min-width: 768px) {
       font-size: 8px;
@@ -24,7 +24,7 @@ html {
       font-size: 9px;
     }
   }
-  .fsLarge {
+  &.fsLarge {
     font-size: 9px;
     @media (min-width: 768px) {
       font-size: 10px;
@@ -628,14 +628,32 @@ a {
 
 .imgUpload {
   position: absolute;
-  top: 20px;
+  top: 10px;
   right: 30px;
-  width: 44px;
-  height: 41px;
+  width: 60px;
+  height: 60px;
   text-indent: -99em;
   cursor: pointer;
   overflow: hidden;
-  background: url("assets/images/upload.png") no-repeat;
+  background-size: 100% 100%;
+  &::before {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    pointer-events: none;
+    background: url("assets/images/upload.png") no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+div.imgUpload {
+  &::before {
+    display: none;
+  }
 }
 .posRelative {
   position: relative;

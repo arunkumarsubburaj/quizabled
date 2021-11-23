@@ -1,9 +1,9 @@
-import { QuestionSet } from './models/quiz';
 import { environment } from '../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Question } from './models/questions';
+import { map, take } from 'rxjs/operators';
 export interface QuizConfig {
   category: string;
   language: string;
@@ -17,7 +17,7 @@ export class QuizService {
   private language$: BehaviorSubject<string> = new BehaviorSubject('en');
   private category$: BehaviorSubject<string> = new BehaviorSubject('A');
   private isDemoSession$ = new BehaviorSubject<boolean>(false);
-  constructor(private HttpClient: HttpClient) {}
+  constructor(private http: HttpClient) {}
   getQuestionType() {
     return this.questionType$.asObservable();
   }
@@ -43,15 +43,24 @@ export class QuizService {
     this.isDemoSession$.next(isDemoSession);
   }
   uploadQuestions(questions: Question[]) {
-    return this.HttpClient.post(
-      `${environment.apiUrl}/addQuestions`,
-      questions
-    );
+    return this.http.post(`${environment.apiUrl}/addQuestions`, questions);
   }
   getQuestions(questionObj: QuizConfig) {
-    return this.HttpClient.post(
-      `${environment.apiUrl}/getQuestions`,
-      questionObj
-    );
+    return this.http.post(`${environment.apiUrl}/getQuestions`, questionObj);
+  }
+  getAnswers(questionObj: QuizConfig) {
+    return this.http.post(`${environment.apiUrl}/getAnswers`, questionObj);
+  }
+  getQuizConfig() {
+    return forkJoin({
+      category: this.getCategory().pipe(take(1)),
+      quizType: this.getDemoSession().pipe(take(1)),
+      language: this.getLanguage().pipe(take(1)),
+    });
+  }
+  uploadImage(fileToUpload: File) {
+    const formData: FormData = new FormData();
+    formData.append('image', fileToUpload, fileToUpload.name);
+    return this.http.post(`${environment.apiUrl}/upload`, formData);
   }
 }
