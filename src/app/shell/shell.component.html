@@ -1,8 +1,10 @@
 <div class="main" [class]="fontClass">
   <header class="mainHeader" *ngIf="!isLoggedIn && !isDemoUser">
+    <div class="hamburger"><i></i><i></i><i></i></div>
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
     </a>
+    <!-- Toggle Class "Show" for <nav> to open menu on Clicking Hamburger. And "noScroll class for <body>" -->
     <nav>
       <a routerLink="home" routerLinkActive="active">Home</a>
       <!-- <a href="#">Resources</a> -->
