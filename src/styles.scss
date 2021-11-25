@@ -2,6 +2,8 @@
 @import "./assets/scss/gallery";
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap");
 @import "~ngx-toastr/toastr";
+@import "ag-grid-community/dist/styles/ag-grid.css";
+@import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 $blue: #4383ff;
 $grey: #e5e5e5;
