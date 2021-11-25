@@ -34,7 +34,7 @@ const routes: Routes = [
           import('./qm-landing/qm-landing.module').then(
             (m) => m.QmLandingModule
           ),
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'admin',
@@ -48,6 +48,14 @@ const routes: Routes = [
             (m) => m.QmQuestionsModule
           ),
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'question-list',
+        loadChildren: () =>
+          import('./qm-question-list/qm-question-list.module').then(
+            (m) => m.QmQuestionListModule
+          ),
+        // canActivate: [AuthGuard],
       },
       {
         path: 'instructions',

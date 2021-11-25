@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LightboxModule } from 'ngx-lightbox';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
+import { AgGridModule } from 'ag-grid-angular';
 
 @NgModule({
   declarations: [],
@@ -12,12 +13,14 @@ import { AngularMultiSelectModule } from 'angular2-multiselect-dropdown';
     ReactiveFormsModule,
     FormsModule,
     AngularMultiSelectModule,
+    AgGridModule.withComponents([]),
   ],
   exports: [
     LightboxModule,
     ReactiveFormsModule,
     FormsModule,
     AngularMultiSelectModule,
+    AgGridModule,
   ],
 })
 export class SharedModule {}

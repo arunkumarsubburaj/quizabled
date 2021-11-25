@@ -4,6 +4,7 @@ import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Question } from './models/questions';
 import { map, take } from 'rxjs/operators';
+import { QmQuestionList } from './qm-question-list/qm-question-list';
 export interface QuizConfig {
   category: string;
   language: string;
@@ -62,5 +63,10 @@ export class QuizService {
     const formData: FormData = new FormData();
     formData.append('image', fileToUpload, fileToUpload.name);
     return this.http.post(`${environment.apiUrl}/upload`, formData);
+  }
+  getQuestionList(): Observable<QmQuestionList> {
+    return this.http.get(
+      `${environment.apiUrl}/getAllQuestions`
+    ) as Observable<QmQuestionList>;
   }
 }

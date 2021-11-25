@@ -27,4 +27,7 @@ export class QmLandingComponent implements OnInit, AfterContentInit {
     this.quizService.setQuestionType(type);
     this.router.navigateByUrl('/add-questions');
   }
+  gotoManage() {
+    this.router.navigateByUrl('/question-list');
+  }
 }
