@@ -1,10 +1,12 @@
 .logoutBtn {
   cursor: pointer;
 }
-h5 > span {
-  font-size: 20px;
+h5 {
+  font-size: 2rem;
   padding-left: 5px;
-  color: #4383ff;
+  span {
+    color: #4383ff;
+  }
 }
 @media print {
   .mainHeader,
