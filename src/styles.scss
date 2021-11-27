@@ -101,6 +101,7 @@ body {
       opacity: 0;
       pointer-events: none;
       transition: 0.75s ease;
+      z-index: 1;
 
       &.show {
         transform: translateX(0);
@@ -783,6 +784,7 @@ div#actionFooter {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 
   @media (min-width: 1023px) {
     display: none;

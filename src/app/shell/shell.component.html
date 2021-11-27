@@ -1,11 +1,11 @@
 <div class="main" [class]="fontClass">
   <header class="mainHeader" *ngIf="!isLoggedIn && !isDemoUser">
-    <div class="hamburger"><i></i><i></i><i></i></div>
+    <div class="hamburger" (click)="toggleMenu()"><i></i><i></i><i></i></div>
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
     </a>
     <!-- Toggle Class "Show" for <nav> to open menu on Clicking Hamburger. And "noScroll class for <body>" -->
-    <nav>
+    <nav [ngClass]="{ show: isMenuOpen }">
       <a routerLink="home" routerLinkActive="active">Home</a>
       <!-- <a href="#">Resources</a> -->
       <a routerLink="gallery" routerLinkActive="active">Gallery</a>
@@ -44,10 +44,11 @@
     </div>
   </header>
   <header class="mainHeader" *ngIf="isLoggedIn || isDemoUser">
+    <div class="hamburger" (click)="toggleMenu()"><i></i><i></i><i></i></div>
     <a href="https://sevainaction.org/" target="_blank" class="logo">
       <small>Organised By</small>
     </a>
-    <nav>
+    <nav [ngClass]="{ show: isMenuOpen }">
       <h5>
         Welcome, <span>{{ isDemoUser ? "demo user" : user.name }}</span>
       </h5>

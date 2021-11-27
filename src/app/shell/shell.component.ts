@@ -22,6 +22,7 @@ export class ShellComponent implements OnInit, AfterViewInit {
   user: any;
   isDemoUser: boolean = false;
   fontClass: string = '';
+  isMenuOpen: boolean = false;
   ngOnInit() {}
   ngAfterViewInit() {
     if (window.sessionStorage.getItem('userData')) {
@@ -76,6 +77,14 @@ export class ShellComponent implements OnInit, AfterViewInit {
         break;
       default:
         break;
+    }
+  }
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    if (this.isMenuOpen) {
+      document.body.classList.add('noScroll');
+    } else {
+      document.body.classList.remove('noScroll');
     }
   }
 }
