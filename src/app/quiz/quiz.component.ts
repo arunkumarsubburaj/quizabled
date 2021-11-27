@@ -98,7 +98,11 @@ export class QuizComponent implements OnInit {
         }, 500);
       },
       (err) => {
-        this.toastrService.error(err.error, 'Error');
+        if (err.status == 404) {
+          this.toastrService.error('No Questions to display!!!', 'Error');
+        } else {
+          this.toastrService.error(err.status, 'Error');
+        }
       }
     );
     console.log(this.primaryQuestionsArray, this.secondaryQuestionsArray);

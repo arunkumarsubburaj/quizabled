@@ -33,8 +33,8 @@ export class QuizCategoryComponent implements OnInit {
     this.languageList = [
       { id: 1, itemName: 'English', name: 'en' },
       { id: 2, itemName: 'Tamil', name: 'tn' },
-      // { id: 3, itemName: 'Kannada', name: 'ka' },
-      // { id: 4, itemName: 'Hindi', name: 'hi' },
+      { id: 3, itemName: 'Kannada', name: 'ka' },
+      { id: 4, itemName: 'Hindi', name: 'hi' },
       // { id: 3, itemName: 'Telugu', name: 'tl' },
       // { id: 5, itemName: 'Malayalam', name: 'ma' },
     ];

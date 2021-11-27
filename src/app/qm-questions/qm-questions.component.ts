@@ -60,8 +60,8 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   languageList = [
     { id: 1, itemName: 'English', name: 'en' },
     { id: 2, itemName: 'Tamil', name: 'tn' },
-    // { id: 3, itemName: 'Kannada', name: 'ka' },
-    // { id: 4, itemName: 'Hindi', name: 'hi' },
+    { id: 3, itemName: 'Kannada', name: 'ka' },
+    { id: 4, itemName: 'Hindi', name: 'hi' },
     // { id: 3, itemName: 'Telugu', name: 'tl' },
     // { id: 5, itemName: 'Malayalam', name: 'ma' },
   ];
@@ -309,7 +309,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
         },
         (err) => {
           console.log(err);
-          this.toastrService.error(err.error, 'Error!!!');
+          this.toastrService.error(err.status, 'Error!!!');
         }
       );
     });
@@ -473,7 +473,7 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
         this.router.navigateByUrl('/question-list');
       },
       (err) => {
-        this.toastrService.error(err.message);
+        this.toastrService.error(err.status);
       }
     );
   }

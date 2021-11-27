@@ -121,8 +121,12 @@ export class QmQuestionListComponent implements OnInit {
         this.generateRowData(res);
       },
       (err) => {
-        this.questionRowData = [];
-        this.toastrService.info(err.error);
+        if (err.status == 404) {
+          this.questionRowData = [];
+          this.toastrService.info('No Questions to display', 'Error');
+        } else {
+          this.toastrService.error(err.status, 'error');
+        }
       }
     );
   }
@@ -226,7 +230,7 @@ export class QmQuestionListComponent implements OnInit {
         this.fetchQuestions();
       },
       (err) => {
-        this.toastrService.error(err.message, 'Error');
+        this.toastrService.error(err.status, 'Error');
       }
     );
   }
