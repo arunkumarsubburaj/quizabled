@@ -188,6 +188,7 @@ $blue: #4383ff;
   align-items: flex-start;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 30px;
   > * {
     width: 40px;
     height: 40px;
@@ -235,14 +236,17 @@ $blue: #4383ff;
   }
 }
 div#timer {
-  position: absolute;
-  top: 120px;
-  right: 100px;
   font-size: 3rem;
   padding: 10px 15px;
-  box-sizing: border-box;
   background: $blue;
-  border-radius: 1rem;
+  border-radius: 5px;
   color: #fff;
   font-weight: bold;
+}
+
+.timerWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
 }

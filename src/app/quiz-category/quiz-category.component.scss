@@ -71,3 +71,9 @@ $blue: #4383ff;
     margin-left: auto;
   }
 }
+
+.categoryList {
+  @media (min-width: 1024px) {
+    margin: 0 50px;
+  }
+}

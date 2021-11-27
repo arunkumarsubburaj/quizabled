@@ -1,12 +1,14 @@
 <!-- Questions Page -->
 <div class="homeContent pageQuizQuestion" [ngClass]="{ hide: !isReviewHide }">
-  <h1 class="centerAlign">Quizzabled: Mock Test</h1>
-  <div id="timer">
-    <countdown
-      #cd
-      [config]="countDownConfig"
-      (event)="handleCounterEvent($event)"
-    ></countdown>
+  <div class="timerWrap">
+    <h1 class="centerAlign">Quizzabled: Mock Test</h1>
+    <div id="timer">
+      <countdown
+        #cd
+        [config]="countDownConfig"
+        (event)="handleCounterEvent($event)"
+      ></countdown>
+    </div>
   </div>
   <div
     class="quizWrap questionBox"

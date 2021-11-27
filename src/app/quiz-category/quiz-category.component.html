@@ -1,9 +1,9 @@
 <div class="homeContent">
-  <div class="questionBox mediumBox">
+  <div class="questionBox">
     <div class="centerAlign">
-      <img src="../../assets/images/quizabled.png" alt="" />
-      <p class="desc"><strong>Please Select Your Language</strong></p>
-      <div>
+      <img src="../../assets/images/quizabled.png" class="pageImg" alt="" />
+      <div class="selectWrap">
+        <div class="selectLabel">Please Select Your Language</div>
         <angular2-multiselect
           [data]="languageList"
           [settings]="languageConfig"
@@ -16,7 +16,7 @@
     <div class="centerAlign" *ngIf="!user.q_category">
       <p class="desc"><strong>Please Select Your Category</strong></p>
     </div>
-    <div class="quizAnsWrap boxList" *ngIf="!user.q_category">
+    <div class="quizAnsWrap boxList categoryList" *ngIf="!user.q_category">
       <div class="quizAns" (click)="updateCategory('A')">
         <input type="radio" name="chooseCategory" id="categoryA" />
         <label for="categoryA">
