@@ -16,7 +16,9 @@ export class ShellComponent implements OnInit, AfterViewInit {
     private loginService: LoginService,
     private router: Router,
     private quizService: QuizService
-  ) {}
+  ) {
+    // this.userService.setUser({});
+  }
   user: any;
   isDemoUser: boolean = false;
   fontClass: string = '';

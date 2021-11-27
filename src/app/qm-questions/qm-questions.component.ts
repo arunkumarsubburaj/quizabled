@@ -1,3 +1,8 @@
+import {
+  QmQuestionList,
+  OptionArray,
+  QuestionArray,
+} from './../qm-question-list/qm-question-list';
 import { ToastrService } from 'ngx-toastr';
 import { QuizService } from '../quiz.service';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
@@ -64,8 +69,37 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
     category: new FormControl('', [Validators.required]),
     questionsArray: this.fb.array([]),
   });
+  isEditQuestion: boolean = false;
   ngOnInit() {}
   ngAfterViewInit() {
+    if (window.location.pathname.includes('edit-question')) {
+      this.isEditQuestion = true;
+      const pathArray = window.location.pathname.split('/');
+      const questionId = pathArray[pathArray.length - 1];
+      let questionArray, optionArray;
+      this.quizService.getQuestion(parseInt(questionId)).subscribe(
+        (res: any) => {
+          console.log(res);
+          questionArray = res.questionArray;
+          optionArray = res.optionArray;
+          questionArray.forEach((questionObj: any) => {
+            const optionsArray = res.optionArray.filter(
+              (optionObj: OptionArray) => {
+                return optionObj.questionId == questionObj.questionId;
+              }
+            );
+            questionObj['options'] = optionsArray;
+          });
+          this.questionsForm.get('questionsArray')?.patchValue([questionArray]);
+          this.updateBGImages(questionArray, optionArray);
+          const category = questionArray[0].category;
+          this.updateCategory(category);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
+    }
     this.quizService.getQuestionType().subscribe((res: any) => {
       switch (res) {
         case 'demo':
@@ -398,5 +432,49 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       const image: any = imageArray[index];
       image.style.backgroundImage = '';
     }
+  }
+  updateBGImages(questionArray: QuestionArray[], optionArray: OptionArray[]) {
+    const questionElements = Array.from(
+      document.querySelectorAll('.questionImage')
+    );
+    questionElements.forEach((questionElement: any, i: number) => {
+      if (questionArray[i].questionImage) {
+        questionElement.style.backgroundImage = `url('${
+          environment.imagePath + '/' + questionArray[i].questionImage
+        }')`;
+      }
+    });
+    const optionElements = Array.from(
+      document.querySelectorAll('.optionImage')
+    );
+    optionElements.forEach((optionEle: any, i: number) => {
+      if (optionArray[i].optionImage) {
+        optionEle.style.backgroundImage = `url('${
+          environment.imagePath + '/' + optionArray[i].optionImage
+        }')`;
+      }
+    });
+  }
+  updateCategory(category: string) {
+    console.log(category);
+    this.selectedCategories = this.categoryList.filter((categoryObj) => {
+      return categoryObj.name == category;
+    });
+    this.questionsForm.get(category)?.setValue(this.selectedCategories);
+  }
+  updateForm() {
+    const questionArray = this.questionsForm.get('questionsArray') as FormArray;
+    this.quizService.updateQuestion(questionArray.getRawValue()[0]).subscribe(
+      (res) => {
+        this.toastrService.success(
+          'Question Updated Successfully!!!',
+          'Success'
+        );
+        this.router.navigateByUrl('/question-list');
+      },
+      (err) => {
+        this.toastrService.error(err.message);
+      }
+    );
   }
 }

@@ -72,7 +72,8 @@ $blue: #4383ff;
   }
 }
 
-.categoryList {
+.categoryList,
+.languageList {
   @media (min-width: 1024px) {
     margin: 0 50px;
   }

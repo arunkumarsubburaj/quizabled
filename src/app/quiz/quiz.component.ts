@@ -5,7 +5,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../user.service';
+import { UserInfo, UserService } from '../user.service';
 import {
   CountdownComponent,
   CountdownConfig,
@@ -30,6 +30,7 @@ export class QuizComponent implements OnInit {
   questionAnswered = 0;
   countDownConfig: CountdownConfig = { leftTime: 1800, demand: true };
   counterStatus: any;
+  quizTitle: string = '';
   @ViewChild('cd') private cd!: CountdownComponent;
   constructor(
     private quizService: QuizService,
@@ -51,6 +52,17 @@ export class QuizComponent implements OnInit {
     this.userService.getLoginStatus().subscribe((status) => {
       if (!status) {
         this.router.navigateByUrl('/home');
+      }
+    });
+    this.userService.getUser().subscribe((userData: UserInfo | {}) => {
+      if (userData == {}) {
+        this.router.navigateByUrl('/home');
+      } else {
+        if ((userData as UserInfo).role == 'STUDENT') {
+          this.quizTitle = 'Quizabled: Main Test';
+        } else {
+          this.quizTitle = 'Quizabled: Mock Test';
+        }
       }
     });
   }

@@ -4,10 +4,10 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:5000',
-  // imagePath: 'http://localhost:80',
-  apiUrl: 'https://quizabled.com/quizabled_node/quizabled_ms/api',
-  imagePath: 'http://quizabled.com/quizable_images',
+  apiUrl: 'http://localhost:5000/quizabled_node/quizabled_ms/api',
+  imagePath: 'http://localhost:80',
+  // apiUrl: 'https://quizabled.com/quizabled_node/quizabled_ms/api',
+  // imagePath: 'http://quizabled.com/quizable_images',
 };
 
 /*

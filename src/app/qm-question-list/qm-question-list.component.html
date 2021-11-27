@@ -1,7 +1,65 @@
-<ag-grid-angular
-  style="width: 500px; height: 500px"
-  class="ag-theme-alpine"
-  [rowData]="rowData"
-  [columnDefs]="columnDefs"
->
-</ag-grid-angular>
+<div id="questionListWrapper">
+  <div class="filterHeader">
+    <div class="selectCategory">
+      <div class="selectTitle">
+        Category: &nbsp;
+        <angular2-multiselect
+          [data]="categoryList"
+          [(ngModel)]="selectedCategories"
+          [settings]="selectSettings"
+        >
+        </angular2-multiselect>
+      </div>
+    </div>
+    <div class="selectQuizType">
+      <div class="selectTitle">
+        Quiz Type: &nbsp;
+        <angular2-multiselect
+          [data]="quizList"
+          [(ngModel)]="selectedquiz"
+          [settings]="selectSettings"
+        >
+        </angular2-multiselect>
+      </div>
+    </div>
+    <div class="selectIsActive">
+      <div class="selectTitle">
+        Question Type: &nbsp;
+        <angular2-multiselect
+          [data]="isActiveList"
+          [(ngModel)]="selectedisActive"
+          [settings]="selectSettings"
+        >
+        </angular2-multiselect>
+      </div>
+    </div>
+    <button class="btnQuizPri dense" (click)="fetchQuestions()">Filter</button>
+  </div>
+  <ag-grid-angular
+    style="height: 100%; width: 100%; position: absolute"
+    class="ag-theme-alpine"
+    [rowData]="questionRowData"
+    [defaultColDef]="defaultColDef"
+    [columnDefs]="columnDefs"
+    (gridReady)="onGridReady($event)"
+    [pagination]="true"
+    [paginationPageSize]="5"
+    [frameworkComponents]="frameworkComponents"
+    (cellClicked)="onCellClicked($event)"
+  >
+  </ag-grid-angular>
+  <div id="confirmPopup">
+    <div class="wrapper">
+      <header>Confirm Delete</header>
+      <div class="content">Are you sure to delete this question?</div>
+      <div class="actionFooter">
+        <button class="btnQuizPri buttonDelete" (click)="closePopup('delete')">
+          Delete
+        </button>
+        <button class="btnQuizSec buttonCancel" (click)="closePopup('cancel')">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

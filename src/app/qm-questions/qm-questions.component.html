@@ -235,7 +235,12 @@
     <!-- <button class="btnQuizPri" (click)="generateQuestions()">
       Add Next Question
     </button> -->
-    <button class="btnQuizPri" (click)="submitForm()">Save & Create New</button>
+    <button class="btnQuizPri" (click)="submitForm()" *ngIf="!isEditQuestion">
+      Save & Create New
+    </button>
+    <button class="btnQuizPri" (click)="updateForm()" *ngIf="isEditQuestion">
+      Update
+    </button>
     <button class="btnQuizSec" (click)="resetForm()">Cancel</button>
   </div>
 </div>

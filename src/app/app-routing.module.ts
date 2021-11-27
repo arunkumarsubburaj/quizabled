@@ -50,6 +50,14 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'edit-question/:id',
+        loadChildren: () =>
+          import('./qm-questions/qm-questions.module').then(
+            (m) => m.QmQuestionsModule
+          ),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'question-list',
         loadChildren: () =>
           import('./qm-question-list/qm-question-list.module').then(

@@ -1,5 +1,5 @@
 import { environment } from '../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Question } from './models/questions';
@@ -64,9 +64,26 @@ export class QuizService {
     formData.append('image', fileToUpload, fileToUpload.name);
     return this.http.post(`${environment.apiUrl}/upload`, formData);
   }
-  getQuestionList(): Observable<QmQuestionList> {
+  getQuestionList(queryParams: {
+    category: string;
+    quizType: number;
+    isActive: number;
+  }): Observable<QmQuestionList> {
     return this.http.get(
-      `${environment.apiUrl}/getAllQuestions`
+      `${environment.apiUrl}/getAllQuestions?category=${queryParams.category}&quizType=${queryParams.quizType}&isActive=${queryParams.isActive}`
     ) as Observable<QmQuestionList>;
+  }
+  deleteQuestion(questionId: number) {
+    return this.http.delete(
+      `${environment.apiUrl}/deleteQuestion?questionId=${questionId}`
+    );
+  }
+  getQuestion(questionId: number) {
+    return this.http.get(
+      `${environment.apiUrl}/getQuestion?questionId=${questionId}`
+    );
+  }
+  updateQuestion(questions: Question[]) {
+    return this.http.put(`${environment.apiUrl}/editQuestion`, questions);
   }
 }
