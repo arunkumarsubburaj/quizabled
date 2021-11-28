@@ -57,7 +57,7 @@ body {
 .mainHeader {
   position: relative;
   height: 120px;
-  padding: 0 10%;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -67,6 +67,9 @@ body {
     padding: 20px;
     height: auto;
     flex-wrap: wrap;
+  }
+  @media (min-width: 1200px) {
+    padding: 0 5%;
   }
 
   small {
@@ -82,7 +85,7 @@ body {
     align-items: center;
     justify-content: space-between;
     > * {
-      margin: 0 1vw;
+      margin: 0 10px;
     }
     @media (max-width: 1023px) {
       position: fixed;
