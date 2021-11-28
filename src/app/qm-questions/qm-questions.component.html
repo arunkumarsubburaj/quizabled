@@ -2,9 +2,8 @@
   <div class="centerAlign" [formGroup]="questionsForm">
     <h1>{{ headerTitle }}</h1>
     <div class="filterHeader">
-      <div class="selectCategory">
-        <div class="selectTitle">
-          Select Category: &nbsp;
+      <div class="selectWrap">
+        <div class="selectLabel">Select Category:</div>
           <angular2-multiselect
             [data]="categoryList"
             [(ngModel)]="selectedCategories"
@@ -21,7 +20,6 @@
           >
             Category is required.
           </div>
-        </div>
       </div>
     </div>
     <ng-container formArrayName="questionsArray">

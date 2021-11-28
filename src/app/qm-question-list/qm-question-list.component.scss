@@ -32,21 +32,33 @@
 }
 
 .filterHeader {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 20px 0;
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   button.btnQuizPri.dense {
-    height: 30px;
-    margin: 0 20px;
+    @media (max-width: 1023px) {
+      width: 200px;
+      display: block;
+      margin: 0 auto;
+      height: 40px;
+    }
+    @media (min-width: 1024px) {
+      height: 30px;
+      margin: 0 20px;
+    }
+  }
+  .selectLabel {
+    @media (max-width: 1023px) {
+      width: 150px;
+    }
   }
 }
 
 .filterHeader > div {
   margin: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 }
 
 #confirmPopup {
@@ -93,5 +105,20 @@
         }
       }
     }
+  }
+}
+::ng-deep {
+  @media (min-width: 1024px) {
+    .filterHeader {
+      .selected-list .c-btn {
+        padding-right: 25px;
+      }
+      .cuppa-dropdown {
+        min-width: auto;
+      }
+    }
+  }
+  .dropdown-list {
+    min-width: 200px;
   }
 }
