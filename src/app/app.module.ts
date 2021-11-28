@@ -15,6 +15,7 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from 'src/shared/services/auth.service';
 import { AdminComponent } from './admin/admin.component';
+import { ResourcesComponent } from './resources/resources.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { AdminComponent } from './admin/admin.component';
     LoaderComponent,
     AdminComponent,
     LoginComponent,
+    ResourcesComponent,
   ],
   imports: [
     BrowserModule,
