@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from './../user.service';
 
 @Component({
@@ -7,7 +8,7 @@ import { UserService } from './../user.service';
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit, AfterViewInit {
-  constructor(private userService: UserService) {}
+  constructor(private router: Router) {}
   user: any;
   ngOnInit(): void {}
   ngAfterViewInit() {
@@ -16,5 +17,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
         window.sessionStorage.getItem('userData') as string
       );
     }
+  }
+  gotoResources() {
+    this.router.navigateByUrl('/add-resource');
   }
 }

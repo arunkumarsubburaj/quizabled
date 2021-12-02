@@ -1,37 +1,21 @@
 <div class="homeContent">
   <div class="centerAlign">
-    <img src="../../assets/images/quizabled.png" alt="">
-    <div class="desc">Explore Quizabled's history, gallery, view sample question banks and other resources.</div>
+    <img src="../../assets/images/quizabled.png" alt="" />
+    <div class="desc">
+      Explore Quizabled's history, gallery, view sample question banks and other
+      resources.
+    </div>
   </div>
-  <div class="resourcesList">
-    <section>
-      <h4>Resources 1</h4>
-      <img src="../../assets/images/download.png" alt="">
-    </section>
-    <section>
-      <h4>Resources 1</h4>
-      <img src="../../assets/images/download.png" alt="">
-    </section>
-    <section>
-      <h4>Resources 1</h4>
-      <img src="../../assets/images/download.png" alt="">
-    </section>
-    <section>
-      <h4>Resources 1</h4>
-      <img src="../../assets/images/download.png" alt="">
-    </section>
-    <section>
-      <h4>Resources 1</h4>
-      <img src="../../assets/images/download.png" alt="">
+  <div class="resourcesList" *ngIf="resourceList.length > 0">
+    <section
+      *ngFor="let resource of resourceList"
+      (click)="downloadResource(resource)"
+    >
+      <h4>{{ resource.title }}</h4>
+      <img src="../../assets/images/download.png" alt="" />
     </section>
   </div>
-</div>
-
-<div class="homeContent instructionPage">
-  <h1 class="centerAlign">Add Resources</h1>
-  <div class="questionBox mediumBox">
-    <div><input type="text" class="textbox" placeholder="Enter Resource Title"></div>
-    <div><input type="file" ></div>
-    <button class="btnQuizPri">Add</button>
-  </div>
+  <h3 class="noRecords" *ngIf="resourceList.length == 0">
+    Resources not found!!!
+  </h3>
 </div>

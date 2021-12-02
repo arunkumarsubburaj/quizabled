@@ -1,0 +1,24 @@
+<div class="homeContent instructionPage">
+  <h1 class="centerAlign">Add Resources</h1>
+  <div class="questionBox mediumBox">
+    <div>
+      <input
+        type="text"
+        class="textbox"
+        placeholder="Enter Resource Title"
+        [(ngModel)]="title"
+      />
+    </div>
+    <div>
+      <input
+        type="file"
+        #fileEle
+        class="custom-file-input"
+        (change)="setFile($event)"
+      />
+    </div>
+    <div class="actionFooter">
+      <button class="btnQuizPri" (click)="uploadResource()">Add</button>
+    </div>
+  </div>
+</div>

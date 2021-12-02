@@ -16,9 +16,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from 'src/shared/services/auth.service';
 import { AdminComponent } from './admin/admin.component';
 import { ResourcesComponent } from './resources/resources.component';
+import { AddResourceComponent } from './add-resource/add-resource.component';
 
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     ShellComponent,
     HomeComponent,
@@ -26,7 +27,8 @@ import { ResourcesComponent } from './resources/resources.component';
     AdminComponent,
     LoginComponent,
     ResourcesComponent,
-  ],
+      AddResourceComponent
+   ],
   imports: [
     BrowserModule,
     AppRoutingModule,

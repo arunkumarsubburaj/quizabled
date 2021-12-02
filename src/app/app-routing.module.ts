@@ -1,3 +1,4 @@
+import { ResourcesComponent } from './resources/resources.component';
 import { LoginComponent } from './login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -5,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { ShellComponent } from './shell/shell.component';
 import { AuthGuardService as AuthGuard } from './../shared/services/auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
+import { AddResourceComponent } from './add-resource/add-resource.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -24,9 +26,18 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
+        path: 'resources',
+        component: ResourcesComponent,
+      },
+      {
         path: 'gallery',
         loadChildren: () =>
           import('./gallery/gallery.module').then((m) => m.GalleryModule),
+      },
+      {
+        path: 'add-resource',
+        component: AddResourceComponent,
+        canActivate: [AuthGuard],
       },
       {
         path: 'quiz-master',
@@ -63,7 +74,7 @@ const routes: Routes = [
           import('./qm-question-list/qm-question-list.module').then(
             (m) => m.QmQuestionListModule
           ),
-        // canActivate: [AuthGuard],
+        canActivate: [AuthGuard],
       },
       {
         path: 'instructions',
@@ -71,6 +82,7 @@ const routes: Routes = [
           import('./instructions/instruction.module').then(
             (m) => m.InstructionModule
           ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'category',
@@ -78,11 +90,13 @@ const routes: Routes = [
           import('./quiz-category/quiz-category.module').then(
             (m) => m.QuizCategoryModule
           ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'quiz',
         loadChildren: () =>
           import('./quiz/quiz.module').then((m) => m.QuizModule),
+        canActivate: [AuthGuard],
       },
       {
         path: 'result',
@@ -90,6 +104,7 @@ const routes: Routes = [
           import('./quiz-result/quiz-result.module').then(
             (m) => m.QuizResultModule
           ),
+        canActivate: [AuthGuard],
       },
       {
         path: 'review',
@@ -97,6 +112,7 @@ const routes: Routes = [
           import('./review-quiz/review-quiz.module').then(
             (m) => m.ReviewQuizModule
           ),
+        canActivate: [AuthGuard],
       },
       { path: '**', redirectTo: '' },
     ],
