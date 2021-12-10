@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { LoginService } from '../login/login.service';
 import { QuizService } from '../quiz.service';
 import { UserService } from '../user.service';
@@ -23,7 +24,14 @@ export class ShellComponent implements OnInit, AfterViewInit {
   isDemoUser: boolean = false;
   fontClass: string = '';
   isMenuOpen: boolean = false;
-  ngOnInit() {}
+  ngOnInit() {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: any) => {
+        this.isMenuOpen = false;
+        document.body.classList.remove('noScroll');
+      });
+  }
   ngAfterViewInit() {
     if (window.sessionStorage.getItem('userData')) {
       this.user = JSON.parse(
