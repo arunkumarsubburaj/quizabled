@@ -1,3 +1,8 @@
+import {
+  LogObj,
+  StudentData,
+  UpdatePayLoad,
+} from './student-details/student.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -31,6 +36,33 @@ export class AdminService {
     return this.http.post(
       environment.apiUrl + '/uploadFile?fileName=' + title,
       formData
+    );
+  }
+  getStudentList() {
+    return this.http.get(environment.apiUrl + '/getStudents') as Observable<
+      StudentData[]
+    >;
+  }
+  updateQuizStatus(studentId: number, payload: UpdatePayLoad) {
+    return this.http.post(
+      environment.apiUrl + '/updateQuizStatus?studentId=' + studentId,
+      payload
+    );
+  }
+  addQuizLog(studentId: string, payload: { answerObj: LogObj[] }) {
+    return this.http.post(
+      environment.apiUrl + '/addStudentLog?studentId=' + studentId,
+      payload
+    );
+  }
+  showQuizLog(studentId: string) {
+    return this.http.get(
+      environment.apiUrl + '/getStudentLog?studentId=' + studentId
+    ) as Observable<LogObj[]>;
+  }
+  unlockStudent(studentId: number) {
+    return this.http.get(
+      environment.apiUrl + '/unlockStudent?studentId=' + studentId
     );
   }
 }

@@ -1,0 +1,19 @@
+#contactAdminWrapper {
+  width: 100%;
+  height: calc(100vh - 280px);
+  color: #595757;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    font-size: 5rem;
+    text-align: center;
+    margin: 15px 0;
+  }
+  h4 {
+    font-size: 3rem;
+    color: #000;
+    text-align: center;
+    margin: 15px 0;
+  }
+}

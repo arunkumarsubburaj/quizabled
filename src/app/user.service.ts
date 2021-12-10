@@ -1,5 +1,7 @@
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 export interface UserInfo {
   id: number;
   name: string;
@@ -20,7 +22,7 @@ export interface UserInfo {
   providedIn: 'root',
 })
 export class UserService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   user$: BehaviorSubject<UserInfo | {}> = new BehaviorSubject({});
   isSignedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -37,5 +39,10 @@ export class UserService {
   }
   setLoginStatus(status: boolean) {
     this.isSignedIn$.next(status);
+  }
+  fetchUser(userId: string) {
+    return this.http.get(
+      environment.apiUrl + '/getUser?id=' + userId
+    ) as Observable<{ name: string; user_name: string; id: number }>;
   }
 }

@@ -1,0 +1,67 @@
+#questionListWrapper {
+  width: 100%;
+  display: block;
+  height: calc(100vh - 160px);
+  position: relative;
+  .header {
+    margin: 10px 0;
+    font-size: 2rem;
+  }
+  .alignCenter {
+    text-align: center;
+  }
+}
+::ng-deep {
+  #questionListWrapper {
+    .ag-theme-alpine .ag-ltr .ag-cell {
+      border: none !important;
+    }
+  }
+}
+
+#confirmPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  .wrapper {
+    min-width: 300px;
+    max-height: 70%;
+    max-width: 80%;
+    background-color: #fff;
+    border-radius: 5px;
+    header {
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+    }
+    .content {
+      padding: 10px;
+    }
+    .actionFooter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      button {
+        margin: 0 10px;
+        &.btnQuizPri,
+        &.btnQuizSec {
+          height: 35px;
+        }
+        &.buttonDelete {
+          background-color: #f00;
+          color: #fff;
+        }
+      }
+    }
+  }
+}

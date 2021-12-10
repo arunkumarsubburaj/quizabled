@@ -37,7 +37,7 @@ export class QmQuestionListComponent implements OnInit {
     private router: Router
   ) {}
   columnDefs: ColDef[] = [
-    { field: 'sno', width: 20, headerName: 'S.No', resizable: false },
+    { field: 'sno', width: 130, headerName: 'S.No', resizable: false },
     { field: 'question' },
     { field: 'questionImage', headerName: 'Question Image' },
     { field: 'isActive', headerName: 'Is Active' },
@@ -68,10 +68,10 @@ export class QmQuestionListComponent implements OnInit {
     editDeleteRenderer: EditDeleteRenderer,
   };
   categoryList: { id: number; itemName: string; name: string }[] = [
-    { id: 1, itemName: 'Catogory A', name: 'A' },
-    { id: 2, itemName: 'Catogory B', name: 'B' },
-    { id: 3, itemName: 'Catogory C', name: 'C' },
-    { id: 4, itemName: 'Catogory D', name: 'D' },
+    { id: 1, itemName: 'Category A', name: 'A' },
+    { id: 2, itemName: 'Category B', name: 'B' },
+    { id: 3, itemName: 'Category C', name: 'C' },
+    { id: 4, itemName: 'Category D', name: 'D' },
   ];
   selectedCategories: { id: number; itemName: string; name: string }[] = [
     this.categoryList[0],

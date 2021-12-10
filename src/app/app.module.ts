@@ -17,9 +17,12 @@ import { AuthService } from 'src/shared/services/auth.service';
 import { AdminComponent } from './admin/admin.component';
 import { ResourcesComponent } from './resources/resources.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { StudentLogComponent } from './student-log/student-log.component';
+import { ContactAdminComponent } from './contact-admin/contact-admin.component';
 
 @NgModule({
-  declarations: [	
+  declarations: [				
     AppComponent,
     ShellComponent,
     HomeComponent,
@@ -27,7 +30,10 @@ import { AddResourceComponent } from './add-resource/add-resource.component';
     AdminComponent,
     LoginComponent,
     ResourcesComponent,
-      AddResourceComponent
+      AddResourceComponent,
+      StudentDetailsComponent,
+      StudentLogComponent,
+      ContactAdminComponent
    ],
   imports: [
     BrowserModule,

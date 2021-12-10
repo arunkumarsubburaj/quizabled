@@ -1,0 +1,13 @@
+<div id="contactAdminWrapper">
+  <div *ngIf="status == 2">
+    <h3>You have already complted the quiz!!!</h3>
+    <h4>Thanks for Participating.</h4>
+  </div>
+  <div *ngIf="status == 1">
+    <h3>
+      In our system it show that you already taken the test but not completed
+      it.
+    </h3>
+    <h4>If you want to retake the quiz, please contact administrator</h4>
+  </div>
+</div>

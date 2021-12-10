@@ -478,8 +478,8 @@ body {
   }
 }
 .btnQuizSec {
-  background: $grey;
-  color: #000;
+  background: $grey !important;
+  color: #000 !important;
 }
 h2 {
   font-size: 3rem;
@@ -845,5 +845,9 @@ a.btnView:hover {
   margin-bottom: 20px;
 }
 .agGridOuterWrap {
-  padding: 10px;
+  height: calc(100% - 120px);
+  position: relative;
+  box-sizing: border-box;
+  width: calc(100% - 20px);
+  margin: 0 auto;
 }

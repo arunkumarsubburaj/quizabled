@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private userService: UserService
   ) {}
+  userData!: any;
   loginForm = new FormGroup({
     user_name: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         (res: any) => {
           this.toastrService.success('Logged In Successfully.', 'Success');
           this.userService.setUser(res.user);
+          this.userData = res.user;
           this.userService.setLoginStatus(true);
           window.sessionStorage.setItem('ROLE', res.user.role);
           this.launchLandingPage(res.user.role);
@@ -63,7 +65,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigateByUrl('/admin');
         break;
       case 'STUDENT':
-        this.router.navigateByUrl('/instructions');
+        if (this.userData.isAttended == 1) {
+          this.router.navigateByUrl('/contact-admin', {
+            state: { quizStatus: 1 },
+          });
+        } else if (this.userData.isAttended == 2) {
+          this.router.navigateByUrl('/contact-admin', {
+            state: { quizStatus: 2 },
+          });
+        } else {
+          this.router.navigateByUrl('/instructions');
+        }
         break;
       case 'QUIZ_MASTER':
         this.router.navigateByUrl('/quiz-master');
@@ -72,5 +84,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       default:
         break;
     }
+  }
+  cancel() {
+    this.router.navigateByUrl('/home');
   }
 }

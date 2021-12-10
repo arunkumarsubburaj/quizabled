@@ -1,0 +1,32 @@
+<div id="questionListWrapper">
+  <h3 class="alignCenter header">Student Details</h3>
+  <div class="agGridOuterWrap">
+    <ag-grid-angular
+      style="height: 100%; width: 100%; position: absolute"
+      class="ag-theme-alpine"
+      [rowData]="studentData"
+      [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs"
+      (gridReady)="onGridReady($event)"
+      [pagination]="true"
+      [paginationPageSize]="5"
+      [frameworkComponents]="frameworkComponents"
+      (cellClicked)="onCellClicked($event)"
+    >
+    </ag-grid-angular>
+  </div>
+  <div id="confirmPopup">
+    <div class="wrapper">
+      <header>Confirm Reset Student Data?</header>
+      <div class="content">Are you sure to reset this students data?</div>
+      <div class="actionFooter">
+        <button class="btnQuizPri buttonDelete" (click)="closePopup('delete')">
+          Reset
+        </button>
+        <button class="btnQuizSec buttonCancel" (click)="closePopup('cancel')">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

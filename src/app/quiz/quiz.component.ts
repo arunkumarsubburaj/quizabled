@@ -1,8 +1,10 @@
-import { QuestionSet, Option } from './../models/quiz';
+import { LogObj } from './../student-details/student.model';
+import { Question } from './../models/questions';
+import { QuestionSet, Option, SecondaryQuestionsObj } from './../models/quiz';
 import { QuizConfig, QuizService } from './../quiz.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, of } from 'rxjs';
-import { catchError, take } from 'rxjs/operators';
+import { catchError, map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserInfo, UserService } from '../user.service';
@@ -12,6 +14,7 @@ import {
   CountdownEvent,
 } from 'ngx-countdown';
 import { environment } from 'src/environments/environment';
+import { AdminService } from '../admin.service';
 @Component({
   selector: 'app-quiz',
   templateUrl: './quiz.component.html',
@@ -26,17 +29,19 @@ export class QuizComponent implements OnInit {
   quizConfig: QuizConfig | {} = {};
   currentIndex: number = 0;
   isReviewHide: boolean = true;
-  resultArrayObj: any = [];
+  resultArrayObj: LogObj[] = [];
   questionAnswered = 0;
   countDownConfig: CountdownConfig = { leftTime: 1800, demand: true };
   counterStatus: any;
   quizTitle: string = '';
+  userData!: UserInfo;
   @ViewChild('cd') private cd!: CountdownComponent;
   constructor(
     private quizService: QuizService,
     private router: Router,
     private toastrService: ToastrService,
-    private userService: UserService
+    private userService: UserService,
+    private adminService: AdminService
   ) {
     this.quizService
       .getQuizConfig()
@@ -58,6 +63,7 @@ export class QuizComponent implements OnInit {
       if (userData == {}) {
         this.router.navigateByUrl('/home');
       } else {
+        this.userData = userData as UserInfo;
         if ((userData as UserInfo).role == 'STUDENT') {
           this.quizTitle = 'Quizabled: Main Test';
         } else {
@@ -67,44 +73,75 @@ export class QuizComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.quizService.getQuestions(this.quizConfig as QuizConfig).subscribe(
-      (res): void => {
-        const primaryQuestionsObj = (res as QuestionSet).primaryQuestionsObj;
-        const secondaryQuestionsObj = (res as QuestionSet)
-          .secondaryQuestionsObj;
-        primaryQuestionsObj.questions.forEach((question) => {
-          this.primaryQuestionsArray.push({
-            questionObj: question,
-            optionsArray: this.getOptions(
-              question.questionId,
-              primaryQuestionsObj.options
-            ),
+    this.quizService
+      .getQuestions(this.quizConfig as QuizConfig)
+      .pipe(
+        map((res) => {
+          const primaryQuestionsObj = (res as QuestionSet).primaryQuestionsObj;
+          const secondaryQuestionsObj = (res as QuestionSet)
+            .secondaryQuestionsObj;
+          primaryQuestionsObj.questions.sort((a, b) => {
+            return a.questionId - b.questionId;
           });
-        });
-        if (secondaryQuestionsObj && secondaryQuestionsObj.questions) {
-          secondaryQuestionsObj.questions.forEach((question) => {
-            this.secondaryQuestionsArray.push({
+          if (secondaryQuestionsObj) {
+            secondaryQuestionsObj.questions.sort((a, b) => {
+              return a.primaryQuestionId - b.primaryQuestionId;
+            });
+          }
+          return res;
+        })
+      )
+      .subscribe(
+        (res): void => {
+          const primaryQuestionsObj = (res as QuestionSet).primaryQuestionsObj;
+          const secondaryQuestionsObj = (res as QuestionSet)
+            .secondaryQuestionsObj;
+          primaryQuestionsObj.questions.forEach((question) => {
+            this.primaryQuestionsArray.push({
               questionObj: question,
               optionsArray: this.getOptions(
                 question.questionId,
-                secondaryQuestionsObj.options
+                primaryQuestionsObj.options
               ),
             });
           });
+          if (secondaryQuestionsObj && secondaryQuestionsObj.questions) {
+            secondaryQuestionsObj.questions.forEach((question) => {
+              this.secondaryQuestionsArray.push({
+                questionObj: question,
+                optionsArray: this.getOptions(
+                  question.questionId,
+                  secondaryQuestionsObj.options
+                ),
+              });
+            });
+          }
+          setTimeout(() => {
+            this.cd.begin();
+            this.counterStatus = 'on';
+            this.adminService
+              .updateQuizStatus(this.userData.id, {
+                isAttended: 1,
+                timeStamp: Date.now(),
+              })
+              .subscribe(
+                (res) => {
+                  console.log('status updated...');
+                },
+                (err) => {
+                  console.log('Error: ', err);
+                }
+              );
+          }, 500);
+        },
+        (err) => {
+          if (err.status == 404) {
+            this.toastrService.error('No Questions to display!!!', 'Error');
+          } else {
+            this.toastrService.error(err.status, 'Error');
+          }
         }
-        setTimeout(() => {
-          this.cd.begin();
-          this.counterStatus = 'on';
-        }, 500);
-      },
-      (err) => {
-        if (err.status == 404) {
-          this.toastrService.error('No Questions to display!!!', 'Error');
-        } else {
-          this.toastrService.error(err.status, 'Error');
-        }
-      }
-    );
+      );
     console.log(this.primaryQuestionsArray, this.secondaryQuestionsArray);
   }
   getOptions(questionId: number, optionArray: any) {
@@ -170,9 +207,34 @@ export class QuizComponent implements OnInit {
       this.counterStatus = 'off';
       this.cd.stop();
     }
-    setTimeout(() => {
-      this.router.navigateByUrl('/result');
-    }, 500);
+    this.adminService
+      .updateQuizStatus(this.userData.id, {
+        isAttended: 2,
+        timeStamp: Date.now(),
+      })
+      .subscribe(
+        (res) => {
+          console.log('status updated...');
+        },
+        (err) => {
+          console.log('Error: ', err);
+        }
+      );
+    this.adminService
+      .addQuizLog(this.userData.id.toString(), {
+        answerObj: this.resultArrayObj,
+      })
+      .subscribe(
+        (res) => {
+          console.log('status updated...');
+          setTimeout(() => {
+            this.router.navigateByUrl('/result');
+          }, 500);
+        },
+        (err) => {
+          console.log('Error: ', err);
+        }
+      );
   }
   handleCounterEvent(event: CountdownEvent) {
     if (event.action == 'stop') {

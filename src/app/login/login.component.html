@@ -16,7 +16,7 @@
   <div class="questionBox mediumBox">
     <div class="loginWrap">
       <div class="centerAlign">
-        <img src="../../assets/images/quizabled.png" alt="">
+        <img src="../../assets/images/quizabled.png" alt="" />
         <h1>LOGIN</h1>
       </div>
       <form [formGroup]="loginForm">
@@ -56,7 +56,10 @@
         >
           Password is required.
         </div>
-        <input type="submit" value="Login" (click)="signIn()" />
+        <div class="actionFooter">
+          <button class="btnQuizSec" (click)="cancel()">Cancel</button>
+          <button class="btnQuizPri" (click)="signIn()">Login</button>
+        </div>
       </form>
     </div>
   </div>

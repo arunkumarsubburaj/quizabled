@@ -44,11 +44,12 @@
 }
 .certificateContent {
   position: absolute;
-  top: 350px;
+  top: 340px;
   left: 130px;
   right: 130px;
   font-size: 18px;
-  line-height: 1.8;
+  line-height: 2.1;
+  background: #f6f6f4;
 
   strong {
     position: relative;
@@ -57,35 +58,42 @@
     text-transform: uppercase;
     margin-left: 2px;
     padding-left: 3px;
-    &:after {
-      content: "";
-      position: absolute;
-      top: 25px;
-      left: 0;
-      right: 0;
-      border-bottom: 3px dotted #d0a054;
+    &:not(.noLine) {
+      text-indent: 30px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      top: 5px;
+      &:after {
+        content: "";
+        position: absolute;
+        top: 30px;
+        left: 0;
+        right: 0;
+        border-bottom: 3px dotted #d0a054;
+      }
     }
   }
 }
 
-.certificateSignature {
-  position: absolute;
-  top: 535px;
-  right: 105px;
-  padding: 5px;
-  text-align: center;
-  background: #f7f7f7;
-  strong {
-    font-weight: 600;
-    font-size: 20px;
-  }
-  span {
-    font-size: 14px;
-  }
-  > * {
-    display: block;
-  }
-}
+// .certificateSignature {
+//   position: absolute;
+//   top: 535px;
+//   right: 105px;
+//   padding: 5px;
+//   text-align: center;
+//   background: #f7f7f7;
+//   strong {
+//     font-weight: 600;
+//     font-size: 20px;
+//   }
+//   span {
+//     font-size: 14px;
+//   }
+//   > * {
+//     display: block;
+//   }
+// }
 @media print {
   #printHeader {
     display: none;

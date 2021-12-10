@@ -2,32 +2,56 @@
   <h1 class="centerAlign">{{ quizTitle }}</h1>
   <div class="questionBox mediumBox">
     <h1 class="centerAlign">Instructions</h1>
-    <ul class="instructionList">
+    <ul class="instructionList" *ngIf="!isMainQuiz">
+      <li>10 Questions totally</li>
       <li>
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis,
-        laudantium!
+        Every question will have 4 multiple choice options as answers.
+        Participants need to choose only one option
       </li>
       <li>
-        Quo accusantium dicta itaque repellat deserunt velit laboriosam quos
-        quae.
+        You can move to the next question only after attempting the current
+        question
       </li>
       <li>
-        Repellendus, a veniam facere deserunt dolorem commodi corporis quisquam
-        necessitatibus.
+        Choose the language of choice. If a language apart from English is
+        chosen, the content will be displayed in the chosen language and
+        English.
       </li>
       <li>
-        Iusto fuga quam minus, eligendi odio vitae inventore dicta repellendus.
+        Participant can choose any category they want to attempt the mock quiz
+      </li>
+      <li>Mock quiz can be taken any number of times</li>
+      <li>Participant can review all the questions before final submission</li>
+      <li>Final result will be displayed post submitting the answers</li>
+    </ul>
+    <ul class="instructionList" *ngIf="isMainQuiz">
+      <li>20 Questions totally</li>
+      <li>Time duration is 30 minutes to attempt all the questions</li>
+      <li>No negative marking, please try to attempt all the questions</li>
+      <li>
+        Every question will have 4 multiple choice options as answers.
+        Participants need to choose only one option
       </li>
       <li>
-        Harum eaque aspernatur eum voluptatem facilis cumque, aperiam
-        voluptatibus debitis.
+        You can move to the next question only after attempting the current
+        question
       </li>
       <li>
-        Assumenda excepturi expedita doloribus numquam repudiandae iure minus
-        autem beatae!
+        Choose the language of choice. If a language apart from English is
+        chosen, the content will be displayed in the chosen language and English
       </li>
+      <li>Quiz can be taken only once</li>
+      <li>Participant can review all the questions before final submission</li>
+      <li>
+        Final result will be displayed post submitting the answers. Certificate
+        will also be provided
+      </li>
+      <li>
+        We suggest the participant attempts the quiz completely on their own
+        without seeking external help
+      </li>
+      <li>Good Luck!</li>
     </ul>
     <button class="btnQuizPri" (click)="gotoCategory()">Start</button>
   </div>
 </div>
-

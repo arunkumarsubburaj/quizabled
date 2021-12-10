@@ -11,6 +11,7 @@ import { take } from 'rxjs/operators';
 export class InstructionsComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) {}
   quizTitle: string = '';
+  isMainQuiz: boolean = false;
   ngOnInit() {
     this.userService.getLoginStatus().subscribe((status) => {
       if (!status) {
@@ -25,6 +26,7 @@ export class InstructionsComponent implements OnInit {
           this.router.navigateByUrl('/home');
         } else {
           if ((userData as UserInfo).role == 'STUDENT') {
+            this.isMainQuiz = true;
             this.quizTitle = 'Quizabled: Main Test';
           } else {
             this.quizTitle = 'Quizabled: Mock Test';

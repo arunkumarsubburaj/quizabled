@@ -21,4 +21,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   gotoResources() {
     this.router.navigateByUrl('/add-resource');
   }
+  gotoStudentDetails() {
+    this.router.navigateByUrl('/student-list');
+  }
 }

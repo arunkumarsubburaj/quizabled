@@ -1,0 +1,16 @@
+<div id="questionListWrapper">
+  <h3 class="alignCenter header">Log Details of {{ studentName }}</h3>
+  <div class="agGridOuterWrap">
+    <ag-grid-angular
+      style="height: 100%; width: 100%; position: absolute"
+      class="ag-theme-alpine"
+      [rowData]="studentLogData"
+      [defaultColDef]="defaultColDef"
+      [columnDefs]="columnDefs"
+      (gridReady)="onGridReady($event)"
+      [pagination]="true"
+      [paginationPageSize]="10"
+    >
+    </ag-grid-angular>
+  </div>
+</div>

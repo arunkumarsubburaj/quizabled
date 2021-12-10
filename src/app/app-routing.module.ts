@@ -7,6 +7,9 @@ import { ShellComponent } from './shell/shell.component';
 import { AuthGuardService as AuthGuard } from './../shared/services/auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { StudentLogComponent } from './student-log/student-log.component';
+import { ContactAdminComponent } from './contact-admin/contact-admin.component';
 const routes: Routes = [
   {
     path: 'login',
@@ -50,6 +53,21 @@ const routes: Routes = [
       {
         path: 'admin',
         component: AdminComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'student-list',
+        component: StudentDetailsComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'contact-admin',
+        component: ContactAdminComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'show-log/:id',
+        component: StudentLogComponent,
         canActivate: [AuthGuard],
       },
       {

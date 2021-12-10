@@ -37,10 +37,10 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
   quizType: number = QuizType.demo;
   parentQuestionArrayIndex = 0;
   categoryList: { id: number; itemName: string; name: string }[] = [
-    { id: 1, itemName: 'Catogory A', name: 'A' },
-    { id: 2, itemName: 'Catogory B', name: 'B' },
-    { id: 3, itemName: 'Catogory C', name: 'C' },
-    { id: 4, itemName: 'Catogory D', name: 'D' },
+    { id: 1, itemName: 'Category A', name: 'A' },
+    { id: 2, itemName: 'Category B', name: 'B' },
+    { id: 3, itemName: 'Category C', name: 'C' },
+    { id: 4, itemName: 'Category D', name: 'D' },
   ];
   selectedCategories: { id: number; itemName: string; name: string }[] = [];
   // answerList: { id: number; itemName: string; name: string }[] = [];
@@ -104,11 +104,15 @@ export class QmQuestionsComponent implements OnInit, AfterViewInit {
       switch (res) {
         case 'demo':
           this.quizType = QuizType.demo;
-          this.headerTitle = 'Add Demo Quiz Questions';
+          this.headerTitle = location.pathname.includes('/edit-question/')
+            ? 'Update Demo Quiz Questions'
+            : 'Add Demo Quiz Questions';
           break;
         case 'main':
           this.quizType = QuizType.main;
-          this.headerTitle = 'Add Main Quiz Questions';
+          this.headerTitle = location.pathname.includes('/edit-question/')
+            ? 'Update Main Quiz Questions'
+            : 'Add Main Quiz Questions';
           break;
         default:
           break;

@@ -1,0 +1,151 @@
+#questionListWrapper {
+  width: 100%;
+  display: block;
+  height: calc(100vh - 160px);
+  position: relative;
+  .header {
+    margin: 10px 0;
+    font-size: 2rem;
+  }
+  .alignCenter {
+    text-align: center;
+  }
+}
+::ng-deep {
+  #questionListWrapper {
+    span.material-icons.btnIcon {
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      font-size: 25px;
+      margin: 0px 5px;
+      text-align: center;
+      position: relative;
+      top: 5px;
+      cursor: pointer;
+      border-radius: 2px;
+      &.editIcon {
+        color: #4383ff;
+      }
+      &.deleteIcon {
+        color: red;
+      }
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.2);
+      }
+    }
+    .ag-theme-alpine .ag-ltr .ag-cell {
+      border: none !important;
+    }
+
+    span.statusBtn {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      top: 10px;
+      position: relative;
+      display: inline-block;
+      &.red {
+        background-color: #f00;
+      }
+      &.green {
+        background-color: #0f0;
+      }
+      &.yellow {
+        background-color: yellow;
+      }
+    }
+  }
+}
+
+.filterHeader {
+  padding: 20px 0;
+  @media (min-width: 1024px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  button.btnQuizPri.dense {
+    @media (max-width: 1023px) {
+      width: 200px;
+      display: block;
+      margin: 0 auto;
+      height: 40px;
+    }
+    @media (min-width: 1024px) {
+      height: 30px;
+      margin: 0 20px;
+    }
+  }
+  .selectLabel {
+    @media (max-width: 1023px) {
+      width: 150px;
+    }
+  }
+}
+
+.filterHeader > div {
+  margin: 10px;
+}
+
+#confirmPopup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  .wrapper {
+    min-width: 300px;
+    max-height: 70%;
+    max-width: 80%;
+    background-color: #fff;
+    border-radius: 5px;
+    header {
+      font-size: 18px;
+      font-weight: bold;
+      border-bottom: 1px solid #ccc;
+      padding: 10px;
+    }
+    .content {
+      padding: 10px;
+    }
+    .actionFooter {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+      button {
+        margin: 0 10px;
+        &.btnQuizPri,
+        &.btnQuizSec {
+          height: 35px;
+        }
+        &.buttonDelete {
+          background-color: #f00;
+          color: #fff;
+        }
+      }
+    }
+  }
+}
+::ng-deep {
+  @media (min-width: 1024px) {
+    .filterHeader {
+      .selected-list .c-btn {
+        padding-right: 25px;
+      }
+      .cuppa-dropdown {
+        min-width: auto;
+      }
+    }
+  }
+  .dropdown-list {
+    min-width: 200px;
+  }
+}
