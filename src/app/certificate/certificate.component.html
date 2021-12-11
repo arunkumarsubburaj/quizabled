@@ -1,0 +1,26 @@
+<div class="homeContent pageReview">
+  <div class="centerAlign" id="printHeader">
+    <div class="desc">
+      Completed on
+      <strong>{{ particiapatedData | date: "fullDate" }}</strong> at
+      <strong>{{ particiapatedData | date: "shortTime" }}</strong>
+    </div>
+    <div class="resultBtnWrap">
+      <button class="btnQuizPri" (click)="printCertificate()">
+        Print Certificate
+      </button>
+      <button class="btnQuizPri" disabled>Give Feedback</button>
+    </div>
+  </div>
+  <div class="certificateBlock" id="printCertificate">
+    <div class="certificateContent">
+      This is to certify that
+      <strong style="width: 453px">{{ participantName }}</strong>
+      <br />of <strong style="width: 600px">{{ participantInstitution }}</strong
+      ><br />
+      has participated on the online quiz event
+      <strong class="noLine">"Quizabled 2022"</strong> program held on
+      {{ particiapatedData | date: "longDate" }}.
+    </div>
+  </div>
+</div>

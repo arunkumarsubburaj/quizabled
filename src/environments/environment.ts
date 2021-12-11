@@ -4,12 +4,12 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:5000/quizabled_node/quizabled_ms/api',
-  // imagePath: 'http://localhost:80',
-  // resourceUrl: 'http://localhost/resources',
-  apiUrl: 'https://quizabled.com/quizabled_node/quizabled_ms/api',
-  imagePath: 'http://quizabled.com/quizable_images',
-  resourceUrl: 'http://quizabled.com/quizable_resources',
+  apiUrl: 'http://localhost:5000/quizabled_node/quizabled_ms/api',
+  imagePath: 'http://localhost:80',
+  resourceUrl: 'http://localhost/resources',
+  // apiUrl: 'https://quizabled.com/quizabled_node/quizabled_ms/api',
+  // imagePath: 'http://quizabled.com/quizable_images',
+  // resourceUrl: 'http://quizabled.com/quizable_resources',
 };
 
 /*

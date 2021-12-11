@@ -125,10 +125,10 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'review',
+        path: 'certificate',
         loadChildren: () =>
-          import('./review-quiz/review-quiz.module').then(
-            (m) => m.ReviewQuizModule
+          import('./certificate/certificate.module').then(
+            (m) => m.CertificateModule
           ),
         canActivate: [AuthGuard],
       },

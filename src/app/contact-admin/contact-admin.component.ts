@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-admin',
@@ -8,9 +8,12 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 })
 export class ContactAdminComponent implements OnInit {
   status!: number;
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     this.status = window.history.state.quizStatus;
+  }
+  gotoCertificate() {
+    this.router.navigateByUrl('certificate');
   }
 }

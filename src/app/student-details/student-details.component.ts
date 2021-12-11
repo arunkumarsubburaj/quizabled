@@ -24,7 +24,6 @@ export class StudentDetailsComponent implements OnInit {
   columnDefs: ColDef[] = [
     { field: 'name', headerName: 'Name' },
     { field: 'user_name', headerName: 'User Name' },
-    { field: 'gender', headerName: 'Gender' },
     { field: 'dob', headerName: 'Date Of Birth' },
     { field: 'institution', headerName: 'Institution' },
     { field: 'email', headerName: 'Email' },

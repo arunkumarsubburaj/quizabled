@@ -17,6 +17,8 @@ export interface UserInfo {
   q_category?: any;
   age?: any;
   isAttended?: any;
+  startTime?: any;
+  endTime?: any;
 }
 @Injectable({
   providedIn: 'root',
