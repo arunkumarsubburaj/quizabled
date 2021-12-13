@@ -4,7 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 import { shareReplay, tap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { StatusFlag } from '../student-details/student.model';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,11 @@ export class LoginService {
       }),
       shareReplay()
     );
+  }
+  getFlags() {
+    return this.http.get(
+      environment.apiUrl + '/flags'
+    ) as Observable<StatusFlag>;
   }
   logout() {
     sessionStorage.removeItem('id_token');

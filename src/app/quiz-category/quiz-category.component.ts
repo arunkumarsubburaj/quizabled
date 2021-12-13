@@ -1,4 +1,4 @@
-import { UserService } from './../user.service';
+import { UserInfo, UserService } from './../user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ export class QuizCategoryComponent implements OnInit {
     private userService: UserService
   ) {
     this.userService.getUser().subscribe((res) => {
-      this.user = res;
+      this.user = res as UserInfo;
     });
   }
   user: any;
@@ -77,6 +77,10 @@ export class QuizCategoryComponent implements OnInit {
       this.toastrService.error('Please select a category', 'Error');
       return false;
     }
-    this.router.navigateByUrl('/quiz');
+    if (this.user.q_category != 'D') {
+      this.router.navigateByUrl('/quiz');
+    } else {
+      this.router.navigateByUrl('/quiz-d');
+    }
   }
 }

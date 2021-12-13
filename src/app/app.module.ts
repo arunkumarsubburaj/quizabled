@@ -20,9 +20,11 @@ import { AddResourceComponent } from './add-resource/add-resource.component';
 import { StudentDetailsComponent } from './student-details/student-details.component';
 import { StudentLogComponent } from './student-log/student-log.component';
 import { ContactAdminComponent } from './contact-admin/contact-admin.component';
+import { ClosedComponent } from './closed/closed.component';
+import { NotStartedComponent } from './not-started/not-started.component';
 
 @NgModule({
-  declarations: [				
+  declarations: [		
     AppComponent,
     ShellComponent,
     HomeComponent,
@@ -30,10 +32,12 @@ import { ContactAdminComponent } from './contact-admin/contact-admin.component';
     AdminComponent,
     LoginComponent,
     ResourcesComponent,
-      AddResourceComponent,
-      StudentDetailsComponent,
-      StudentLogComponent,
-      ContactAdminComponent
+    AddResourceComponent,
+    StudentDetailsComponent,
+    StudentLogComponent,
+    ContactAdminComponent,
+      ClosedComponent,
+      NotStartedComponent
    ],
   imports: [
     BrowserModule,

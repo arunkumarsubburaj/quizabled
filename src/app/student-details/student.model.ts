@@ -26,3 +26,16 @@ export interface LogObj {
   selectedValue: string | null;
   questionNo: string;
 }
+
+export interface StatusFlag {
+  isStartedA: number;
+  isStartedB: number;
+  isStartedD: number;
+  isEndedA: number;
+  isEndedB: number;
+  isEndedD: number;
+  isEndedC: number;
+  isStartedC: number;
+  isStarted: number;
+  isEnded: number;
+}

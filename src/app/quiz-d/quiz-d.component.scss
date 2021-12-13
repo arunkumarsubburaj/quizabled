@@ -1,0 +1,252 @@
+$blue: #4383ff;
+
+.pageQuizQuestion {
+  &.hide {
+    display: none;
+  }
+  .questionPagination {
+    @media (min-width: 768px) {
+      padding: 0 130px;
+      margin-top: -70px;
+    }
+  }
+}
+
+.quizWrap {
+  &.questionBox {
+    &.hide {
+      display: none;
+    }
+  }
+  .textbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 15px;
+    margin-bottom: 0;
+    height: 100%;
+
+    img {
+      max-width: 150px;
+      max-height: 150px;
+      align-self: center;
+      margin: 5px 0;
+    }
+
+    @media (min-width: 768px) {
+      padding: 20px;
+      min-height: 80px;
+    }
+  }
+  .secLang {
+    opacity: 0.6;
+    margin-top: 10px;
+  }
+}
+.quizAnsWrap {
+  @media (min-width: 768px) {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -20px;
+  }
+}
+.quizQus {
+  @media (max-width: 767px) {
+    margin-bottom: 20px;
+  }
+  margin-bottom: 40px;
+  position: relative;
+  .zoom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+    cursor: zoom-in;
+  }
+
+  &:hover .zoom {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+.quizAns {
+  position: relative;
+  margin-bottom: 20px;
+  @media (min-width: 768px) {
+    flex: 0 0 calc(50% - 40px);
+    max-width: calc(50% - 40px);
+    margin: 0 20px 40px;
+  }
+
+  .zoom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #ccc;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+    cursor: zoom-in;
+  }
+
+  &:hover .zoom {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  label {
+    cursor: pointer;
+    height: 100%;
+    &:hover .textbox {
+      background: rgb(224, 249, 255);
+    }
+  }
+
+  input {
+    display: none;
+
+    &:checked + label .textbox {
+      background: $blue;
+      color: #fff;
+      transition: 0.12s;
+    }
+  }
+}
+
+.zoomedImg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  // display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  &.show {
+    display: flex;
+  }
+
+  .btnQuizPri {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    span {
+      font-size: 30px;
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+
+  img {
+    max-width: 80%;
+    max-height: 80%;
+  }
+}
+
+.otherLanguage {
+  border-top: 2px solid #ccc;
+  padding-top: 20px;
+  @media (min-width: 768px) {
+    padding-top: 40px;
+  }
+  .textbox {
+    background: #eee;
+  }
+}
+
+/* Next Prev */
+.navBtnWrap {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  button {
+    justify-content: center;
+    min-width: 110px;
+    padding: 0;
+  }
+}
+
+/* pagination */
+.questionPagination {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  > * {
+    width: 40px;
+    height: 40px;
+    margin: 0 8px 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    background: #ff8484;
+    box-shadow: 0px 4px 15px rgba(24, 24, 24, 0.22);
+    border-radius: 5px;
+    cursor: pointer;
+    &.active {
+      color: $blue;
+      background: #fff;
+    }
+  }
+  @media (min-width: 768px) {
+    > * {
+      width: 50px;
+      height: 50px;
+      margin: 0 10px 20px;
+    }
+  }
+}
+
+/* Review & Submit */
+.pageReview {
+  &.hide {
+    display: none;
+  }
+  .questionPagination {
+    .done {
+      color: #000;
+      background: #92ff4f;
+    }
+    @media (min-width: 768px) {
+      padding: 5vh 10%;
+    }
+  }
+  .btnQuizPri {
+    margin-bottom: 20px;
+  }
+}
+div#timer {
+  font-size: 3rem;
+  padding: 10px 15px;
+  background: $blue;
+  border-radius: 5px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.timerWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}

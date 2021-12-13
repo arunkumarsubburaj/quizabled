@@ -2,7 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../user.service';
+import { StatusFlag } from '../student-details/student.model';
+import { UserInfo, UserService } from '../user.service';
 import { LoginService } from './login.service';
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private userService: UserService
   ) {}
-  userData!: any;
+  userData!: UserInfo;
   loginForm = new FormGroup({
     user_name: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required]),
@@ -65,25 +66,61 @@ export class LoginComponent implements OnInit, AfterViewInit {
         this.router.navigateByUrl('/admin');
         break;
       case 'STUDENT':
-        if (this.userData.isAttended == 1) {
-          this.router.navigateByUrl('/contact-admin', {
-            state: { quizStatus: 1 },
-          });
-        } else if (this.userData.isAttended == 2) {
-          this.router.navigateByUrl('/contact-admin', {
-            state: { quizStatus: 2 },
-          });
-        } else {
-          this.router.navigateByUrl('/instructions');
-        }
+        this.loadStudentPage();
         break;
       case 'QUIZ_MASTER':
         this.router.navigateByUrl('/quiz-master');
         break;
-
       default:
         break;
     }
+  }
+  loadStudentPage() {
+    this.loginService.getFlags().subscribe(
+      (res: StatusFlag) => {
+        if (
+          res.isEnded ||
+          (this.userData.q_category == 'A' &&
+            res.isEndedA &&
+            !this.userData.endTime) ||
+          (this.userData.q_category == 'B' &&
+            res.isEndedB &&
+            !this.userData.endTime) ||
+          (this.userData.q_category == 'C' &&
+            res.isEndedC &&
+            !this.userData.endTime) ||
+          (this.userData.q_category == 'D' &&
+            res.isEndedD &&
+            !this.userData.endTime)
+        ) {
+          this.router.navigateByUrl('/closed');
+        } else if (
+          !res.isStarted ||
+          (this.userData.q_category == 'A' && !res.isStartedA) ||
+          (this.userData.q_category == 'B' && !res.isStartedB) ||
+          (this.userData.q_category == 'C' && !res.isStartedC) ||
+          (this.userData.q_category == 'D' && !res.isStartedD)
+        ) {
+          this.router.navigateByUrl('/not-started');
+        } else {
+          if (this.userData.isAttended != 0) {
+            this.router.navigateByUrl('/contact-admin', {
+              state: {
+                quizStatus: this.userData.isAttended,
+                endTime: this.userData.endTime,
+              },
+            });
+          } else {
+            this.router.navigateByUrl('/instructions');
+          }
+        }
+      },
+      (err) => {
+        this.toastrService.error(
+          'Something wend wrong. Please contact administrator'
+        );
+      }
+    );
   }
   cancel() {
     this.router.navigateByUrl('/home');

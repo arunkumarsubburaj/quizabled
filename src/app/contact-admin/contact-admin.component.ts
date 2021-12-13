@@ -8,10 +8,12 @@ import { Router } from '@angular/router';
 })
 export class ContactAdminComponent implements OnInit {
   status!: number;
+  endTime!: number;
   constructor(private router: Router) {}
 
   ngOnInit() {
     this.status = window.history.state.quizStatus;
+    this.endTime = window.history.state.endTime;
   }
   gotoCertificate() {
     this.router.navigateByUrl('certificate');

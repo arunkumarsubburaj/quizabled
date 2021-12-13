@@ -1,0 +1,175 @@
+<!-- Questions Page -->
+<div class="homeContent pageQuizQuestion" [ngClass]="{ hide: !isReviewHide }">
+  <div class="timerWrap">
+    <h1 class="centerAlign">{{ quizTitle }}</h1>
+    <div id="timer">
+      <countdown
+        #cd
+        [config]="countDownConfig"
+        (event)="handleCounterEvent($event)"
+      ></countdown>
+    </div>
+  </div>
+  <div
+    class="quizWrap questionBox"
+    *ngFor="let questions of primaryQuestionsArray; let i = index"
+    [ngClass]="{ hide: i != currentIndex }"
+  >
+    <div class="quizQus">
+      <div class="textbox">
+        <div>
+          <input
+            type="hidden"
+            name="questionId"
+            [value]="questions.questionObj.questionId"
+          />
+          <input
+            type="hidden"
+            name="question"
+            [value]="questions.questionObj.question"
+          />
+          <input type="hidden" name="questionNo" [value]="i + 1" />
+          <span
+            >Question <span>{{ i + 1 }}</span
+            >: &nbsp;</span
+          >{{ questions.questionObj.question }}
+        </div>
+        <div class="secLang" *ngIf="secondaryQuestionsArray.length > 0">
+          <span
+            >Question <span>{{ i + 1 }}</span
+            >: &nbsp;</span
+          >{{ secondaryQuestionsArray[i].questionObj.question }}
+        </div>
+        <img
+          *ngIf="
+            questions.questionObj.questionImage &&
+            questions.questionObj.questionImage.length > 0
+          "
+          [src]="getImage(questions.questionObj)"
+          alt=""
+        />
+        <div
+          class="zoom"
+          *ngIf="
+            questions.questionObj.questionImage &&
+            questions.questionObj.questionImage.length > 0
+          "
+          (click)="expand(questions.questionObj)"
+        >
+          Click here to Zoom the Image
+        </div>
+      </div>
+    </div>
+    <div class="quizAnsWrap">
+      <div
+        class="quizAns"
+        *ngFor="let option of questions.optionsArray; let j = index"
+      >
+        <input
+          type="radio"
+          [name]="questions.questionObj.questionId"
+          [id]="option.optionId"
+          class="questionNOption"
+          [attr.data-selectedValue]="option.options"
+          [attr.data-index]="i + 1"
+          [attr.data-question]="questions.questionObj.question"
+        />
+        <label [for]="option.optionId">
+          <div class="textbox">
+            <div>{{ option.options }}</div>
+            <div class="secLang" *ngIf="secondaryQuestionsArray.length > 0">
+              {{ secondaryQuestionsArray[i].optionsArray[j].options }}
+            </div>
+            <img
+              *ngIf="option.optionImage && option.optionImage.length > 0"
+              [src]="getImage(option, true)"
+              alt=""
+            />
+          </div>
+        </label>
+        <div
+          *ngIf="option.optionImage && option.optionImage.length > 0"
+          class="zoom"
+          (click)="expand(option, true)"
+        >
+          Click here to Zoom the Image
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- make this show(display: flex) hide(display: none)  -->
+  <div class="zoomedImg">
+    <button class="btnQuizPri" (click)="collapseImage()">
+      <span>&times;</span> Close
+    </button>
+    <img alt="" />
+  </div>
+
+  <!-- Next Previous -->
+  <div class="navBtnWrap">
+    <button
+      class="btnQuizPri prevBtn"
+      [disabled]="true"
+      style="visibility: hidden"
+    >
+      Previous
+    </button>
+    <button
+      class="btnQuizPri nextBtn"
+      (click)="changeQuestion('next', false)"
+      *ngIf="currentIndex != primaryQuestionsArray.length - 1"
+    >
+      Next
+    </button>
+    <button
+      class="btnQuizPri nextBtn"
+      (click)="gotoCertify()"
+      *ngIf="currentIndex == primaryQuestionsArray.length - 1"
+    >
+      Submit
+    </button>
+  </div>
+
+  <!-- Pagination -->
+  <div class="questionPagination">
+    <div
+      *ngFor="let item of primaryQuestionsArray; let i = index"
+      [ngClass]="{ active: currentIndex == i }"
+    >
+      {{ i + 1 }}
+    </div>
+  </div>
+</div>
+
+<div class="homeContent pageReview" [ngClass]="{ hide: isReviewHide }">
+  <div class="centerAlign">
+    <h1>Review and Submit</h1>
+    <div class="desc">
+      <strong
+        >Once you click the submit button you will not be able to change your
+        answers. So please review and then click submit.</strong
+      >
+    </div>
+    <div class="desc redText">
+      <strong
+        >You have answered&nbsp;<span>{{ questionAnswered }}</span
+        >&nbsp;out of &nbsp;<span>{{ primaryQuestionsArray.length }}</span
+        >&nbsp; questions in this quiz.</strong
+      >
+    </div>
+    <div class="questionPagination">
+      <div
+        *ngFor="let questionObj of resultArrayObj"
+        (click)="gotoQuestion(questionObj)"
+        [ngClass]="{ done: questionObj.selectedValue != null }"
+      >
+        {{ questionObj.questionNo }}
+      </div>
+    </div>
+    <div class="desc redText">
+      <strong>Warning: Submitting is final and cannot be undone.</strong>
+    </div>
+    <button class="btnQuizPri" (click)="gotoCertify()">Submit</button>
+  </div>
+</div>
