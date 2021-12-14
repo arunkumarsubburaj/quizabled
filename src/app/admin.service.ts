@@ -11,6 +11,10 @@ export interface ResourceList {
   name: string;
   extension: string;
 }
+export interface MarkPayload {
+  studentId: number;
+  totalMark: number;
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -59,6 +63,9 @@ export class AdminService {
     return this.http.get(
       environment.apiUrl + '/getStudentLog?studentId=' + studentId
     ) as Observable<LogObj[]>;
+  }
+  updateMarks(payLoad: MarkPayload) {
+    return this.http.post(`${environment.apiUrl}/updateStudentMark`, payLoad);
   }
   unlockStudent(studentId: number) {
     return this.http.get(

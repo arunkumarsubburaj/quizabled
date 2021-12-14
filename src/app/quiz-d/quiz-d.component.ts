@@ -237,31 +237,31 @@ export class QuizDComponent implements OnInit {
   }
   handleCounterEvent(event: CountdownEvent) {
     //On submit or next click
-    if (event.action == 'stop') {
+    if (event.action == 'stop' || event.action == 'done') {
       this.counterStatus = 'off';
       this.timeConsumed += 90000 - event.left;
       const timeTaken = this.millisToMinutesAndSeconds(this.timeConsumed);
       window.sessionStorage.setItem('timeTaken', timeTaken);
-      if (event.left == 0) {
-        if (this.currentIndex == this.primaryQuestionsArray.length - 1) {
-          this.gotoReview();
-        } else {
-          this.changeQuestion('next', true);
-        }
-      }
-    }
-    // On timer ends
-    if (event.action == 'done') {
-      this.counterStatus = 'off';
-      this.timeConsumed += 90000;
-      const timeTaken = this.millisToMinutesAndSeconds(this.timeConsumed);
-      window.sessionStorage.setItem('timeTaken', timeTaken);
+      // if (event.left == 0) {
       if (this.currentIndex == this.primaryQuestionsArray.length - 1) {
         this.gotoReview();
       } else {
         this.changeQuestion('next', true);
       }
+      // }
     }
+    // On timer ends
+    // if (event.action == 'done') {
+    //   this.counterStatus = 'off';
+    //   this.timeConsumed += 90000;
+    //   const timeTaken = this.millisToMinutesAndSeconds(this.timeConsumed);
+    //   window.sessionStorage.setItem('timeTaken', timeTaken);
+    //   if (this.currentIndex == this.primaryQuestionsArray.length - 1) {
+    //     this.gotoReview();
+    //   } else {
+    //     this.changeQuestion('next', true);
+    //   }
+    // }
   }
   millisToMinutesAndSeconds(millis: number) {
     var minutes = Math.floor(millis / 60000);

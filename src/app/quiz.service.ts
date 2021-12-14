@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { Question } from './models/questions';
 import { map, take } from 'rxjs/operators';
 import { QmQuestionList } from './qm-question-list/qm-question-list';
+import { AnswerObj } from './student-details/student.model';
 export interface QuizConfig {
   category: string;
   language: string;
@@ -50,7 +51,10 @@ export class QuizService {
     return this.http.post(`${environment.apiUrl}/getQuestions`, questionObj);
   }
   getAnswers(questionObj: QuizConfig) {
-    return this.http.post(`${environment.apiUrl}/getAnswers`, questionObj);
+    return this.http.post(
+      `${environment.apiUrl}/getAnswers`,
+      questionObj
+    ) as Observable<AnswerObj[]>;
   }
   getQuizConfig() {
     return forkJoin({

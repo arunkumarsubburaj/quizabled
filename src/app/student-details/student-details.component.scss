@@ -24,7 +24,9 @@
       top: 5px;
       cursor: pointer;
       border-radius: 2px;
-      &.editIcon {
+      &.editIcon,
+      &.refreshIcon,
+      &.marksIcon {
         color: #4383ff;
       }
       &.deleteIcon {

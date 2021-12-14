@@ -5,8 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { ColDef, GridApi } from 'ag-grid-community';
 import { EditDeleteRenderer } from './edit-delete-button.component';
-import { fromEvent } from 'rxjs';
+import { forkJoin, fromEvent } from 'rxjs';
 import { StudentData } from './student.model';
+import { QuizService } from '../quiz.service';
 
 @Component({
   selector: 'app-student-details',
@@ -17,10 +18,12 @@ export class StudentDetailsComponent implements OnInit {
   constructor(
     private toastrService: ToastrService,
     private router: Router,
-    private adminService: AdminService
+    private adminService: AdminService,
+    private quizService: QuizService
   ) {}
   studentId!: number;
   studentData: StudentData[] = [];
+  currentstudentData!: StudentData;
   columnDefs: ColDef[] = [
     { field: 'name', headerName: 'Name' },
     { field: 'user_name', headerName: 'User Name' },
@@ -31,6 +34,7 @@ export class StudentDetailsComponent implements OnInit {
     { field: 'phone', headerName: 'Phone No' },
     { field: 'q_category', headerName: 'Quiz Category' },
     { field: 'age', headerName: 'Age', width: 150 },
+    { field: 'totalMarks', headerName: 'Mark', width: 150 },
     {
       field: 'isAttended',
       headerName: 'Status',
@@ -105,6 +109,7 @@ export class StudentDetailsComponent implements OnInit {
   }
   onCellClicked(eve: any) {
     this.studentId = eve.data.id;
+    this.currentstudentData = eve.data;
     if ((eve.column.getColId() as string).toLowerCase() == 'action') {
       let actionType = eve.event.target.getAttribute('data-action');
       switch (actionType) {
@@ -114,8 +119,60 @@ export class StudentDetailsComponent implements OnInit {
         case 'resetLog':
           this.openPopup();
           break;
+        case 'getMarks':
+          this.updateMarks();
       }
     }
+  }
+  updateMarks() {
+    if (
+      this.currentstudentData.isAttended == 2 ||
+      this.currentstudentData.endTime != null
+    ) {
+      const stundetId = this.studentId.toString();
+      let questionsAnswered = 0;
+      const AnswersEndPoint = this.quizService.getAnswers({
+        quizType: 2,
+        category: this.currentstudentData.q_category,
+        language: 'en',
+      });
+      const studentLogEndPoint = this.adminService.showQuizLog(stundetId);
+      forkJoin([AnswersEndPoint, studentLogEndPoint]).subscribe(
+        (res) => {
+          const resultArray = res[1];
+          const answerArray = res[0];
+          resultArray.forEach((resultObj) => {
+            const answerObj = answerArray.filter((answerObj) => {
+              return answerObj.questionId == +resultObj.questionId;
+            })[0];
+            if (
+              resultObj.selectedOptionId &&
+              resultObj.selectedOptionId == answerObj.optionId
+            ) {
+              questionsAnswered += 1;
+            }
+          });
+          this.updateMarksToTable(questionsAnswered);
+        },
+        (err) => {
+          this.toastrService.error(err);
+        }
+      );
+    } else {
+      this.toastrService.info('Student not completed the Quiz yet....');
+    }
+  }
+  updateMarksToTable(mark: number) {
+    this.adminService
+      .updateMarks({ totalMark: mark, studentId: this.studentId })
+      .subscribe(
+        (res) => {
+          this.fetchStudentList();
+        },
+        (err) => {
+          this.toastrService.error(err);
+        }
+      );
   }
   closePopup(btnName: string) {
     (document.getElementById('confirmPopup') as HTMLDivElement).style.display =

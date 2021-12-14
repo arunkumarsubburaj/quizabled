@@ -1,5 +1,13 @@
 <div id="questionListWrapper">
-  <h3 class="alignCenter header">Student Details</h3>
+  <h3 class="alignCenter header">
+    Student Details &nbsp; &nbsp;
+    <span
+      class="material-icons btnIcon refreshIcon"
+      (click)="fetchStudentList()"
+    >
+      refresh
+    </span>
+  </h3>
   <div class="agGridOuterWrap">
     <ag-grid-angular
       style="height: 100%; width: 100%; position: absolute"

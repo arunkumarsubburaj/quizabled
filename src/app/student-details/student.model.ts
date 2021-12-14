@@ -39,3 +39,8 @@ export interface StatusFlag {
   isStarted: number;
   isEnded: number;
 }
+
+export interface AnswerObj {
+  optionId: number;
+  questionId: number;
+}

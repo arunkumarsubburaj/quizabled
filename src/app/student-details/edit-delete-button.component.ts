@@ -4,6 +4,13 @@ import { ICellRendererParams } from 'ag-grid-community';
   selector: 'edit-delete-cell-renderer',
   template: `
     <span
+      class="material-icons btnIcon marksIcon"
+      data-action="getMarks"
+      title="Get Marks"
+    >
+      calculate
+    </span>
+    <span
       class="material-icons btnIcon editIcon"
       data-action="showLog"
       title="Show Log"
