@@ -17,6 +17,7 @@ export class QuizResultComponent implements OnInit {
   user: any;
   answerArryObj: any;
   quizConfig: any;
+  isDemoUser: boolean = false;
   timeTaken: any;
   constructor(private quizService: QuizService) {
     this.quizService
@@ -32,12 +33,15 @@ export class QuizResultComponent implements OnInit {
       });
   }
   ngOnInit() {
-    this.user = window.sessionStorage.getItem('userData')
-      ? JSON.parse(window.sessionStorage.getItem('userData') as string)
-      : null;
-    if (this.user && this.user.role != 'DEMO') {
-      this.participantName = this.user.name;
-      this.participantInstitution = this.user.institution;
+    this.isDemoUser = sessionStorage.getItem('isDemoUser') == 'true';
+    if (!this.isDemoUser) {
+      this.user = window.sessionStorage.getItem('userData')
+        ? JSON.parse(window.sessionStorage.getItem('userData') as string)
+        : null;
+      if (this.user && this.user.role != 'DEMO') {
+        this.participantName = this.user.name;
+        this.participantInstitution = this.user.institution;
+      }
     }
     this.resultArrayObj = window.sessionStorage.getItem('resultArrayObj')
       ? JSON.parse(window.sessionStorage.getItem('resultArrayObj') as string)

@@ -207,51 +207,29 @@ export class QuizComponent implements OnInit {
       this.counterStatus = 'off';
       this.cd.stop();
     }
-    const quizStatus = this.adminService.updateQuizStatus(this.userData.id, {
-      isAttended: 2,
-      timeStamp: Date.now(),
-    });
-    const log = this.adminService.addQuizLog(this.userData.id.toString(), {
-      answerObj: this.resultArrayObj,
-    });
-    forkJoin([quizStatus, log]).subscribe(
-      (res) => {
-        console.log('status updated...');
-        console.log('status updated...');
-        setTimeout(() => {
-          this.router.navigateByUrl('/result');
-        }, 500);
-      },
-      (err) => {
-        this.toastrService.error(err);
-      }
-    );
-    // this.adminService
-    //   .updateQuizStatus(this.userData.id, {
-    //     isAttended: 2,
-    //     timeStamp: Date.now(),
-    //   })
-    //   .subscribe(
-    //     (res) => {
-    //     },
-    //     (err) => {
-    //       console.log('Error: ', err);
-    //     }
-    //   );
-    // this.adminService
-    //   .addQuizLog(this.userData.id.toString(), {
-    //     answerObj: this.resultArrayObj,
-    //   })
-    //   .subscribe(
-    //     (res) => {
-    //       setTimeout(() => {
-    //         this.router.navigateByUrl('/result');
-    //       }, 500);
-    //     },
-    //     (err) => {
-    //       console.log('Error: ', err);
-    //     }
-    //   );
+    if (this.userData && this.userData.id) {
+      const quizStatus = this.adminService.updateQuizStatus(this.userData.id, {
+        isAttended: 2,
+        timeStamp: Date.now(),
+      });
+      const log = this.adminService.addQuizLog(this.userData.id.toString(), {
+        answerObj: this.resultArrayObj,
+      });
+      forkJoin([quizStatus, log]).subscribe(
+        (res) => {
+          console.log('status updated...');
+          console.log('status updated...');
+          setTimeout(() => {
+            this.router.navigateByUrl('/result');
+          }, 500);
+        },
+        (err) => {
+          this.toastrService.error(err);
+        }
+      );
+    } else {
+      this.router.navigateByUrl('/result');
+    }
   }
   handleCounterEvent(event: CountdownEvent) {
     if (event.action == 'stop') {

@@ -77,7 +77,11 @@ export class QuizCategoryComponent implements OnInit {
       this.toastrService.error('Please select a category', 'Error');
       return false;
     }
-    if (this.user.q_category != 'D') {
+    const selectedCategry = window.sessionStorage.getItem('selectedCategory');
+    if (
+      (this.user && this.user.q_category && this.user.q_category != 'D') ||
+      selectedCategry != 'D'
+    ) {
       this.router.navigateByUrl('/quiz');
     } else {
       this.router.navigateByUrl('/quiz-d');

@@ -32,7 +32,7 @@ export class QuizDComponent implements OnInit {
   isReviewHide: boolean = true;
   resultArrayObj: LogObj[] = [];
   questionAnswered = 0;
-  countDownConfig: CountdownConfig = { leftTime: 90, demand: true };
+  countDownConfig: CountdownConfig = { leftTime: 40, demand: true };
   timeConsumed: number = 0;
   counterStatus: any;
   quizTitle: string = '';
@@ -202,66 +202,52 @@ export class QuizDComponent implements OnInit {
       'resultArrayObj',
       JSON.stringify(this.resultArrayObj)
     );
-    if (this.counterStatus == 'on') {
-      this.isReviewHide = false;
-    } else {
-      this.gotoCertify();
-    }
+    // this.gotoCertify();
   }
   gotoQuestion(questionObj: any) {
     this.currentIndex = questionObj.questionNo - 1;
     this.isReviewHide = true;
   }
   gotoCertify() {
+    this.gotoReview();
     if (this.counterStatus == 'on') {
       this.counterStatus = 'off';
       this.cd.stop();
     }
-    const quizStatus = this.adminService.updateQuizStatus(this.userData.id, {
-      isAttended: 2,
-      timeStamp: Date.now(),
-    });
-    const log = this.adminService.addQuizLog(this.userData.id.toString(), {
-      answerObj: this.resultArrayObj,
-    });
-    forkJoin([quizStatus, log]).subscribe(
-      (res) => {
-        console.log('status updated...');
-        console.log('status updated...');
-        this.router.navigateByUrl('/result');
-      },
-      (err) => {
-        this.toastrService.error(err);
-      }
-    );
+    if (this.userData && this.userData.id) {
+      const quizStatus = this.adminService.updateQuizStatus(this.userData.id, {
+        isAttended: 2,
+        timeStamp: Date.now(),
+      });
+      const log = this.adminService.addQuizLog(this.userData.id.toString(), {
+        answerObj: this.resultArrayObj,
+      });
+      forkJoin([quizStatus, log]).subscribe(
+        (res) => {
+          console.log('status updated...');
+          console.log('status updated...');
+          this.router.navigateByUrl('/result');
+        },
+        (err) => {
+          this.toastrService.error(err);
+        }
+      );
+    } else {
+      this.router.navigateByUrl('/result');
+    }
   }
   handleCounterEvent(event: CountdownEvent) {
-    //On submit or next click
     if (event.action == 'stop' || event.action == 'done') {
       this.counterStatus = 'off';
-      this.timeConsumed += 90000 - event.left;
+      this.timeConsumed += 40000 - event.left;
       const timeTaken = this.millisToMinutesAndSeconds(this.timeConsumed);
       window.sessionStorage.setItem('timeTaken', timeTaken);
-      // if (event.left == 0) {
       if (this.currentIndex == this.primaryQuestionsArray.length - 1) {
         this.gotoReview();
       } else {
         this.changeQuestion('next', true);
       }
-      // }
     }
-    // On timer ends
-    // if (event.action == 'done') {
-    //   this.counterStatus = 'off';
-    //   this.timeConsumed += 90000;
-    //   const timeTaken = this.millisToMinutesAndSeconds(this.timeConsumed);
-    //   window.sessionStorage.setItem('timeTaken', timeTaken);
-    //   if (this.currentIndex == this.primaryQuestionsArray.length - 1) {
-    //     this.gotoReview();
-    //   } else {
-    //     this.changeQuestion('next', true);
-    //   }
-    // }
   }
   millisToMinutesAndSeconds(millis: number) {
     var minutes = Math.floor(millis / 60000);

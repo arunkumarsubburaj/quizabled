@@ -12,6 +12,7 @@ export class InstructionsComponent implements OnInit {
   constructor(private router: Router, private userService: UserService) {}
   quizTitle: string = '';
   isMainQuiz: boolean = false;
+  isCategoryD: boolean = false;
   ngOnInit() {
     this.userService.getLoginStatus().subscribe((status) => {
       if (!status) {
@@ -25,6 +26,7 @@ export class InstructionsComponent implements OnInit {
         if (userData == {}) {
           this.router.navigateByUrl('/home');
         } else {
+          this.isCategoryD = (userData as UserInfo).q_category == 'D';
           if ((userData as UserInfo).role == 'STUDENT') {
             this.isMainQuiz = true;
             this.quizTitle = 'Quizabled: Main Test';

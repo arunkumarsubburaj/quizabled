@@ -24,7 +24,7 @@
       <li>Participant can review all the questions before final submission</li>
       <li>Final result will be displayed post submitting the answers</li>
     </ul>
-    <ul class="instructionList" *ngIf="isMainQuiz">
+    <ul class="instructionList" *ngIf="isMainQuiz && !isCategoryD">
       <li>20 Questions totally</li>
       <li>Time duration is 30 minutes to attempt all the questions</li>
       <li>No negative marking, please try to attempt all the questions</li>
@@ -49,6 +49,34 @@
       <li>
         We suggest the participant attempts the quiz completely on their own
         without seeking external help
+      </li>
+      <li>Good Luck!</li>
+    </ul>
+    <ul class="instructionList" *ngIf="isMainQuiz && isCategoryD">
+      <li>20 Questions totally</li>
+      <li>Time duration is 40 second per question</li>
+      <li>
+        If you do not answer, the question will automatically move to the next
+        question after 40 seconds
+      </li>
+      <li>No negative marking, please try to attempt all the questions</li>
+      <li>
+        Every question will have 4 multiple choice options as answers.
+        Participants need to choose only one option
+      </li>
+      <li>
+        You can move to the next question only after attempting the current
+        question. Can move on to the next question if you do not answer anything
+      </li>
+      <li>
+        Choose the language of choice. If a language apart from English is
+        chosen, the content will be displayed in the chosen language and English
+      </li>
+      <li>Quiz can be taken only once</li>
+      <li>Final result will be displayed post submitting the answers</li>
+      <li>
+        We suggest the participants attempt the quiz completely on their own
+        without seeking external help. Googling strictly not allowed!
       </li>
       <li>Good Luck!</li>
     </ul>

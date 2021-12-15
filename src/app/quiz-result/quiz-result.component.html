@@ -20,7 +20,7 @@
       <button
         class="btnQuizPri"
         (click)="printCertificate()"
-        *ngIf="user.role != 'DEMO'"
+        *ngIf="user && user.role != 'DEMO'"
       >
         Print Certificate
       </button>
@@ -30,7 +30,7 @@
   <div
     class="certificateBlock"
     id="printCertificate"
-    *ngIf="user.role != 'DEMO'"
+    *ngIf="user && user.role != 'DEMO'"
   >
     <div class="certificateContent">
       This is to certify that
