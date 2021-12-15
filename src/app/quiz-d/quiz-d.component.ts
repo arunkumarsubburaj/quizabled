@@ -243,7 +243,7 @@ export class QuizDComponent implements OnInit {
       const timeTaken = this.millisToMinutesAndSeconds(this.timeConsumed);
       window.sessionStorage.setItem('timeTaken', timeTaken);
       if (this.currentIndex == this.primaryQuestionsArray.length - 1) {
-        this.gotoReview();
+        this.gotoCertify();
       } else {
         this.changeQuestion('next', true);
       }
