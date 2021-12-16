@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { AdminService } from '../admin.service';
 import { QuizService } from '../quiz.service';
+import { UserInfo } from '../user.service';
 @Component({
   selector: 'app-quiz-result',
   templateUrl: './quiz-result.component.html',
@@ -14,12 +16,15 @@ export class QuizResultComponent implements OnInit {
   questionsAnswered = 0;
   resultArrayObj: any;
   totalQuestions!: number;
-  user: any;
+  user!: UserInfo;
   answerArryObj: any;
   quizConfig: any;
   isDemoUser: boolean = false;
   timeTaken: any;
-  constructor(private quizService: QuizService) {
+  constructor(
+    private quizService: QuizService,
+    private adminService: AdminService
+  ) {
     this.quizService
       .getQuizConfig()
       .pipe(catchError((error) => of(error)))
@@ -38,9 +43,9 @@ export class QuizResultComponent implements OnInit {
       this.user = window.sessionStorage.getItem('userData')
         ? JSON.parse(window.sessionStorage.getItem('userData') as string)
         : null;
-      if (this.user && this.user.role != 'DEMO') {
-        this.participantName = this.user.name;
-        this.participantInstitution = this.user.institution;
+      if (this.user && (this.user as UserInfo).role != 'DEMO') {
+        this.participantName = (this.user as UserInfo).name;
+        this.participantInstitution = (this.user as UserInfo).institution;
       }
     }
     this.resultArrayObj = window.sessionStorage.getItem('resultArrayObj')
@@ -65,5 +70,18 @@ export class QuizResultComponent implements OnInit {
         this.questionsAnswered += 1;
       }
     });
+    this.adminService
+      .updateMarks({
+        studentId: (this.user as UserInfo).id,
+        totalMark: this.questionsAnswered,
+      })
+      .subscribe(
+        (res) => {
+          console.log('Marks Updated in DB');
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }

@@ -1,6 +1,6 @@
 <div id="contactAdminWrapper">
   <div *ngIf="status == 2 || (status == 1 && endTime)">
-    <h3>You have already complted the quiz!!!</h3>
+    <h3>You have already completed the quiz!!!</h3>
     <div class="actionFooter">
       <button class="btnQuizPri" (click)="gotoCertificate()">
         View Certificate
@@ -9,8 +9,8 @@
   </div>
   <div *ngIf="status == 1 && !endTime">
     <h3>
-      In our system it show that you already taken the test but not completed
-      it.
+      In our system it show that you have already taken the test but not
+      completed it.
     </h3>
     <h4>If you want to retake the quiz, please contact administrator</h4>
   </div>

@@ -78,46 +78,46 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loadStudentPage() {
     this.loginService.getFlags().subscribe(
       (res: StatusFlag) => {
-        if (
-          res.isEnded ||
-          (this.userData.q_category == 'A' &&
-            res.isEndedA &&
-            !this.userData.endTime) ||
-          (this.userData.q_category == 'B' &&
-            res.isEndedB &&
-            !this.userData.endTime) ||
-          (this.userData.q_category == 'C' &&
-            res.isEndedC &&
-            !this.userData.endTime) ||
-          (this.userData.q_category == 'D' &&
-            res.isEndedD &&
-            !this.userData.endTime)
-        ) {
-          this.router.navigateByUrl('/closed');
-        } else if (
-          !res.isStarted ||
-          (this.userData.q_category == 'A' && !res.isStartedA) ||
-          (this.userData.q_category == 'B' && !res.isStartedB) ||
-          (this.userData.q_category == 'C' && !res.isStartedC) ||
-          (this.userData.q_category == 'D' && !res.isStartedD)
-        ) {
-          this.router.navigateByUrl('/not-started');
-        } else {
-          if (this.userData.isAttended != 0) {
-            this.router.navigateByUrl('/contact-admin', {
-              state: {
-                quizStatus: this.userData.isAttended,
-                endTime: this.userData.endTime,
-              },
-            });
+        if (this.userData.isAttended == 0) {
+          if (
+            res.isEnded ||
+            (this.userData.q_category == 'A' &&
+              res.isEndedA &&
+              !this.userData.endTime) ||
+            (this.userData.q_category == 'B' &&
+              res.isEndedB &&
+              !this.userData.endTime) ||
+            (this.userData.q_category == 'C' &&
+              res.isEndedC &&
+              !this.userData.endTime) ||
+            (this.userData.q_category == 'D' &&
+              res.isEndedD &&
+              !this.userData.endTime)
+          ) {
+            this.router.navigateByUrl('/closed');
+          } else if (
+            !res.isStarted ||
+            (this.userData.q_category == 'A' && !res.isStartedA) ||
+            (this.userData.q_category == 'B' && !res.isStartedB) ||
+            (this.userData.q_category == 'C' && !res.isStartedC) ||
+            (this.userData.q_category == 'D' && !res.isStartedD)
+          ) {
+            this.router.navigateByUrl('/not-started');
           } else {
             this.router.navigateByUrl('/instructions');
           }
+        } else {
+          this.router.navigateByUrl('/contact-admin', {
+            state: {
+              quizStatus: this.userData.isAttended,
+              endTime: this.userData.endTime,
+            },
+          });
         }
       },
       (err) => {
         this.toastrService.error(
-          'Something wend wrong. Please contact administrator'
+          'Something went wrong. Please contact administrator'
         );
       }
     );
