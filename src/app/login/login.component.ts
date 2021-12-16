@@ -68,6 +68,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
       case 'STUDENT':
         this.loadStudentPage();
         break;
+      case 'STUDENT_TEST':
+        this.router.navigateByUrl('/instructions');
+        break;
       case 'QUIZ_MASTER':
         this.router.navigateByUrl('/quiz-master');
         break;
@@ -122,6 +125,53 @@ export class LoginComponent implements OnInit, AfterViewInit {
       }
     );
   }
+  // loadTestStudentPage(){
+  //   this.loginService.getFlags().subscribe(
+  //     (res: StatusFlag) => {
+  //       if (this.userData.isAttended == 0) {
+  //         if (
+  //           res.isEnded ||
+  //           (this.userData.q_category == 'A' &&
+  //             res.isEndedA &&
+  //             !this.userData.endTime) ||
+  //           (this.userData.q_category == 'B' &&
+  //             res.isEndedB &&
+  //             !this.userData.endTime) ||
+  //           (this.userData.q_category == 'C' &&
+  //             res.isEndedC &&
+  //             !this.userData.endTime) ||
+  //           (this.userData.q_category == 'D' &&
+  //             res.isEndedD &&
+  //             !this.userData.endTime)
+  //         ) {
+  //           this.router.navigateByUrl('/closed');
+  //         } else if (
+  //           !res.isStarted ||
+  //           (this.userData.q_category == 'A' && !res.isStartedA) ||
+  //           (this.userData.q_category == 'B' && !res.isStartedB) ||
+  //           (this.userData.q_category == 'C' && !res.isStartedC) ||
+  //           (this.userData.q_category == 'D' && !res.isStartedD)
+  //         ) {
+  //           this.router.navigateByUrl('/not-started');
+  //         } else {
+  //           this.router.navigateByUrl('/instructions');
+  //         }
+  //       } else {
+  //         this.router.navigateByUrl('/contact-admin', {
+  //           state: {
+  //             quizStatus: this.userData.isAttended,
+  //             endTime: this.userData.endTime,
+  //           },
+  //         });
+  //       }
+  //     },
+  //     (err) => {
+  //       this.toastrService.error(
+  //         'Something went wrong. Please contact administrator'
+  //       );
+  //     }
+  //   );
+  // }
   cancel() {
     this.router.navigateByUrl('/home');
   }

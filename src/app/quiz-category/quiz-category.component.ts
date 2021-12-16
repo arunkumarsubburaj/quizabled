@@ -35,6 +35,7 @@ export class QuizCategoryComponent implements OnInit {
       { id: 2, itemName: 'Tamil', name: 'tn' },
       { id: 3, itemName: 'Kannada', name: 'ka' },
       { id: 4, itemName: 'Hindi', name: 'hi' },
+      { id: 5, itemName: 'Marathi', name: 'ka' },
       // { id: 3, itemName: 'Telugu', name: 'tl' },
       // { id: 5, itemName: 'Malayalam', name: 'ma' },
     ];

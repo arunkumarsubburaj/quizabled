@@ -27,7 +27,10 @@ export class InstructionsComponent implements OnInit {
           this.router.navigateByUrl('/home');
         } else {
           this.isCategoryD = (userData as UserInfo).q_category == 'D';
-          if ((userData as UserInfo).role == 'STUDENT') {
+          if (
+            (userData as UserInfo).role == 'STUDENT' ||
+            (userData as UserInfo).role == 'STUDENT_TEST'
+          ) {
             this.isMainQuiz = true;
             this.quizTitle = 'Quizabled: Main Test';
           } else {

@@ -66,7 +66,10 @@ export class QuizDComponent implements OnInit {
         this.router.navigateByUrl('/home');
       } else {
         this.userData = userData as UserInfo;
-        if ((userData as UserInfo).role == 'STUDENT') {
+        if (
+          (userData as UserInfo).role == 'STUDENT' ||
+          (userData as UserInfo).role == 'STUDENT_TEST'
+        ) {
           this.quizTitle = 'Quizabled: Main Test';
         } else {
           this.quizTitle = 'Quizabled: Mock Test';
