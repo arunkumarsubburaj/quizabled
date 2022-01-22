@@ -4,7 +4,7 @@ import { QuestionSet, Option, SecondaryQuestionsObj } from './../models/quiz';
 import { QuizConfig, QuizService } from './../quiz.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { forkJoin, of } from 'rxjs';
-import { catchError, map, take } from 'rxjs/operators';
+import { catchError, delay, map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserInfo, UserService } from '../user.service';
@@ -119,23 +119,21 @@ export class QuizComponent implements OnInit {
               });
             });
           }
-          setTimeout(() => {
-            this.cd.begin();
-            this.counterStatus = 'on';
-            this.adminService
-              .updateQuizStatus(this.userData.id, {
-                isAttended: 1,
-                timeStamp: Date.now(),
-              })
-              .subscribe(
-                (res) => {
-                  console.log('status updated...');
-                },
-                (err) => {
-                  console.log('Error: ', err);
-                }
-              );
-          }, 500);
+          this.adminService
+            .updateQuizStatus(this.userData.id, {
+              isAttended: 1,
+              timeStamp: Date.now(),
+            })
+            .subscribe(
+              (res) => {
+                this.cd.begin();
+                this.counterStatus = 'on';
+                console.log('status updated...');
+              },
+              (err) => {
+                console.log('Error: ', err);
+              }
+            );
         },
         (err) => {
           if (err.status == 404) {
@@ -218,18 +216,19 @@ export class QuizComponent implements OnInit {
       const log = this.adminService.addQuizLog(this.userData.id.toString(), {
         answerObj: this.resultArrayObj,
       });
-      forkJoin([quizStatus, log]).subscribe(
-        (res) => {
-          console.log('status updated...');
-          console.log('status updated...');
-          setTimeout(() => {
-            this.router.navigateByUrl('/result');
-          }, 500);
-        },
-        (err) => {
-          this.toastrService.error(err);
-        }
-      );
+      forkJoin([quizStatus, log])
+        .pipe(delay(500))
+        .subscribe(
+          (res) => {
+            console.log('status updated...');
+            setTimeout(() => {
+              this.router.navigateByUrl('/result');
+            }, 500);
+          },
+          (err) => {
+            this.toastrService.error(err);
+          }
+        );
     } else {
       this.router.navigateByUrl('/result');
     }
