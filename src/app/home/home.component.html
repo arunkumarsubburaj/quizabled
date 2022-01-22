@@ -202,6 +202,7 @@
             <a href="#">Zoom</a>. The Quiz will consist of multiple rounds and
             will be led by the Quiz Masters and Volunteers.
           </p>
+          <p class="fakeLink" (click)="openFinalists()">Details of Finalists</p>
           <h4>Final Round: 25<sup>th</sup> January 2022</h4>
           <p>
             The final round will be conducted through Zoom. The Quiz will
@@ -288,3 +289,46 @@
     </div>
   </div>
 </section>
+
+<div id="finalistWrapper" [ngClass]="{ show: showFinalists }">
+  <div class="quizOverlay">
+    <div class="quizModalContent">
+      <h2 class="centerAlign" style="position: relative">
+        Finalists
+        <span class="material-icons closeBtn" (click)="hideFinalists()"
+          >close</span
+        >
+      </h2>
+      <details
+        class="sgAccordion"
+        *ngFor="let item of finalistData; let row = index"
+        #accordion
+      >
+        <summary (click)="toggleAccordion(row)">
+          <span>{{ item.stateName }}</span>
+        </summary>
+        <div class="sgAccordion-body">
+          <div class="twoColumns">
+            <div *ngFor="let studentData of item.studentDetails">
+              <h3>{{ studentData.categoryName }}</h3>
+              <table>
+                <tr>
+                  <th width="10%">S.No</th>
+                  <th width="40%">Name</th>
+                  <th width="50%">School</th>
+                </tr>
+                <tr
+                  *ngFor="let student of studentData.studentList; let i = index"
+                >
+                  <td class="serialNo">{{ i + 1 }}</td>
+                  <td>{{ student.name }}</td>
+                  <td>{{ student.school }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
