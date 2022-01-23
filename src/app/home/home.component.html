@@ -190,6 +190,9 @@
             </tr>
           </table>
           <button style="display: none" class="btnQuizPri">View Results</button>
+          <button class="btnQuizPri" (click)="openFinalists()">
+            View Finalists
+          </button>
         </div>
         <div class="quizColContent">
           <h3>17<sup>th</sup> December 2021</h3>
@@ -202,7 +205,6 @@
             <a href="#">Zoom</a>. The Quiz will consist of multiple rounds and
             will be led by the Quiz Masters and Volunteers.
           </p>
-          <p class="fakeLink" (click)="openFinalists()">Details of Finalists</p>
           <h4>Final Round: 25<sup>th</sup> January 2022</h4>
           <p>
             The final round will be conducted through Zoom. The Quiz will
@@ -293,7 +295,10 @@
 <div id="finalistWrapper" [ngClass]="{ show: showFinalists }">
   <div class="quizOverlay">
     <div class="quizModalContent">
-      <h2 class="centerAlign" style="position: relative">
+      <h2
+        class="centerAlign"
+        style="position: relative; text-transform: uppercase"
+      >
         Finalists
         <span class="material-icons closeBtn" (click)="hideFinalists()"
           >close</span
