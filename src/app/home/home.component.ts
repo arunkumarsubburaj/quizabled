@@ -195,6 +195,110 @@ export class HomeComponent implements OnInit, AfterViewInit {
       ],
     },
   ];
+  winnerData = [
+    {
+      stateName: 'Maharashtra',
+      studentDetails: [
+        {
+          categoryName: 'Students with Visually impairment',
+          studentList: [
+            { name: 'JASH MEHTA', school: 'NAB', status: 'WINNER' },
+            {
+              name: 'SHRADDHA SAMADDER',
+              school: 'FATHER AGNEL',
+              status: 'RUNNER UP',
+            },
+          ],
+        },
+        {
+          categoryName: 'Students with Hearing impairment',
+          studentList: [
+            {
+              name: 'AMAANUR REHMAN ATIQUR REHAMN SIDDIQUI',
+              school: 'THE STEPHEN HIGH SCHOOL FOR DEAF AND APHASIC',
+              status: 'WINNER',
+            },
+            {
+              name: 'SURAJ WANKHEDE',
+              school: 'JUNAIGAR MARATHI SCHOOL',
+              status: 'RUNNER UP',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      stateName: 'TamilNadu',
+      studentDetails: [
+        {
+          categoryName: 'Students with Visually impairment',
+          studentList: [
+            {
+              name: 'MADAN KUMAR',
+              school: 'NETHRODAYA',
+              status: 'WINNER',
+            },
+            {
+              name: 'STS GUGHAN',
+              school: 'SETHU BHASKARA METRICULATION SCHOOL',
+              status: 'RUNNER UP',
+            },
+          ],
+        },
+        {
+          categoryName: 'Students with Hearing impairment',
+          studentList: [
+            {
+              name: 'POORVIKA',
+              school: 'MARYCLUBWALA SCHOOL',
+              status: 'WINNER',
+            },
+            {
+              name: 'MOULESH ANNAMALAI',
+              school: 'AJAY DEAF SCHOOL',
+              status: 'RUNNER UP',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      stateName: 'Karnataka',
+      studentDetails: [
+        {
+          categoryName: 'Students with Visually impairment',
+          studentList: [
+            {
+              name: 'VENKATESH',
+              school: 'BGS SCHOOL FOR THE BLIND RAMNAGARA',
+              status: 'WINNER',
+            },
+            {
+              name: 'NITISH',
+              school:
+                'ROMAN AND CATHERINE LOBO SCHOOL FOR THE BLIND, MANGALORE',
+              status: 'RUNNER UP',
+            },
+          ],
+        },
+        {
+          categoryName: 'Students with Hearing impairment',
+          studentList: [
+            {
+              name: 'MAMATHA. M',
+              school: 'SHEILA KOTHWAL INSTITUTE FOR THE DEAF, BENGALURU',
+              status: 'WINNER',
+            },
+            {
+              name: 'FAHIMA KHANUM',
+              school: 'SHRADHANJALI INTEGRATED SCHOOL-APD',
+              status: 'RUNNER UP',
+            },
+          ],
+        },
+      ],
+    },
+  ];
   ngOnInit() {}
   ngAfterViewInit() {
     const firstAccordion = this.accordion.first.nativeElement;

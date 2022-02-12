@@ -189,8 +189,14 @@
               <td>Hearing Impairment (HI)</td>
             </tr>
           </table>
-          <button style="display: none" class="btnQuizPri">View Results</button>
           <button class="btnQuizPri" (click)="openFinalists()">
+            View Result
+          </button>
+          <button
+            class="btnQuizPri"
+            style="display: none"
+            (click)="openFinalists()"
+          >
             View Finalists
           </button>
         </div>
@@ -294,7 +300,7 @@
 
 <div id="finalistWrapper" [ngClass]="{ show: showFinalists }">
   <div class="quizOverlay">
-    <div class="quizModalContent">
+    <!-- <div class="quizModalContent">
       <h2
         class="centerAlign"
         style="position: relative; text-transform: uppercase"
@@ -328,6 +334,49 @@
                   <td class="serialNo">{{ i + 1 }}</td>
                   <td>{{ student.name }}</td>
                   <td>{{ student.school }}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
+    </div> -->
+    <div class="quizModalContent">
+      <h2
+        class="centerAlign"
+        style="position: relative; text-transform: uppercase"
+      >
+        RESULT
+        <span class="material-icons closeBtn" (click)="hideFinalists()"
+          >close</span
+        >
+      </h2>
+      <details
+        class="sgAccordion"
+        *ngFor="let item of winnerData; let row = index"
+        #accordion
+      >
+        <summary (click)="toggleAccordion(row)">
+          <span>{{ item.stateName }}</span>
+        </summary>
+        <div class="sgAccordion-body">
+          <div class="twoColumns">
+            <div *ngFor="let studentData of item.studentDetails">
+              <h3>{{ studentData.categoryName }}</h3>
+              <table>
+                <tr>
+                  <th width="10%">S.No</th>
+                  <th width="30%">Name</th>
+                  <th width="30%">School</th>
+                  <th width="30%">Status</th>
+                </tr>
+                <tr
+                  *ngFor="let student of studentData.studentList; let i = index"
+                >
+                  <td class="serialNo">{{ i + 1 }}</td>
+                  <td>{{ student.name }}</td>
+                  <td>{{ student.school }}</td>
+                  <td>{{ student.status }}</td>
                 </tr>
               </table>
             </div>
