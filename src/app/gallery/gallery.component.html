@@ -6,7 +6,7 @@
       ullam inventore amet laudantium cupiditate.
     </p> -->
   </div>
-  <ul class="galleryList">
+  <ul class="galleryList" [ngClass]="{ show: isGallery }">
     <li>
       <img
         src="./../../assets/images/gallery/18-19/2018-19_9.jpg"
@@ -32,11 +32,23 @@
       <div>2020</div>
     </li>
     <li>
-      <video controls id="videoTag">
+      <img
+        src="./../../assets/images/gallery/21-22/2021-22_1.jpg"
+        alt=""
+        (click)="open('21_22')"
+      />
+      <div>2021</div>
+    </li>
+    <li>
+      <video controls class="videoTag">
         <source src="./../../assets/others/2021-12-31_14.37.20.mp4" />
         Your browser does not support the video tag.
       </video>
-      <div>2021</div>
+      <div>About (2021)</div>
+    </li>
+    <li (click)="toggleTestimonials()">
+      <img src="./../../assets/images/testimonials.jpg" alt="" />
+      <div>Testimonials (2021)</div>
     </li>
     <li class="youtube-content">
       <div class="container">
@@ -59,4 +71,20 @@
       </div>
     </li>
   </ul>
+  <div id="testimonialsDir" [ngClass]="{ show: !isGallery }">
+    <header>
+      <div class="backWrap" (click)="toggleTestimonials()">
+        <span class="material-icons back"> arrow_back </span>Back
+      </div>
+      <h3>Testimonials</h3>
+    </header>
+    <ul class="galleryList show">
+      <li *ngFor="let i of numbers">
+        <video controls class="videoTag">
+          <source [src]="getResourcePath(i)" />
+          Your browser does not support the video tag.
+        </video>
+      </li>
+    </ul>
+  </div>
 </div>

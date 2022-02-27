@@ -42,7 +42,7 @@ const routes: Routes = [
       {
         path: 'add-resource',
         component: AddResourceComponent,
-        canActivate: [AuthGuard],
+        // canActivate: [AuthGuard],
       },
       {
         path: 'quiz-master',

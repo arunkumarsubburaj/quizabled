@@ -14,9 +14,38 @@ li > div.container {
     height: 100%;
   }
 }
-#videoTag {
+.videoTag {
   max-height: 420px;
   padding-bottom: 40px;
   box-sizing: border-box;
   width: 100%;
+}
+#testimonialsDir {
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 10px;
+    margin-bottom: 20px;
+    .backWrap {
+      position: absolute;
+      left: 10px;
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  li {
+    max-height: 100%;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    video {
+      padding-bottom: 0;
+      height: 100%;
+      max-height: 100%;
+    }
+  }
 }

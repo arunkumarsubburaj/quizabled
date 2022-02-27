@@ -43,36 +43,33 @@ export class LoginComponent implements OnInit, AfterViewInit {
         user_name: this.fc.user_name.value,
         password: this.fc.password.value,
       };
-      this.loginService.login(data).subscribe(
-        (res: any) => {
-          this.toastrService.success('Logged In Successfully.', 'Success');
-          this.userService.setUser(res.user);
-          this.userData = res.user;
-          this.userService.setLoginStatus(true);
-          window.sessionStorage.setItem('ROLE', res.user.role);
-          this.launchLandingPage(res.user.role);
-        },
-        (err) => {
-          const errorCode = err.error.code;
-          const errorMessage = err.error.message;
-          this.toastrService.error(errorMessage, 'Error');
-        }
-      );
+      const encryptPwd = window.btoa(`${data.user_name}:${data.password}`);
+      // this.loginService.login(data).subscribe(
+      //   (res: any) => {
+      //     this.toastrService.success('Logged In Successfully.', 'Success');
+      //     this.userService.setUser(res.user);
+      //     this.userData = res.user;
+      //     this.userService.setLoginStatus(true);
+      //     window.sessionStorage.setItem('ROLE', res.user.role);
+      //     this.launchLandingPage(res.user.role);
+      //   },
+      //   (err) => {
+      //     const errorCode = err.error.code;
+      //     const errorMessage = err.error.message;
+      //     this.toastrService.error(errorMessage, 'Error');
+      //   }
+      // );
+      if (encryptPwd == 'cXVpemFibGVkX2FkbWluOkFwcGxlQDEyMw==') {
+        this.launchLandingPage('ADMIN');
+      } else {
+        this.toastrService.error('Incorrect User Name or Password', 'Error');
+      }
     }
   }
   launchLandingPage(role: string) {
     switch (role) {
       case 'ADMIN':
-        this.router.navigateByUrl('/admin');
-        break;
-      case 'STUDENT':
-        this.loadStudentPage();
-        break;
-      case 'STUDENT_TEST':
-        this.router.navigateByUrl('/instructions');
-        break;
-      case 'QUIZ_MASTER':
-        this.router.navigateByUrl('/quiz-master');
+        this.router.navigateByUrl('/add-resource');
         break;
       default:
         break;

@@ -523,10 +523,13 @@ td {
   }
 }
 .galleryList {
-  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin-bottom: 20px;
+  display: none;
+  &.show {
+    display: flex;
+  }
   li {
     position: relative;
     flex: 0 0 100%;
@@ -536,6 +539,7 @@ td {
     overflow: hidden;
     transition: 0.2s;
     cursor: pointer;
+    max-height: 375px;
     @media (min-width: 600px) {
       flex: 0 0 calc(50% - 10px);
       max-width: calc(50% - 10px);
@@ -545,6 +549,7 @@ td {
     }
     img {
       height: 100%;
+      width: 100%;
     }
     div {
       position: absolute;
