@@ -18,7 +18,7 @@ export class GalleryComponent implements OnInit {
   isGallery = true;
   numbers!: number[];
   constructor(private _lightbox: Lightbox) {
-    this.numbers = Array(12)
+    this.numbers = Array(3)
       .fill(1)
       .map((x, i) => i + 1);
   }
@@ -28,6 +28,12 @@ export class GalleryComponent implements OnInit {
   open(year: string): void {
     // open lightbox
     switch (year) {
+      case '16_17':
+        this.getAlbums('16-17', 8, '2016-17_');
+        break;
+      case '17_18':
+        this.getAlbums('17-18', 16, '2017-18_');
+        break;
       case '18_19':
         this.getAlbums('18-19', 52, '2018-19_');
         break;
@@ -38,7 +44,7 @@ export class GalleryComponent implements OnInit {
         this.getAlbums('20-21', 15, '2020-21_');
         break;
       case '21_22':
-        this.getAlbums('21-22', 91, '2021-22_');
+        this.getAlbums('21-22', 66, '2021-22_');
         break;
       default:
         break;
